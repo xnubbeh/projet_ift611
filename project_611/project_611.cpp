@@ -1,6 +1,6 @@
 // project_611.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-//#include <glad.h>
+#include <glad/glad.h>
 #include <glfw3.h>
 #include <iostream>
 
