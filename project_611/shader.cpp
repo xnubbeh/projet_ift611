@@ -1,7 +1,7 @@
 #include "shader.h"
 
 #include <iostream>
-#include "glm/gtc/type_ptr.hpp"
+#include "gtc/type_ptr.hpp"
 
 Shader& Shader::Use()
 {

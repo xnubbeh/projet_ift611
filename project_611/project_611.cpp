@@ -4,6 +4,8 @@
 #include <glfw3.h>
 #include <iostream>
 
+#define STB_IMAGE_IMPLEMENTATION
+
 #include "game.h"
 #include "resource_manager.h"
 

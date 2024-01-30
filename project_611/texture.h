@@ -1,3 +1,8 @@
+#ifndef TEXTURE_H
+#define TEXTURE_H
+
+
+
 #include <glad/glad.h>
 
 class Texture
@@ -23,3 +28,4 @@ public:
     void Bind() const;
 };
 
+#endif // !TEXTURE_H

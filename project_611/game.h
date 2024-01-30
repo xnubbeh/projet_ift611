@@ -1,7 +1,10 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
 
 #include <glad/glad.h>
 #include <glfw3.h>
+#include "resource_manager.h"
+#include "sprite_render.h"
 
 enum GameState {
 	GAME_ACTIVE,
@@ -28,3 +31,4 @@ public:
 
 };
 
+#endif
