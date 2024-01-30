@@ -76,9 +76,9 @@ Shader resource_manager::loadShaderFromFile(const char* vShaderFile, const char*
     {
         std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
     }
-    const char* vShaderCode = vertexCode.c_str();
-    const char* fShaderCode = fragmentCode.c_str();
-    const char* gShaderCode = geometryCode.c_str();
+    const GLchar* vShaderCode = vertexCode.c_str();
+    const GLchar* fShaderCode = fragmentCode.c_str();
+    const GLchar* gShaderCode = geometryCode.c_str();
     // 2. now create shader object from source code
     Shader shader;
     shader.Compile(vShaderCode, fShaderCode, gShaderFile != nullptr ? gShaderCode : nullptr);

@@ -1,11 +1,14 @@
-#version 330 core
+#version 460
 
-layout (location = 0) in vec4 vertex; // <vec2 position, vec2 texCoords>
-
-out vec2 TexCoords;
 
 uniform mat4 model;
 uniform mat4 projection;
+
+layout (location = 0) in vec4 vertex; // <vec2 position, vec2 texCoords>
+out vec2 TexCoords;
+out gl_PerVertex {
+     vec4 gl_Position;
+};
 
 void main()
 {

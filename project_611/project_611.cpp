@@ -25,15 +25,22 @@ int main()
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "game pre-alpha v0.01", NULL, NULL);
     glfwMakeContextCurrent(window);
 
+
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize OpenGL context" << std::endl;
         glfwTerminate();
         return EXIT_FAILURE;
     }
 
+    Game game{ SCREEN_WIDTH , SCREEN_HEIGHT };
+    game.Init();
+    glClearColor(0.5, 0.5, 0.5, 1.0);
+    glEnable(GL_DEPTH_TEST);
+
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
-
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        game.Render();
         glfwSwapBuffers(window);
 
     }

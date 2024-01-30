@@ -36,7 +36,7 @@ void sprite_render::DrawSprite(Texture& texture, glm::vec2 position, glm::vec2 s
 
 void sprite_render::initRenderData() {
     // configure VAO/VBO
-    unsigned int VBO;
+    GLuint VBO;
     float vertices[] = {
         // pos      // tex
         0.0f, 1.0f, 0.0f, 1.0f,
@@ -48,16 +48,15 @@ void sprite_render::initRenderData() {
         1.0f, 0.0f, 1.0f, 0.0f
     };
 
-    glGenVertexArrays(1, &this->quadVAO);
-    glGenBuffers(1, &VBO);
+    glCreateBuffers(1, &VBO);
+    glNamedBufferData(VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glCreateVertexArrays(1, &this->quadVAO);
+    glEnableVertexArrayAttrib(this->quadVAO, 0);
+    glVertexArrayAttribFormat(this->quadVAO, 0, 4, GL_FLOAT, GL_FALSE, 0);
+    glVertexArrayVertexBuffer(this->quadVAO, 0, VBO, 0, sizeof(float) * 4);
 
+    glVertexArrayAttribBinding(this->quadVAO, 0, 0);
     glBindVertexArray(this->quadVAO);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
 }
 
