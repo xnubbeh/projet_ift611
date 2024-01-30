@@ -4,18 +4,47 @@
 #include <glfw3.h>
 #include <iostream>
 
+#define STB_IMAGE_IMPLEMENTATION
+
+#include "game.h"
+#include "resource_manager.h"
+
+// The Width of the screen
+const unsigned int SCREEN_WIDTH = 800;
+// The height of the screen
+const unsigned int SCREEN_HEIGHT = 600;
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+
+    glfwWindowHint(GLFW_RESIZABLE, false); //save the trouble of resizing for now
+
+    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "game pre-alpha v0.01", NULL, NULL);
+    glfwMakeContextCurrent(window);
+
+
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cerr << "Failed to initialize OpenGL context" << std::endl;
+        glfwTerminate();
+        return EXIT_FAILURE;
+    }
+
+    Game game{ SCREEN_WIDTH , SCREEN_HEIGHT };
+    game.Init();
+
+    while (!glfwWindowShouldClose(window)) {
+        glfwPollEvents();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        game.Render();
+        glfwSwapBuffers(window);
+
+    }
+    
+    glfwTerminate();
+    return EXIT_SUCCESS;
+
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
