@@ -23,7 +23,7 @@ void Game::Init()
     Shader rat_shader = resource_manager::GetShader("sprite");
     Renderer = new sprite_render(rat_shader);
     // load textures
-    resource_manager::LoadTexture("rat.png", true, "rat");
+    resource_manager::LoadTexture("star.png", true, "star");
 }
 
 void Game::ProcessInput(float)
@@ -37,8 +37,8 @@ void Game::Update(float)
 void Game::Render()
 {
 
-    Texture rat_texture = resource_manager::GetTexture("rat");
-    Renderer->DrawSprite(rat_texture, glm::vec2(400.0, 300.0), glm::vec2(20.0,20.0), 45.0f);
+    Texture rat_texture = resource_manager::GetTexture("star");
+    Renderer->DrawSprite(rat_texture, glm::vec2(400.0, 300.0), glm::vec2(300.0,100.0), 0.0f);
 }
 
 

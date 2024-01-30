@@ -152,9 +152,6 @@
     <None Include="sprite.frag" />
     <None Include="sprite.vs" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="D:\Pictures\rat.png" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
