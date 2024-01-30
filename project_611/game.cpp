@@ -15,8 +15,10 @@ void Game::Init()
 {
 	resource_manager::LoadShader("sprite.vs","sprite.frag",NULL,"sprite");
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->Width),static_cast<float>(this->Height), 0.0f, -1.0f, 1.0f);
-    resource_manager::GetShader("sprite").Use().SetInteger("image", 0);
-    resource_manager::GetShader("sprite").SetMatrix4("projection", projection);
+    resource_manager::GetShader("sprite").SetInteger("image", 0, resource_manager::GetShader("sprite").fs);
+    resource_manager::GetShader("sprite").SetMatrix4("projection", projection, resource_manager::GetShader("sprite").vs);
+    glClearColor(0.5, 0.5, 0.5, 1.0);
+    glEnable(GL_DEPTH_TEST);
     // set render-specific controls
     Shader rat_shader = resource_manager::GetShader("sprite");
     Renderer = new sprite_render(rat_shader);

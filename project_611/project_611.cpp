@@ -34,8 +34,6 @@ int main()
 
     Game game{ SCREEN_WIDTH , SCREEN_HEIGHT };
     game.Init();
-    glClearColor(0.5, 0.5, 0.5, 1.0);
-    glEnable(GL_DEPTH_TEST);
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();

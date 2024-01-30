@@ -3,44 +3,27 @@
 #include <iostream>
 #include "gtc/type_ptr.hpp"
 
-Shader& Shader::Use()
-{
-    glUseProgram(this->ID);
-    return *this;
-}
-
 void Shader::Compile(const char* vertexSource, const char* fragmentSource, const char* geometrySource)
 {
-    GLuint sVertex, sFragment, gShader;
+    GLuint gShader;
     // vertex Shader
-    sVertex = glCreateShaderProgramv(GL_VERTEX_SHADER, 1, &vertexSource);
-
-  //  sVertex = glCreateShader(GL_VERTEX_SHADER);
-  //  glShaderSource(sVertex, 1, &vertexSource, NULL);
-  //  glCompileShader(sVertex);
-    checkCompileErrors(sVertex, "VERTEX");
+    this->vs = glCreateShaderProgramv(GL_VERTEX_SHADER, 1, &vertexSource);
+    checkCompileErrors(this->vs, "VERTEX");
     // fragment Shader
-    sFragment = glCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &fragmentSource);
- /*   glShaderSource(sFragment, 1, &fragmentSource, NULL);
-    glCompileShader(sFragment);*/
-    checkCompileErrors(sFragment, "FRAGMENT");
+    this->fs = glCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &fragmentSource);
+    checkCompileErrors(this->fs, "FRAGMENT");
 
     // if geometry shader source code is given, also compile geometry shader
     if (geometrySource != nullptr)
     {
         gShader = glCreateShaderProgramv(GL_GEOMETRY_SHADER, 1, &geometrySource);
-        //gShader = glCreateShader(GL_GEOMETRY_SHADER);
-        //glShaderSource(gShader, 1, &geometrySource, NULL);
-        //glCompileShader(gShader);
         checkCompileErrors(gShader, "GEOMETRY");
     }
     // shader program
     glCreateProgramPipelines(1, &this->ID);
-    glUseProgramStages(this->ID, GL_VERTEX_SHADER_BIT, sVertex);
-    glUseProgramStages(this->ID, GL_FRAGMENT_SHADER_BIT, sFragment);
+    glUseProgramStages(this->ID, GL_VERTEX_SHADER_BIT, this->vs);
+    glUseProgramStages(this->ID, GL_FRAGMENT_SHADER_BIT, this->fs);
 
-    //glAttachShader(this->ID, sVertex);
-    //glAttachShader(this->ID, sFragment);
     if (geometrySource != nullptr)
         glUseProgramStages(this->ID, GL_GEOMETRY_SHADER_BIT, gShader);
     glValidateProgramPipeline(this->ID);
@@ -48,65 +31,56 @@ void Shader::Compile(const char* vertexSource, const char* fragmentSource, const
     checkCompileErrors(this->ID, "PROGRAM");
 
     // delete the shaders as they're linked into our program now and no longer necessary
-    glDeleteShader(sVertex);
-    glDeleteShader(sFragment);
+    glDeleteShader(this->vs);
+    glDeleteShader(this->fs);
     if (geometrySource != nullptr)
         glDeleteShader(gShader);
 }
 
-void Shader::SetFloat(const char* name, float value, bool useShader)
+void Shader::SetFloat(const char* name, float value, GLuint shader)
 {
-    if (useShader)
-        this->Use();
-    glUniform1f(glGetUniformLocation(this->ID, name), value);
+    GLint variable = glGetUniformLocation(shader, name);
+    glProgramUniform1f(shader, variable,  value);
 }
-void Shader::SetInteger(const char* name, int value, bool useShader)
+void Shader::SetInteger(const char* name, int value, GLuint shader)
 {
-    if (useShader)
-        this->Use();
-    glUniform1i(glGetUniformLocation(this->ID, name), value);
+    GLint variable = glGetUniformLocation(shader, name);
+    glProgramUniform1i(shader, variable, value);
 }
-void Shader::SetVector2f(const char* name, float x, float y, bool useShader)
+void Shader::SetVector2f(const char* name, float x, float y, GLuint shader)
 {
-    if (useShader)
-        this->Use();
-    glUniform2f(glGetUniformLocation(this->ID, name), x, y);
+    GLint variable = glGetUniformLocation(shader, name);
+    glProgramUniform2f(shader, variable, x, y);
 }
-void Shader::SetVector2f(const char* name, const glm::vec2& value, bool useShader)
+void Shader::SetVector2f(const char* name, const glm::vec2& value, GLuint shader)
 {
-    if (useShader)
-        this->Use();
-    glUniform2f(glGetUniformLocation(this->ID, name), value.x, value.y);
+    GLint variable = glGetUniformLocation(shader, name);
+    glProgramUniform2f(shader, variable, value.x, value.y);
 }
-void Shader::SetVector3f(const char* name, float x, float y, float z, bool useShader)
+void Shader::SetVector3f(const char* name, float x, float y, float z, GLuint shader)
 {
-    if (useShader)
-        this->Use();
-    glUniform3f(glGetUniformLocation(this->ID, name), x, y, z);
+    GLint variable = glGetUniformLocation(shader, name);
+    glProgramUniform3f(shader, variable, x, y, z);
 }
-void Shader::SetVector3f(const char* name, const glm::vec3& value, bool useShader)
+void Shader::SetVector3f(const char* name, const glm::vec3& value, GLuint shader)
 {
-    if (useShader)
-        this->Use();
-    glUniform3f(glGetUniformLocation(this->ID, name), value.x, value.y, value.z);
+    GLint variable = glGetUniformLocation(shader, name);
+    glProgramUniform3f(shader, variable, value.x, value.y, value.z);
 }
-void Shader::SetVector4f(const char* name, float x, float y, float z, float w, bool useShader)
+void Shader::SetVector4f(const char* name, float x, float y, float z, float w, GLuint shader)
 {
-    if (useShader)
-        this->Use();
-    glUniform4f(glGetUniformLocation(this->ID, name), x, y, z, w);
+    GLint variable = glGetUniformLocation(shader, name);
+    glProgramUniform4f(shader, variable, x, y, z, w);
 }
-void Shader::SetVector4f(const char* name, const glm::vec4& value, bool useShader)
+void Shader::SetVector4f(const char* name, const glm::vec4& value, GLuint shader)
 {
-    if (useShader)
-        this->Use();
-    glUniform4f(glGetUniformLocation(this->ID, name), value.x, value.y, value.z, value.w);
+    GLint variable = glGetUniformLocation(shader, name);
+    glProgramUniform4f(shader, variable, value.x, value.y, value.z, value.w);
 }
-void Shader::SetMatrix4(const char* name, const glm::mat4& matrix, bool useShader)
+void Shader::SetMatrix4(const char* name, const glm::mat4& matrix, GLuint shader)
 {
-    if (useShader)
-        this->Use();
-    glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, false, glm::value_ptr(matrix));
+    GLint variable = glGetUniformLocation(shader, name);
+    glProgramUniformMatrix4fv(shader, variable, 1, false, glm::value_ptr(matrix));
 }
 
 

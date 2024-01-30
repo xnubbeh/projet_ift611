@@ -7,7 +7,7 @@ std::map<std::string, Shader> resource_manager::Shaders;
 
 Shader resource_manager::LoadShader(const char* vShaderFile, const char* fShaderFile, const char* gShaderFile, std::string name)
 {
-    Shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, gShaderFile);
+    Shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, nullptr);
     return Shaders[name];
 }
 
