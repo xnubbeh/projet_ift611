@@ -1,50 +1,23 @@
-// project_611.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// main.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#include <glad/glad.h>
-#include <glfw3.h>
-#include <iostream>
+
 
 #define STB_IMAGE_IMPLEMENTATION
-
-#include "game.h"
-#include "resource_manager.h"
-
-// The Width of the screen
-const unsigned int SCREEN_WIDTH = 800;
-// The height of the screen
-const unsigned int SCREEN_HEIGHT = 600;
+#include "game_engine.h"
 
 int main()
 {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    GameEngine engine{};
+    int status = engine.Init();
 
-    glfwWindowHint(GLFW_RESIZABLE, false); //save the trouble of resizing for now
-
-    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "game pre-alpha v0.01", NULL, NULL);
-    glfwMakeContextCurrent(window);
-
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << "Failed to initialize OpenGL context" << std::endl;
-        glfwTerminate();
-        return EXIT_FAILURE;
+    if (status  == EXIT_FAILURE)
+    {
+        return status;
     }
 
-    Game game{ SCREEN_WIDTH , SCREEN_HEIGHT };
-    game.Init();
-
-    while (!glfwWindowShouldClose(window)) {
-        glfwPollEvents();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        game.Render();
-        glfwSwapBuffers(window);
-
-    }
-    
+    engine.MainLoop();
     glfwTerminate();
-    return EXIT_SUCCESS;
 
+    return EXIT_SUCCESS;
 }
 
