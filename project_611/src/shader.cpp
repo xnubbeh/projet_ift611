@@ -1,4 +1,4 @@
-#include "shader.h"
+#include "../header/shader.h"
 
 #include <iostream>
 #include "gtc/type_ptr.hpp"

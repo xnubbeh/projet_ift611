@@ -1,4 +1,4 @@
-#include "scene.h"
+#include "../header/scene.h"
 
 
 GameObject* Scene::GetRoot()

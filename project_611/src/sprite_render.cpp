@@ -1,4 +1,4 @@
-#include "sprite_render.h"
+#include "../header/sprite_render.h"
 
 sprite_render::sprite_render(Shader& shader) {
 	this->shader = shader;

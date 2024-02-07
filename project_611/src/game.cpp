@@ -1,4 +1,4 @@
-#include "game.h"
+#include "../header/game.h"
 
 
 sprite_render *Renderer;

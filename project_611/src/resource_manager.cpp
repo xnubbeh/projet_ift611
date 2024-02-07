@@ -1,4 +1,4 @@
-#include "resource_manager.h"
+#include "../header/resource_manager.h"
 
 // Instantiate static variables
 std::map<std::string, Texture> resource_manager::Textures;

@@ -1,6 +1,6 @@
 #include <algorithm>
 
-#include "game_engine.h"
+#include "../header/game_engine.h"
 
 
 GameEngine::GameEngine() {

@@ -1,4 +1,4 @@
-#include "frame.h"
+#include "../header/frame.h"
 #include "gtc/matrix_transform.hpp"
 
 Frame::Frame(const glm::mat4& mat, Frame* parent) : matrix{mat}, parent{parent} {}
