@@ -30,6 +30,8 @@ int GameEngine::Init() {
         return EXIT_FAILURE;
     }
 
+    glClearColor(0.5, 0.5, 0.5, 1.0);
+
     return EXIT_SUCCESS;
 }
 
