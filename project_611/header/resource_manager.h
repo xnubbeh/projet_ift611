@@ -8,7 +8,7 @@
 #include <fstream>
 
 
-#include "third_party/stb_image.h"
+#include "../third_party/stb_image.h"
 
 #include <glad/glad.h>
 

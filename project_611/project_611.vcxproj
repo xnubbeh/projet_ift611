@@ -133,32 +133,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="camera.cpp" />
-    <ClCompile Include="frame.cpp" />
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="game_engine.cpp" />
-    <ClCompile Include="game_object.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="resource_manager.cpp" />
-    <ClCompile Include="scene.cpp" />
-    <ClCompile Include="shader.cpp" />
-    <ClCompile Include="sprite_render.cpp" />
-    <ClCompile Include="texture.cpp" />
+    <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\Frame.cpp" />
+    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\game_engine.cpp" />
+    <ClCompile Include="src\game_object.cpp" />
+    <ClCompile Include="src\resource_manager.cpp" />
+    <ClCompile Include="src\scene.cpp" />
+    <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\sprite_render.cpp" />
+    <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="third_party\glad\src\glad.c" />
     <ClCompile Include="third_party\glm\detail\glm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="frame.h" />
-    <ClInclude Include="game.h" />
-    <ClInclude Include="game_engine.h" />
-    <ClInclude Include="game_object.h" />
-    <ClInclude Include="resource_manager.h" />
-    <ClInclude Include="scene.h" />
-    <ClInclude Include="shader.h" />
-    <ClInclude Include="singleton.h" />
-    <ClInclude Include="sprite_render.h" />
-    <ClInclude Include="texture.h" />
+    <ClInclude Include="header\camera.h" />
+    <ClInclude Include="header\frame.h" />
+    <ClInclude Include="header\game.h" />
+    <ClInclude Include="header\game_engine.h" />
+    <ClInclude Include="header\game_object.h" />
+    <ClInclude Include="header\resource_manager.h" />
+    <ClInclude Include="header\scene.h" />
+    <ClInclude Include="header\shader.h" />
+    <ClInclude Include="header\singleton.h" />
+    <ClInclude Include="header\sprite_render.h" />
+    <ClInclude Include="header\texture.h" />
     <ClInclude Include="third_party\glm\common.hpp" />
     <ClInclude Include="third_party\glm\detail\compute_common.hpp" />
     <ClInclude Include="third_party\glm\detail\compute_vector_relational.hpp" />
