@@ -105,6 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\third_party\glm\gtc;$(ProjectDir)\third_party\glad\include;$(ProjectDir)\third_party\glm;$(ProjectDir)\include;$(ProjectDir)\third_party\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,6 +123,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\third_party\glm\gtc;$(ProjectDir)\third_party\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,9 +141,10 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\game_engine.cpp" />
     <ClCompile Include="src\game_object.cpp" />
+    <ClCompile Include="src\material.cpp" />
     <ClCompile Include="src\resource_manager.cpp" />
     <ClCompile Include="src\scene.cpp" />
-    <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\shader_pipeline.cpp" />
     <ClCompile Include="src\sprite_render.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="third_party\glad\src\glad.c" />
@@ -149,13 +152,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\camera.h" />
+    <ClInclude Include="header\color.h" />
     <ClInclude Include="header\frame.h" />
     <ClInclude Include="header\game.h" />
     <ClInclude Include="header\game_engine.h" />
     <ClInclude Include="header\game_object.h" />
+    <ClInclude Include="header\material.h" />
     <ClInclude Include="header\resource_manager.h" />
     <ClInclude Include="header\scene.h" />
-    <ClInclude Include="header\shader.h" />
+    <ClInclude Include="header\shader_pipeline.h" />
     <ClInclude Include="header\singleton.h" />
     <ClInclude Include="header\sprite_render.h" />
     <ClInclude Include="header\texture.h" />

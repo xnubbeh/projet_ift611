@@ -19,7 +19,7 @@ public:
 	GameObject* getGameObject(const std::string& name);
 	GameObject* createGameObject(const std::string& name);
 	std::map<std::string, GameObject*>& getAllGameObjects();
-
+	void LoadScene();
 
 
 

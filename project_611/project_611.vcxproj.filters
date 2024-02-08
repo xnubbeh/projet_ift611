@@ -45,13 +45,16 @@
     <ClCompile Include="src\scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\shader.cpp">
+    <ClCompile Include="src\shader_pipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\sprite_render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -923,7 +926,7 @@
     <ClInclude Include="header\scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header\shader.h">
+    <ClInclude Include="header\shader_pipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header\singleton.h">
@@ -933,6 +936,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header\texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

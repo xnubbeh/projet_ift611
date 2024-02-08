@@ -11,7 +11,7 @@ public:
 	~GameObject() = default;
 	
 	void Render();
-
+	void Animate(const float elapsedTime);
 
 private:
 	// private car les objets DOIVENT avoir un nom

@@ -37,11 +37,13 @@ public:
 	void ProcessInput(float);
 	void Update(float);
 	void Render();
+	void Animate(const float elapsedTime);
 
 
 	void MainLoop();
 
 private:
+	void LoadGeometry();
 	GLFWwindow* window;
 	Scene* scene;
 };

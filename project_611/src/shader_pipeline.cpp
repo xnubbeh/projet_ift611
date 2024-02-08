@@ -1,90 +1,83 @@
-#include "../header/shader.h"
+#include "../header/shader_pipeline.h"
 
 #include <iostream>
 #include "gtc/type_ptr.hpp"
 
-void Shader::Compile(const char* vertexSource, const char* fragmentSource, const char* geometrySource)
+ShaderPipeline::ShaderPipeline(std::string name) : name {name} {
+    glCreateProgramPipelines(1, &shaderProgramPipeline);
+}
+
+
+void ShaderPipeline::Compile(const char* vertexSource, const char* fragmentSource)
 {
     GLuint gShader;
     // vertex Shader
-    this->vs = glCreateShaderProgramv(GL_VERTEX_SHADER, 1, &vertexSource);
-    checkCompileErrors(this->vs, "VERTEX");
+    this->vertexShaderProgram = glCreateShaderProgramv(GL_VERTEX_SHADER, 1, &vertexSource);
+    checkCompileErrors(vertexShaderProgram, "VERTEX");
     // fragment Shader
-    this->fs = glCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &fragmentSource);
-    checkCompileErrors(this->fs, "FRAGMENT");
+    this->fragmentShaderProgram = glCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &fragmentSource);
+    checkCompileErrors(fragmentShaderProgram, "FRAGMENT");
 
-    // if geometry shader source code is given, also compile geometry shader
-    if (geometrySource != nullptr)
-    {
-        gShader = glCreateShaderProgramv(GL_GEOMETRY_SHADER, 1, &geometrySource);
-        checkCompileErrors(gShader, "GEOMETRY");
-    }
     // shader program
-    glCreateProgramPipelines(1, &this->ID);
-    glUseProgramStages(this->ID, GL_VERTEX_SHADER_BIT, this->vs);
-    glUseProgramStages(this->ID, GL_FRAGMENT_SHADER_BIT, this->fs);
+    glUseProgramStages(shaderProgramPipeline, GL_VERTEX_SHADER_BIT, vertexShaderProgram);
+    glUseProgramStages(shaderProgramPipeline, GL_FRAGMENT_SHADER_BIT, fragmentShaderProgram);
 
-    if (geometrySource != nullptr)
-        glUseProgramStages(this->ID, GL_GEOMETRY_SHADER_BIT, gShader);
-    glValidateProgramPipeline(this->ID);
-    glBindProgramPipeline(this->ID);
-    checkCompileErrors(this->ID, "PROGRAM");
+    glValidateProgramPipeline(shaderProgramPipeline);
+    glBindProgramPipeline(shaderProgramPipeline);
+    checkCompileErrors(shaderProgramPipeline, "PROGRAM");
 
     // delete the shaders as they're linked into our program now and no longer necessary
-    glDeleteShader(this->vs);
-    glDeleteShader(this->fs);
-    if (geometrySource != nullptr)
-        glDeleteShader(gShader);
+    glDeleteShader(vertexShaderProgram);
+    glDeleteShader(fragmentShaderProgram);
 }
 
-void Shader::SetFloat(const char* name, float value, GLuint shader)
+void ShaderPipeline::SetFloat(const char* name, float value, GLuint shader)
 {
     GLint variable = glGetUniformLocation(shader, name);
     glProgramUniform1f(shader, variable,  value);
 }
-void Shader::SetInteger(const char* name, int value, GLuint shader)
+void ShaderPipeline::SetInteger(const char* name, int value, GLuint shader)
 {
     GLint variable = glGetUniformLocation(shader, name);
     glProgramUniform1i(shader, variable, value);
 }
-void Shader::SetVector2f(const char* name, float x, float y, GLuint shader)
+void ShaderPipeline::SetVector2f(const char* name, float x, float y, GLuint shader)
 {
     GLint variable = glGetUniformLocation(shader, name);
     glProgramUniform2f(shader, variable, x, y);
 }
-void Shader::SetVector2f(const char* name, const glm::vec2& value, GLuint shader)
+void ShaderPipeline::SetVector2f(const char* name, const glm::vec2& value, GLuint shader)
 {
     GLint variable = glGetUniformLocation(shader, name);
     glProgramUniform2f(shader, variable, value.x, value.y);
 }
-void Shader::SetVector3f(const char* name, float x, float y, float z, GLuint shader)
+void ShaderPipeline::SetVector3f(const char* name, float x, float y, float z, GLuint shader)
 {
     GLint variable = glGetUniformLocation(shader, name);
     glProgramUniform3f(shader, variable, x, y, z);
 }
-void Shader::SetVector3f(const char* name, const glm::vec3& value, GLuint shader)
+void ShaderPipeline::SetVector3f(const char* name, const glm::vec3& value, GLuint shader)
 {
     GLint variable = glGetUniformLocation(shader, name);
     glProgramUniform3f(shader, variable, value.x, value.y, value.z);
 }
-void Shader::SetVector4f(const char* name, float x, float y, float z, float w, GLuint shader)
+void ShaderPipeline::SetVector4f(const char* name, float x, float y, float z, float w, GLuint shader)
 {
     GLint variable = glGetUniformLocation(shader, name);
     glProgramUniform4f(shader, variable, x, y, z, w);
 }
-void Shader::SetVector4f(const char* name, const glm::vec4& value, GLuint shader)
+void ShaderPipeline::SetVector4f(const char* name, const glm::vec4& value, GLuint shader)
 {
     GLint variable = glGetUniformLocation(shader, name);
     glProgramUniform4f(shader, variable, value.x, value.y, value.z, value.w);
 }
-void Shader::SetMatrix4(const char* name, const glm::mat4& matrix, GLuint shader)
+void ShaderPipeline::SetMatrix4(const char* name, const glm::mat4& matrix, GLuint shader)
 {
     GLint variable = glGetUniformLocation(shader, name);
     glProgramUniformMatrix4fv(shader, variable, 1, false, glm::value_ptr(matrix));
 }
 
-
-void Shader::checkCompileErrors(unsigned int object, std::string type)
+void ShaderPipeline::checkCompileErrors(unsigned int object, std::string type)
 {
     int success;
     char infoLog[1024];
@@ -110,4 +103,12 @@ void Shader::checkCompileErrors(unsigned int object, std::string type)
                 << std::endl;
         }
     }
+}
+
+void ShaderPipeline::Bind() {
+    glBindProgramPipeline(shaderProgramPipeline);
+}
+
+void ShaderPipeline::Release() {
+    glBindProgramPipeline(0);
 }

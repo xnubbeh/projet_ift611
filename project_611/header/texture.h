@@ -1,31 +1,48 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+/*
+	Ce fichier est base sur l'engin du TP2 d'IMN401 par Guillaume Gilet
+*/
 
 
+#include <string>
 #include <glad/glad.h>
 
 class Texture
 {
 public:
-    // holds the ID of the texture object, used for all texture operations to reference to this particular texture
-    unsigned int ID;
-    // texture image dimensions
-    unsigned int Width, Height; // width and height of loaded image in pixels
-    // texture Format
-    unsigned int Internal_Format; // format of texture object
-    unsigned int Image_Format; // format of loaded image
-    // texture configuration
-    unsigned int Wrap_S; // wrapping mode on S axis
-    unsigned int Wrap_T; // wrapping mode on T axis
-    unsigned int Filter_Min; // filtering mode if texture pixels < screen pixels
-    unsigned int Filter_Max; // filtering mode if texture pixels > screen pixels
-    // constructor (sets default texture modes)
-    Texture();
-    // generates texture from image data
-    void Generate(unsigned int width, unsigned int height, unsigned char* data);
-    // binds the texture as the current active GL_TEXTURE_2D texture object
-    void Bind() const;
+	Texture(const std::string& filename);
+
+	//Create an empty texture
+	Texture(int _width = 1024, int _height = 1024);
+
+	//Create an empty texture
+	Texture(int _width = 1024, int _height = 1024, GLint format = GL_RGBA8);
+
+	~Texture() = default;
+
+	void createEmptyTexture();
+	void loadToGPU();
+	void makeResident();
+
+	void Bind();
+
+	GLuint getId() {
+		return id;
+	};
+	GLuint64 getHandle()
+	{
+		return handle;
+	};
+
+protected:
+	GLuint id;
+	GLuint64 handle;
+	std::string name;
+	int width, height;
+	GLint format;
+	unsigned char* image;
 };
 
-#endif // !TEXTURE_H
+#endif // TEXTURE_H

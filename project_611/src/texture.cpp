@@ -1,26 +1,69 @@
+/*
+	Ce fichier est base sur l'engin du TP2 d'IMN401 par Guillaume Gilet
+*/
+
 #include "../header/texture.h"
 
-Texture::Texture()
-	: Width(0), Height(0), Internal_Format(GL_RGB), Image_Format(GL_RGB), Wrap_S(GL_REPEAT), Wrap_T(GL_REPEAT), Filter_Min(GL_LINEAR), Filter_Max(GL_LINEAR)
+
+#include <../third_party/stb_image.h>
+
+
+Texture::Texture(const std::string& filename) :
+	name(filename), id(0), handle(0), format(GL_RGBA8), image(NULL)
 {
-	glGenTextures(1, &this->ID);
+	int channels;
+
+
+	image = stbi_load(filename.c_str(), &width, &height, &channels, 4);
+
+	if (image != nullptr)
+		loadToGPU();
+		//TODO
+		// LOG INSTEAD
+		// DO SOME ERROR HANDLING
+
+
+	stbi_image_free(image);
+
+}
+Texture::Texture(int _width, int _height, GLint _format) :
+	width(_width), height(_height), format(_format)
+{
+
+	createEmptyTexture();
+
 }
 
-void Texture::Generate(unsigned int width, unsigned int height, unsigned char* data) {
-    this->Width = width;
-    this->Height = height;
-    // create Texture
-    glBindTexture(GL_TEXTURE_2D, this->ID);
-    glTexImage2D(GL_TEXTURE_2D, 0, this->Internal_Format, width, height, 0, this->Image_Format, GL_UNSIGNED_BYTE, data);
-    // set Texture wrap and filter modes
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->Wrap_S);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->Wrap_T);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->Filter_Min);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->Filter_Max);
-    // unbind texture
-    glBindTexture(GL_TEXTURE_2D, 0);
+void Texture::createEmptyTexture()
+{
+	int numberOfLevel = (int)(1 + floor(log2(std::max(width, height))));
+	glCreateTextures(GL_TEXTURE_2D, 1, &id);
+
+	glTextureStorage2D(id, numberOfLevel, format, width, height);
+
+	glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glGenerateTextureMipmap(id);
+	makeResident();
 }
 
-void Texture::Bind() const {
-    glBindTexture(GL_TEXTURE_2D, this->ID);
+void Texture::loadToGPU()
+{
+	createEmptyTexture();
+
+	glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glGenerateTextureMipmap(id);
+}
+
+void Texture::makeResident()
+{
+	handle = glGetTextureHandleARB(id);
+	glMakeTextureHandleResidentARB(handle);
+
+}
+
+void Texture::Bind() {
+	glBindTexture(GL_TEXTURE_2D, id);
 }
