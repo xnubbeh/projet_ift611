@@ -9,17 +9,23 @@
 
 #include "texture.h"
 #include "shader_pipeline.h"
+#include "frame.h"
 
 class Sprite
 {
 public:
-	Sprite(ShaderPipeline& shader);
+	Sprite(const ShaderPipeline& shader, const Texture& sprite_sheet, const glm::vec2& sprite_sheet_position);
 	~Sprite();
-	void DrawSprite(Texture& texture, glm::vec2 position, glm::vec2 size = glm::vec2(10.0f, 10.0f), float rotate = 0.0f, glm::vec3 color = glm::vec3(1.0f));
+	void Render(Frame* frame_pointer);
+	
 private:
 	ShaderPipeline shader;
 	GLuint quadVAO;
 	void initRenderData();
+
+	glm::vec2 sprite_sheet_pos;
+	Texture sprite_sheet;
+
 };
 
 #endif // !1

@@ -14,10 +14,14 @@ Texture::Texture(const std::string& filename) :
 	int channels;
 
 
-	image = stbi_load(filename.c_str(), &width, &height, &channels, 4);
+	image = stbi_load(filename.c_str(), &sprite_sheet_width, &sprite_sheet_height, &channels, 4);
 
-	if (image != nullptr)
+	if (image != nullptr) {
 		loadToGPU();
+		pixel_height = 1 / sprite_sheet_height;
+		pixel_width = 1 / sprite_sheet_width;
+	}
+		
 		//TODO
 		// LOG INSTEAD
 		// DO SOME ERROR HANDLING
@@ -27,7 +31,7 @@ Texture::Texture(const std::string& filename) :
 
 }
 Texture::Texture(int _width, int _height, GLint _format) :
-	width(_width), height(_height), format(_format)
+	sprite_sheet_width(_width), sprite_sheet_height(_height), format(_format)
 {
 
 	createEmptyTexture();
@@ -36,10 +40,10 @@ Texture::Texture(int _width, int _height, GLint _format) :
 
 void Texture::createEmptyTexture()
 {
-	int numberOfLevel = (int)(1 + floor(log2(std::max(width, height))));
+	int numberOfLevel = (int)(1 + floor(log2(std::max(sprite_sheet_width, sprite_sheet_height))));
 	glCreateTextures(GL_TEXTURE_2D, 1, &id);
 
-	glTextureStorage2D(id, numberOfLevel, format, width, height);
+	glTextureStorage2D(id, numberOfLevel, format, sprite_sheet_width, sprite_sheet_height);
 
 	glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -53,7 +57,7 @@ void Texture::loadToGPU()
 {
 	createEmptyTexture();
 
-	glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glTextureSubImage2D(id, 0, 0, 0, sprite_sheet_width, sprite_sheet_height, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glGenerateTextureMipmap(id);
 }
 

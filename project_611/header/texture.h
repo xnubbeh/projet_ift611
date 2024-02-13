@@ -5,6 +5,8 @@
 	Ce fichier est base sur l'engin du TP2 d'IMN401 par Guillaume Gilet
 */
 
+// TODO
+// Refactor name to sprite sheet
 
 #include <string>
 #include <glad/glad.h>
@@ -36,11 +38,14 @@ public:
 		return handle;
 	};
 
+	int sprite_sheet_width, sprite_sheet_height; //might have to make getter & setter
+	float pixel_width, pixel_height; //might have to make getter & setter
+
 protected:
 	GLuint id;
 	GLuint64 handle;
 	std::string name;
-	int width, height;
+	
 	GLint format;
 	unsigned char* image;
 };

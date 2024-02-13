@@ -1,41 +1,26 @@
 #include "../header/sprite.h"
 
-Sprite::Sprite(ShaderPipeline& shader) {
-	this->shader = shader;
-	this->initRenderData();
+Sprite::Sprite(const ShaderPipeline& shader, const Texture& sprite_sheet, const glm::vec2& sprite_sheet_position) :
+    shader{shader},
+    sprite_sheet{sprite_sheet},
+    sprite_sheet_pos{sprite_sheet_position} 
+{
+
+	initRenderData(); // a reviser
 }
 
 Sprite::~Sprite() {
     glDeleteVertexArrays(1, &this->quadVAO);
 }
 
-void Sprite::DrawSprite(Texture& texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color) {
-    // prepare transformations
-    glm::mat4 model = glm::mat4(1.0f);
-    //model = glm::translate(model, glm::vec3(position, 0.0f));  // first translate (transformations are: scale happens first, then rotation, and then final translation happens; reversed order)
-
-    //model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f)); // move origin of rotation to center of quad
-    //model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f)); // then rotate
-    //model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // move origin back
-
-    //model = glm::scale(model, glm::vec3(size, 1.0f)); // last scale
-
-    //this->shader.SetMatrix4("model", model, shader.vs);
-
-    //// render textured quad
-    //this->shader.SetVector3f("spriteColor", color, shader.vs);
-
-    glActiveTexture(GL_TEXTURE0);
-    texture.Bind();
+void Sprite::Render(Frame* frame_pointer) {
+    shader.Bind();
     glDrawArrays(GL_TRIANGLES, 0, 6);
-
-  //  glBindVertexArray(this->quadVAO);
-
-  //  glBindVertexArray(0);
+    shader.Release();
 }
 
 void Sprite::initRenderData() {
-
+    shader.SetVector2f("caca",sprite_sheet_pos,shader.fragmentShaderProgram); //frag ou vertex
     // 100% integre 
 
     // configure VAO/VBO

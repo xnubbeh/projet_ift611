@@ -2,6 +2,8 @@
 #define GAME_OBJECT_H
 
 #include <string>
+#include "frame.h"
+#include "sprite.h"
 
 class GameObject
 {
@@ -17,6 +19,10 @@ private:
 	// private car les objets DOIVENT avoir un nom
 	GameObject() = default;
 	std::string name;
+
+	Frame* p_frame;
+	Sprite* p_sprite;
+
 
 
 };
