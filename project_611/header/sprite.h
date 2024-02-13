@@ -1,5 +1,5 @@
-#ifndef SPRITE_REDNER_H
-#define SPRITE_RENDER_H
+#ifndef SPRITE_H
+#define SPRITE_H
 
 
 
@@ -10,11 +10,11 @@
 #include "texture.h"
 #include "shader_pipeline.h"
 
-class sprite_render
+class Sprite
 {
 public:
-	sprite_render(ShaderPipeline& shader);
-	~sprite_render();
+	Sprite(ShaderPipeline& shader);
+	~Sprite();
 	void DrawSprite(Texture& texture, glm::vec2 position, glm::vec2 size = glm::vec2(10.0f, 10.0f), float rotate = 0.0f, glm::vec3 color = glm::vec3(1.0f));
 private:
 	ShaderPipeline shader;

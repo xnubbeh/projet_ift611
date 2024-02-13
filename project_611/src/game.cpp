@@ -1,7 +1,7 @@
-//#include "../header/game.h"
+#include "../header/game.h"
 //
 //
-//sprite_render *Renderer;
+//Sprite *Renderer;
 //
 //Game::Game(unsigned int width, unsigned int height) : State(GAME_ACTIVE), Keys(), Width(width), Height(height) {
 //
@@ -21,7 +21,7 @@
 //    glEnable(GL_DEPTH_TEST);
 //    // set render-specific controls
 //    ShaderPipeline rat_shader = resource_manager::GetShader("sprite");
-//    Renderer = new sprite_render(rat_shader);
+//    Renderer = new Sprite(rat_shader);
 //    // load textures
 //    resource_manager::LoadTexture("star.png", true, "star");
 //}

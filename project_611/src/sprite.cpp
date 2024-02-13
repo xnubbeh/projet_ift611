@@ -1,15 +1,15 @@
-#include "../header/sprite_render.h"
+#include "../header/sprite.h"
 
-sprite_render::sprite_render(ShaderPipeline& shader) {
+Sprite::Sprite(ShaderPipeline& shader) {
 	this->shader = shader;
 	this->initRenderData();
 }
 
-sprite_render::~sprite_render() {
+Sprite::~Sprite() {
     glDeleteVertexArrays(1, &this->quadVAO);
 }
 
-void sprite_render::DrawSprite(Texture& texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color) {
+void Sprite::DrawSprite(Texture& texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color) {
     // prepare transformations
     glm::mat4 model = glm::mat4(1.0f);
     //model = glm::translate(model, glm::vec3(position, 0.0f));  // first translate (transformations are: scale happens first, then rotation, and then final translation happens; reversed order)
@@ -34,7 +34,7 @@ void sprite_render::DrawSprite(Texture& texture, glm::vec2 position, glm::vec2 s
   //  glBindVertexArray(0);
 }
 
-void sprite_render::initRenderData() {
+void Sprite::initRenderData() {
 
     // 100% integre 
 

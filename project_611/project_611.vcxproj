@@ -145,7 +145,7 @@
     <ClCompile Include="src\resource_manager.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\shader_pipeline.cpp" />
-    <ClCompile Include="src\sprite_render.cpp" />
+    <ClCompile Include="src\sprite.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="third_party\glad\src\glad.c" />
     <ClCompile Include="third_party\glm\detail\glm.cpp" />
