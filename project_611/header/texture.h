@@ -11,22 +11,16 @@
 #include <string>
 #include <glad/glad.h>
 
+#define TEXTURE_PATH "WowKiller_sheet.png"
+
 class Texture
 {
 public:
 	Texture(const std::string& filename);
 
-	//Create an empty texture
-	Texture(int _width = 1024, int _height = 1024);
-
-	//Create an empty texture
-	Texture(int _width = 1024, int _height = 1024, GLint format = GL_RGBA8);
-
 	~Texture() = default;
 
-	void createEmptyTexture();
 	void loadToGPU();
-	void makeResident();
 
 	void Bind();
 

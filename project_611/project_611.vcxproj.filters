@@ -944,6 +944,12 @@
     <ClInclude Include="header\material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="header\sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="sprite.frag" />

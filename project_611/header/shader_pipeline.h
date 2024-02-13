@@ -6,6 +6,10 @@
 #include <glad/glad.h>
 #include <glm.hpp>
 
+#define VERT_SHADER "sprite.vs"
+#define FRAG_SHADER "sprite.frag"
+#define MAIN_SHADER_NAME "main"
+
 //Stuff that will be used a lot so we need it here for ease of use
 class ShaderPipeline
 {
@@ -32,7 +36,7 @@ public:
 //    string info_text;
 
     // Pipeline
-    GLuint shaderProgramPipeline;
+    GLuint shaderProgramPipeline{0};
     // Vertex shader
     GLuint vertexShaderProgram;
     // Fragment shader

@@ -1,8 +1,12 @@
 #include "../header/scene.h"
+#include "../header/sprite.h"
 
 void Scene::LoadScene() {
 
-	GameObject* etoile = createGameObject("etoile");
+	GameObject* cloppeux = createGameObject("cloppeux");
+	RenderData cloppeuxSprite = { glm::vec2(750,0), glm::vec2(50, 50), glm::ivec2(48, 0), glm::ivec2(16, 16), 0.0 };
+	cloppeux->CreateRenderData(cloppeuxSprite);
+	Sprite::getInstance()->AddSprite(cloppeuxSprite);
 
 
 }

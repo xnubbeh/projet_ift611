@@ -38,6 +38,8 @@ int GameEngine::Init() {
 
     scene->LoadScene();
 
+    Sprite::getInstance()->Init();
+
     return EXIT_SUCCESS;
 }
 
@@ -74,10 +76,15 @@ void GameEngine::Render()
 {
     glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+    // SI JAMAIS ON UTILISE UN DRAW CALL POUR TOUS LES OBJETS C CA QUI FAUT FAIRE
 
-    std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [](const std::pair<std::string, GameObject*>& pair) {
-        pair.second->Render();
-    });
+    Sprite::getInstance()->RenderAll();
+
+    // SI JAMAIS ON UTILISE UN DRAW CALL PAR OBJET, C CA QUI FAUT FAIRE
+    //std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [](const std::pair<std::string, GameObject*>& pair) {
+    //    pair.second->Render();
+    //});
 }
 
 void GameEngine::Animate(const float elapsedTime)

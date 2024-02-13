@@ -1,11 +1,10 @@
 #include "../header/sprite.h"
+#include "../header/camera.h"
 
-Sprite::Sprite(const ShaderPipeline& shader, const Texture& sprite_sheet, const glm::vec2& sprite_sheet_position) :
-    shader{shader},
-    sprite_sheet{sprite_sheet},
-    sprite_sheet_pos{sprite_sheet_position} 
+Sprite::Sprite() :
+    shader{ MAIN_SHADER_NAME },
+    sprite_sheet{TEXTURE_PATH}
 {
-
 	initRenderData(); // a reviser
 }
 
@@ -14,13 +13,12 @@ Sprite::~Sprite() {
 }
 
 void Sprite::Render(Frame* frame_pointer) {
-    shader.Bind();
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    shader.Release();
+    //shader.Bind();
+    //glDrawArrays(GL_TRIANGLES, 0, 6);
+    //shader.Release();
 }
 
 void Sprite::initRenderData() {
-    shader.SetVector2f("caca",sprite_sheet_pos,shader.fragmentShaderProgram); //frag ou vertex
     // 100% integre 
 
     // configure VAO/VBO
@@ -47,4 +45,35 @@ void Sprite::initRenderData() {
     //glVertexArrayAttribBinding(this->quadVAO, 0, 0);
     //glBindVertexArray(this->quadVAO);
 }
+
+void Sprite::RenderAll()
+{
+    // on a un array de *sprites* qu'on veut render
+    // le buffer qu'on passe contient un array de structs
+        // chaque struct contient le data pour render une sprite individuelle
+    
+    // if (it has changed) ??
+    main_shader.SetMatrix4("orthoProjection", Camera::getInstance()->Projection(), main_shader.vertexShaderProgram);
+    glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, sizeof(RenderData) * numSprites, renderData);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 6, numSprites + 1);
+}
+
+
+int Sprite::AddSprite(const RenderData& data) {
+    renderData[numSprites] = data;
+    ++numSprites;
+    return numSprites - 1;
+}
+
+void Sprite::Init() {
+    // Init buffers
+    glGenBuffers(1, &SBO);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, SBO);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(RenderData) * MAX_SPRITES, renderData, GL_DYNAMIC_DRAW);
+    glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, sizeof(RenderData) * numSprites, renderData);
+
+    // Compile the sprite shaders 
+    main_shader.Compile(VERT_SHADER, FRAG_SHADER);
+}
+
 

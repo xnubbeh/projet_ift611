@@ -2,20 +2,27 @@
 
 #include <iostream>
 #include "gtc/type_ptr.hpp"
+#include "../header/utils.h"
 
-ShaderPipeline::ShaderPipeline(std::string name) : name {name} {
-    glCreateProgramPipelines(1, &shaderProgramPipeline);
-}
+ShaderPipeline::ShaderPipeline(std::string name) : name {name} {}
 
 
 void ShaderPipeline::Compile(const char* vertexSource, const char* fragmentSource)
 {
-    GLuint gShader;
+
+    std::string vertexCodeStr = readFile(vertexSource);
+    std::string fragmentCodeStr = readFile(fragmentSource);
+    const GLchar* vertexCode = vertexCodeStr.c_str();
+    const GLchar* fragmentCode = fragmentCodeStr.c_str();
+
+
+    glCreateProgramPipelines(1, &shaderProgramPipeline);
+
     // vertex Shader
-    this->vertexShaderProgram = glCreateShaderProgramv(GL_VERTEX_SHADER, 1, &vertexSource);
+    vertexShaderProgram = glCreateShaderProgramv(GL_VERTEX_SHADER, 1, &vertexCode);
     checkCompileErrors(vertexShaderProgram, "VERTEX");
     // fragment Shader
-    this->fragmentShaderProgram = glCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &fragmentSource);
+    fragmentShaderProgram = glCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &fragmentCode);
     checkCompileErrors(fragmentShaderProgram, "FRAGMENT");
 
     // shader program

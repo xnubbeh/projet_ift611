@@ -15,13 +15,16 @@ public:
 	void Render();
 	void Animate(const float elapsedTime);
 
+	void CreateRenderData(const RenderData&);
+	RenderData& GetRenderData();
+
 private:
 	// private car les objets DOIVENT avoir un nom
 	GameObject() = default;
 	std::string name;
 
 	Frame* p_frame;
-	Sprite* p_sprite;
+	RenderData sprite;
 
 
 

@@ -26,46 +26,23 @@ Texture::Texture(const std::string& filename) :
 		// LOG INSTEAD
 		// DO SOME ERROR HANDLING
 
-
 	stbi_image_free(image);
-
-}
-Texture::Texture(int _width, int _height, GLint _format) :
-	sprite_sheet_width(_width), sprite_sheet_height(_height), format(_format)
-{
-
-	createEmptyTexture();
-
-}
-
-void Texture::createEmptyTexture()
-{
-	int numberOfLevel = (int)(1 + floor(log2(std::max(sprite_sheet_width, sprite_sheet_height))));
-	glCreateTextures(GL_TEXTURE_2D, 1, &id);
-
-	glTextureStorage2D(id, numberOfLevel, format, sprite_sheet_width, sprite_sheet_height);
-
-	glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glGenerateTextureMipmap(id);
-	makeResident();
 }
 
 void Texture::loadToGPU()
 {
-	createEmptyTexture();
+	glGenTextures(1, &id);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, id);
 
-	glTextureSubImage2D(id, 0, 0, 0, sprite_sheet_width, sprite_sheet_height, GL_RGBA, GL_UNSIGNED_BYTE, image);
-	glGenerateTextureMipmap(id);
-}
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-void Texture::makeResident()
-{
-	handle = glGetTextureHandleARB(id);
-	glMakeTextureHandleResidentARB(handle);
 
+	// IMAGE MUST BE MINIMUM 1024x1024
+	glTexImage2D(id, 0, GL_SRGB8_ALPHA8, sprite_sheet_width, sprite_sheet_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 }
 
 void Texture::Bind() {
