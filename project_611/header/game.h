@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include <glfw3.h>
 #include "resource_manager.h"
-#include "sprite_render.h"
+#include "sprite.h"
 
 enum GameState {
 	GAME_ACTIVE,
