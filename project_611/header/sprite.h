@@ -36,18 +36,25 @@ public:
 	void Init();
 	
 private:
-	// sauce fraiche
-	GLuint SBO;
+	void InitBuffers();
+
+	// Buffers
+	GLuint VAO /*VertexArray*/,
+		   VBO /*Base vertex*/,
+		   VBO_POSITION /*Vertex position and size*/,
+		   VBO_SPRITE /*Atlas offset and sprite size*/,
+		   VBO_DEPTH /*z-buffer*/;
+
 	ShaderPipeline main_shader;
-	RenderData renderData[MAX_SPRITES];
+
+	// RenderData arrays
+//	RenderData renderData[MAX_SPRITES];
+	glm::vec4 positionOffset_size [MAX_SPRITES];
+	glm::ivec4 atlasOffset_spriteSize [MAX_SPRITES];
+	float zBuffer[MAX_SPRITES];
+
 	int numSprites;
 	Texture sprite_sheet;
-
-
-	//vieille sauce
-	ShaderPipeline shader;
-	GLuint quadVAO;
-	void initRenderData();
 
 };
 

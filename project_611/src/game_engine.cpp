@@ -31,11 +31,6 @@ int GameEngine::Init() {
         return EXIT_FAILURE;
     }
 
-    // Everything here is a square 
-    LoadGeometry();
-
-    glClearColor(0.5, 0.5, 0.5, 1.0);
-
     scene->LoadScene();
 
     Sprite::getInstance()->Init();
@@ -92,31 +87,4 @@ void GameEngine::Animate(const float elapsedTime)
     std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
         pair.second->Animate(elapsedTime);
     });
-}
-
-void GameEngine::LoadGeometry() {
-    // configure VAO/VBO
-    GLuint VBO;
-    GLuint VAO;
-    float vertices[] = {
-        // pos      // tex
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 0.0f,
-
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f
-    };
-
-    glCreateBuffers(1, &VBO);
-    glNamedBufferData(VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glCreateVertexArrays(1, &VAO);
-    glEnableVertexArrayAttrib(VAO, 0);
-    glVertexArrayAttribFormat(VAO, 0, 4, GL_FLOAT, GL_FALSE, 0);
-    glVertexArrayVertexBuffer(VAO, 0, VBO, 0, sizeof(float) * 4);
-
-    glVertexArrayAttribBinding(VAO, 0, 0);
-    glBindVertexArray(VAO);
 }

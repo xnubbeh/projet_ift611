@@ -43,7 +43,6 @@ public:
 	void MainLoop();
 
 private:
-	void LoadGeometry();
 	GLFWwindow* window;
 	Scene* scene;
 };

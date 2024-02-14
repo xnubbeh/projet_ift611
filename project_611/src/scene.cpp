@@ -9,12 +9,12 @@ void Scene::LoadScene() {
 	Sprite::getInstance()->AddSprite(cloppeuxSprite);
 
 	GameObject* cloppeux2 = createGameObject("cloppeux2");
-	RenderData cloppeuxSprite2 = { glm::vec2(10,0), glm::vec2(50, 50), glm::ivec2(48, 0), glm::ivec2(16, 16), 0.0 };
+	RenderData cloppeuxSprite2 = { glm::vec2(10,0), glm::vec2(50, 50), glm::ivec2(48, 0), glm::ivec2(16, 16), 0.25 };
 	cloppeux2->CreateRenderData(cloppeuxSprite2);
 	Sprite::getInstance()->AddSprite(cloppeuxSprite2);
 
-	GameObject* cloppeux3 = createGameObject("cloppeux2");
-	RenderData cloppeuxSprite3 = { glm::vec2(50,0), glm::vec2(50, 50), glm::ivec2(48, 0), glm::ivec2(16, 16), 0.0 };
+	GameObject* cloppeux3 = createGameObject("cloppeux3");
+	RenderData cloppeuxSprite3 = { glm::vec2(50,150), glm::vec2(50, 50), glm::ivec2(48, 0), glm::ivec2(16, 16), 0.5 };
 	cloppeux3->CreateRenderData(cloppeuxSprite3);
 	Sprite::getInstance()->AddSprite(cloppeuxSprite3);
 }
