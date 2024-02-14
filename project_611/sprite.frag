@@ -1,15 +1,16 @@
 #version 460
+// In
+layout (location = 0) in ivec2 textureCoordsOut;
 
-layout (location = 0) in vec2 textureCoordsOut;
-
+// Out
 layout (location = 0) out vec4 fragColor;
 
-//layout (location = 0) uniform sampler2D textureAtlas;
+// SpriteSheet
+layout (location = 0) uniform sampler2D textureAtlas;
 
 
 void main()
 {
-	//vec4 textureColor = texelFetch(textureAtlas, ivec2(textureCoords), 0);
-	//fragColor = vec4(textureCoordsOut.x);
-	fragColor = vec4(1.0);
+	vec4 textureColor = texelFetch(textureAtlas, textureCoordsOut, 0);
+//	fragColor = vec4(textureCoordsOut.x);
 }

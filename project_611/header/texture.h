@@ -11,7 +11,9 @@
 #include <string>
 #include <glad/glad.h>
 
-#define TEXTURE_PATH "WowKiller_sheet.png"
+//#define TEXTURE_PATH "WowKiller_sheet.png"
+#define TEXTURE_PATH "star.png"
+
 
 class Texture
 {

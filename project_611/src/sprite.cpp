@@ -52,6 +52,7 @@ void Sprite::RenderAll()
     // le buffer qu'on passe contient un array de structs
         // chaque struct contient le data pour render une sprite individuelle
     
+    sprite_sheet.Bind();
     main_shader.SetMatrix4("orthoProjection", Camera::getInstance()->Projection(), main_shader.vertexShaderProgram);
 
    // glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(RenderData) * numSprites, renderData);
