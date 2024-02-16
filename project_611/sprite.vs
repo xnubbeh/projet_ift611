@@ -11,7 +11,7 @@ layout (location = 2) in ivec4 atlasOffset_spriteSize;
 layout (location = 3) in float zBuffer;
 
 // Out
-layout (location = 0) out ivec2 textureCoordsOut;
+out vec2 textureCoordsOut;
 out gl_PerVertex {
      vec4 gl_Position;
 };
@@ -53,7 +53,6 @@ void main()
         ivec2(right, bottom),
     };
 
-    textureCoordsOut = textureCoords[gl_VertexID];
-    gl_Position = orthoProjection * vec4(vertexPos, zBuffer, 1.0);
+   textureCoordsOut = textureCoords[gl_VertexID];
 
 }

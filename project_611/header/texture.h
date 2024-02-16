@@ -10,6 +10,8 @@
 
 #include <string>
 #include <glad/glad.h>
+#include <glfw3.h>
+
 
 //#define TEXTURE_PATH "WowKiller_sheet.png"
 #define TEXTURE_PATH "star.png"

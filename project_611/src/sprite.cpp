@@ -53,6 +53,8 @@ void Sprite::RenderAll()
         // chaque struct contient le data pour render une sprite individuelle
     
     sprite_sheet.Bind();
+    glActiveTexture(GL_TEXTURE0);
+
     main_shader.SetMatrix4("orthoProjection", Camera::getInstance()->Projection(), main_shader.vertexShaderProgram);
 
    // glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(RenderData) * numSprites, renderData);
