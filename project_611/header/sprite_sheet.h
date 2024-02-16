@@ -2,27 +2,20 @@
 #define TEXTURE_H
 
 /*
-	Ce fichier est base sur l'engin du TP2 d'IMN401 par Guillaume Gilet
+	Ce fichier est base sur l'engin du TP2 d'IMN401 par Guillaume Gilet. Beaucoup de modifications ont été apportées.
 */
-
-// TODO
-// Refactor name to sprite sheet
 
 #include <string>
 #include <glad/glad.h>
-#include <glfw3.h>
 
+#define TEXTURE_PATH "WowKiller_sheet.png"
 
-//#define TEXTURE_PATH "WowKiller_sheet.png"
-#define TEXTURE_PATH "star.png"
-
-
-class Texture
+class SpriteSheet
 {
 public:
-	Texture(const std::string& filename);
+	SpriteSheet(const std::string& filename);
 
-	~Texture() = default;
+	~SpriteSheet() = default;
 
 	void loadToGPU();
 

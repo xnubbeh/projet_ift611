@@ -7,7 +7,7 @@ Material::Material(std::string iName) : name { iName } {
 
     // TODO
     // NE PAS LOADER DE TEXTURE ICI 
-    texture = new Texture{"../star.png"};
+    texture = new SpriteSheet{"../star.png"};
 }
 
 

@@ -5,7 +5,7 @@
 #include "shader_pipeline.h"
 #include "game_object.h"
 #include "scene.h"
-#include "texture.h"
+#include "sprite_sheet.h"
 
 class Material {
 public:
@@ -55,7 +55,7 @@ protected:
 
 	// TODO
 	//CECI NE DEVRAIT PAS ETERE ICI, CETTE CLASSE DEVRAIT ETRE UNE INTERFACE
-	Texture* texture;
+	SpriteSheet* texture;
 
 private:
 

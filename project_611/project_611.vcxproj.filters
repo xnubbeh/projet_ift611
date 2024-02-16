@@ -27,7 +27,7 @@
     <ClCompile Include="src\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Frame.cpp">
+    <ClCompile Include="src\frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game.cpp">
@@ -39,9 +39,6 @@
     <ClCompile Include="src\game_object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\resource_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,7 +48,7 @@
     <ClCompile Include="src\sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\texture.cpp">
+    <ClCompile Include="src\sprite_sheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\material.cpp">
@@ -920,9 +917,6 @@
     <ClInclude Include="header\game_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header\resource_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="header\scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -935,7 +929,7 @@
     <ClInclude Include="header\sprite_render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header\texture.h">
+    <ClInclude Include="header\sprite_sheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header\color.h">

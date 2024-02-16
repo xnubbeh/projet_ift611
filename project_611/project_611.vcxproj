@@ -137,16 +137,15 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\Frame.cpp" />
+    <ClCompile Include="src\frame.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\game_engine.cpp" />
     <ClCompile Include="src\game_object.cpp" />
     <ClCompile Include="src\material.cpp" />
-    <ClCompile Include="src\resource_manager.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\shader_pipeline.cpp" />
     <ClCompile Include="src\sprite.cpp" />
-    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\sprite_sheet.cpp" />
     <ClCompile Include="third_party\glad\src\glad.c" />
     <ClCompile Include="third_party\glm\detail\glm.cpp" />
   </ItemGroup>
@@ -158,13 +157,12 @@
     <ClInclude Include="header\game_engine.h" />
     <ClInclude Include="header\game_object.h" />
     <ClInclude Include="header\material.h" />
-    <ClInclude Include="header\resource_manager.h" />
     <ClInclude Include="header\scene.h" />
     <ClInclude Include="header\shader_pipeline.h" />
     <ClInclude Include="header\singleton.h" />
     <ClInclude Include="header\sprite.h" />
     <ClInclude Include="header\sprite_render.h" />
-    <ClInclude Include="header\texture.h" />
+    <ClInclude Include="header\sprite_sheet.h" />
     <ClInclude Include="header\utils.h" />
     <ClInclude Include="third_party\glm\common.hpp" />
     <ClInclude Include="third_party\glm\detail\compute_common.hpp" />

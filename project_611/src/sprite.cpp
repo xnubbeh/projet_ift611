@@ -8,63 +8,23 @@ Sprite::Sprite() :
 {}
 
 Sprite::~Sprite() {
-    // TODO
- //   glDeleteVertexArrays(1, &this->quadVAO);
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteVertexArrays(1, &VBO_POSITION);
+    glDeleteVertexArrays(1, &VBO_SPRITE);
+    glDeleteVertexArrays(1, &VBO_DEPTH);
 }
-
-void Sprite::Render(Frame* frame_pointer) {
-    //shader.Bind();
-    //glDrawArrays(GL_TRIANGLES, 0, 6);
-    //shader.Release();
-}
-
-//void Sprite::initRenderData() {
-    // 100% integre 
-
-    // configure VAO/VBO
-    //GLuint VBO;
-    //float vertices[] = {
-    //    // pos      // tex
-    //    0.0f, 1.0f, 0.0f, 1.0f,
-    //    1.0f, 0.0f, 1.0f, 0.0f,
-    //    0.0f, 0.0f, 0.0f, 0.0f,
-
-    //    0.0f, 1.0f, 0.0f, 1.0f,
-    //    1.0f, 1.0f, 1.0f, 1.0f,
-    //    1.0f, 0.0f, 1.0f, 0.0f
-    //};
-
-    //glCreateBuffers(1, &VBO);
-    //glNamedBufferData(VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    //glCreateVertexArrays(1, &this->quadVAO);
-    //glEnableVertexArrayAttrib(this->quadVAO, 0);
-    //glVertexArrayAttribFormat(this->quadVAO, 0, 4, GL_FLOAT, GL_FALSE, 0);
-    //glVertexArrayVertexBuffer(this->quadVAO, 0, VBO, 0, sizeof(float) * 4);
-
-    //glVertexArrayAttribBinding(this->quadVAO, 0, 0);
-    //glBindVertexArray(this->quadVAO);
-//}
 
 void Sprite::RenderAll()
 {
-    // on a un array de *sprites* qu'on veut render
-    // le buffer qu'on passe contient un array de structs
-        // chaque struct contient le data pour render une sprite individuelle
-    
-    sprite_sheet.Bind();
-    glActiveTexture(GL_TEXTURE0);
+    // this is here in case the camera ever moves
+    main_shader.SetMatrix4("orthoProjection", Camera::getInstance()->Projection(), main_shader.VertexShader());
 
-    main_shader.SetMatrix4("orthoProjection", Camera::getInstance()->Projection(), main_shader.vertexShaderProgram);
+    // update buffers
+    glNamedBufferSubData(VBO_POSITION, 0, sizeof(glm::vec4) * numSprites, positionOffset_size);
+    glNamedBufferSubData(VBO_SPRITE, 0, sizeof(glm::ivec4) * numSprites, atlasOffset_spriteSize);
+    glNamedBufferSubData(VBO_DEPTH, 0, sizeof(float) * numSprites, zBuffer);
 
-   // glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(RenderData) * numSprites, renderData);
-    // MAYBE : THIS SHOULD NOT BE SYSTEMATICALLY CALLED EVERY FRAME
-    {
-        glNamedBufferSubData(VBO_POSITION, 0, sizeof(glm::vec4) * numSprites, positionOffset_size);
-        glNamedBufferSubData(VBO_SPRITE, 0, sizeof(glm::ivec4) * numSprites, atlasOffset_spriteSize);
-        glNamedBufferSubData(VBO_DEPTH, 0, sizeof(float) * numSprites, zBuffer);
-    }
-
+    // one draw call to rule them all
     glDrawArraysInstanced(GL_TRIANGLES, 0, 6, numSprites);
 }
 
@@ -92,7 +52,7 @@ void Sprite::Init() {
 
 void Sprite::InitBuffers() {
 
-    // Must be done or else nothing renders
+    // This must be done or else nothing renders
     glCreateVertexArrays(1, &VAO);
     glEnableVertexArrayAttrib(VAO, 0);
     glBindVertexArray(VAO);
@@ -108,10 +68,10 @@ void Sprite::InitBuffers() {
 
     // Atlas offset and sprite size channel 2 (pass a ivec4 that we will decompose as 2 ivec2)
     glCreateBuffers(1, &VBO_SPRITE);
-    glNamedBufferData(VBO_SPRITE, sizeof(glm::ivec4) * MAX_SPRITES, atlasOffset_spriteSize, GL_DYNAMIC_DRAW);
+    glNamedBufferData(VBO_SPRITE, sizeof(glm::vec4) * MAX_SPRITES, atlasOffset_spriteSize, GL_DYNAMIC_DRAW);
     glEnableVertexArrayAttrib(VAO, 2);
-    glVertexArrayAttribFormat(VAO, 2, 4, GL_INT, GL_FALSE, 0);
-    glVertexArrayVertexBuffer(VAO, 2, VBO_SPRITE, 0, sizeof(glm::ivec4));
+    glVertexArrayAttribFormat(VAO, 2, 4, GL_FLOAT, GL_FALSE, 0);
+    glVertexArrayVertexBuffer(VAO, 2, VBO_SPRITE, 0, sizeof(glm::vec4));
     glVertexArrayAttribBinding(VAO, 2, 2);
     glVertexAttribDivisor(2, 1);
 
@@ -123,7 +83,6 @@ void Sprite::InitBuffers() {
     glVertexArrayVertexBuffer(VAO, 3, VBO_DEPTH, 0, sizeof(float));
     glVertexArrayAttribBinding(VAO, 3, 3);
     glVertexAttribDivisor(3, 1);
-
 }
 
 
