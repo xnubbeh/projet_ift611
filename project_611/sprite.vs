@@ -7,29 +7,29 @@ uniform mat4 orthoProjection;
 
 // In
 layout (location = 1) in vec4 positionOffset_size;
-layout (location = 2) in ivec4 atlasOffset_spriteSize;
+layout (location = 2) in vec4 atlasOffset_spriteSize;
 layout (location = 3) in float zBuffer;
 
 // Out
-layout (location = 0) out vec2 textureCoordsOut;
+out vec2 textureCoordsOut;
 out gl_PerVertex {
      vec4 gl_Position;
 };
 
-
+// # # # # MAIN # # # #
 void main()
 {
     vec2 positionOffset = positionOffset_size.xy;
     vec2 size = positionOffset_size.zw;
-    ivec2 atlasOffset = atlasOffset_spriteSize.xy;
-    ivec2 spriteSize = atlasOffset_spriteSize.zw;
+    vec2 atlasOffset = atlasOffset_spriteSize.xy;
+    vec2 spriteSize = atlasOffset_spriteSize.zw;
 
-    int left = atlasOffset.x;
-    int top = atlasOffset.y;
-    int right = atlasOffset.x + spriteSize.x;
-    int bottom = atlasOffset.y + spriteSize.y;
+    float left = atlasOffset.x;
+    float bottom = atlasOffset.y;
+    float right = atlasOffset.x + spriteSize.x;
+    float top = atlasOffset.y + spriteSize.y;
 
-    // position
+    // POSITION CALCULATION
     vec2 vertices[6] =
     {
         positionOffset,                              // Top Left
@@ -40,11 +40,10 @@ void main()
         positionOffset + size,                       // Bottom Right
     };
 
-    vec2 vertexPos = vertices[gl_VertexID]; // / vec2(screenWidth, screenHeight);
+    vec2 vertexPos = vertices[gl_VertexID];
     gl_Position = orthoProjection * vec4(vertexPos, zBuffer, 1.0);
-  // gl_Position = vec4(vertexPos, zBuffer, 1.0);
 
-    // texcoord
+    // TEXCOORD CALCULATION
     vec2 textureCoords[6] = 
     {
         vec2(left, top),
@@ -55,15 +54,6 @@ void main()
         vec2(right, bottom),
     };
 
-
-
-    // ################ THIS IS USEFUL #########
-   // textureCoordsOut = textureCoords[gl_VertexID];
-    // ################ THIS IS USEFUL ---- END #########
-
-
-
-    // ################ THIS IS FOR DEBUGGING #########
-    textureCoordsOut = vec2(gl_VertexID);
+   textureCoordsOut = textureCoords[gl_VertexID];
 
 }

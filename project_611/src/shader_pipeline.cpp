@@ -9,12 +9,10 @@ ShaderPipeline::ShaderPipeline(std::string name) : name {name} {}
 
 void ShaderPipeline::Compile(const char* vertexSource, const char* fragmentSource)
 {
-
     std::string vertexCodeStr = readFile(vertexSource);
     std::string fragmentCodeStr = readFile(fragmentSource);
     const GLchar* vertexCode = vertexCodeStr.c_str();
     const GLchar* fragmentCode = fragmentCodeStr.c_str();
-
 
     glCreateProgramPipelines(1, &shaderProgramPipeline);
 
@@ -85,7 +83,7 @@ void ShaderPipeline::SetMatrix4(const char* name, const glm::mat4& matrix, GLuin
 }
 
 void ShaderPipeline::checkCompileErrors(unsigned int object, std::string type)
-{
+{// TODO : LOG INSTEAD OF COUT
     int success;
     char infoLog[1024];
     if (type != "PROGRAM")

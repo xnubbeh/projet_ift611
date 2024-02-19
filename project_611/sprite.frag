@@ -1,15 +1,17 @@
 #version 460
+// In
+in vec2 textureCoordsOut;
 
-layout (location = 0) in vec2 textureCoordsOut;
+out vec4 fragColor;
 
-layout (location = 0) out vec4 fragColor;
-
-//layout (location = 0) uniform sampler2D textureAtlas;
-
+layout (location = 0) uniform sampler2D textureAtlas;
 
 void main()
 {
-	//vec4 textureColor = texelFetch(textureAtlas, ivec2(textureCoords), 0);
-	//fragColor = vec4(textureCoordsOut.x);
-	fragColor = vec4(1.0);
+	// texelFetch requires a vector of ints. This is why we cast here
+	int texCoordX = int (textureCoordsOut.x);
+	int texCoordY = int (textureCoordsOut.y);
+
+	vec4 textureColor = texelFetch(textureAtlas, ivec2(texCoordX, texCoordY), 0);
+	fragColor = textureColor;
 }

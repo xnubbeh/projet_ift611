@@ -4,17 +4,17 @@
 void Scene::LoadScene() {
 
 	GameObject* cloppeux = createGameObject("cloppeux");
-	RenderData cloppeuxSprite = { glm::vec2(750,0), glm::vec2(50, 50), glm::ivec2(48, 0), glm::ivec2(16, 16), 0.0 };
+	RenderData cloppeuxSprite = { glm::vec2(400,350), glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(16, 16), 0.0 };
 	cloppeux->CreateRenderData(cloppeuxSprite);
 	Sprite::getInstance()->AddSprite(cloppeuxSprite);
 
 	GameObject* cloppeux2 = createGameObject("cloppeux2");
-	RenderData cloppeuxSprite2 = { glm::vec2(10,0), glm::vec2(50, 50), glm::ivec2(48, 0), glm::ivec2(16, 16), 0.25 };
+	RenderData cloppeuxSprite2 = { glm::vec2(10,0), glm::vec2(50, 50), glm::vec2(16, 0), glm::vec2(16, 16), 0.25 };
 	cloppeux2->CreateRenderData(cloppeuxSprite2);
 	Sprite::getInstance()->AddSprite(cloppeuxSprite2);
 
 	GameObject* cloppeux3 = createGameObject("cloppeux3");
-	RenderData cloppeuxSprite3 = { glm::vec2(50,150), glm::vec2(50, 50), glm::ivec2(48, 0), glm::ivec2(16, 16), 0.5 };
+	RenderData cloppeuxSprite3 = { glm::vec2(50,150), glm::vec2(50, 50), glm::vec2(32, 0), glm::vec2(16, 16), 0.75 };
 	cloppeux3->CreateRenderData(cloppeuxSprite3);
 	Sprite::getInstance()->AddSprite(cloppeuxSprite3);
 }

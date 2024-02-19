@@ -1,36 +1,31 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-
-
 #include <glad/glad.h>
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
 
-#include "texture.h"
+#include "sprite_sheet.h"
 #include "shader_pipeline.h"
-#include "frame.h"
 #include "singleton.h"
 
 #define MAX_SPRITES 1000
 
 struct RenderData {
-	glm::vec2 pos;  // Top left of the sprite
-	glm::vec2 size; // vec2(width, height);
-	glm::ivec2 atlasOffset;
-	glm::ivec2 spriteSize; // vec2(numPix_width, numPix_height);
+	glm::vec2 pos;  // bottom left position of the sprite
+	glm::vec2 size; // (width, height)
+	glm::vec2 atlasOffset; // top left position of the sprite in the atlas, expressed in texels
+	glm::vec2 spriteSize; // (spriteWidth, spriteHeight), expressed in texels
 	float z;
 };
 
 class Sprite : public Singleton<Sprite> {
 	friend class Singleton<Sprite>;
 public:
-	// vieille sauce
+
 	Sprite();
 	~Sprite();
-	void Render(Frame* frame_pointer);
 
-	// sauce fraiche
 	void RenderAll();
 	int AddSprite(const RenderData& data); // retourne l'indice de ce sprite dans renderData[]
 	void Init();
@@ -40,21 +35,28 @@ private:
 
 	// Buffers
 	GLuint VAO /*VertexArray*/,
-		   VBO /*Base vertex*/,
 		   VBO_POSITION /*Vertex position and size*/,
 		   VBO_SPRITE /*Atlas offset and sprite size*/,
 		   VBO_DEPTH /*z-buffer*/;
 
 	ShaderPipeline main_shader;
 
-	// RenderData arrays
-//	RenderData renderData[MAX_SPRITES];
-	glm::vec4 positionOffset_size [MAX_SPRITES];
-	glm::ivec4 atlasOffset_spriteSize [MAX_SPRITES];
-	float zBuffer[MAX_SPRITES];
+	// # # # # RENDER DATA SECTION # # # #
+	// Position and size of the object to draw
+	//   positionOffset_size.xy = position, positionOffset_size.zw = size
+	glm::vec4 positionOffset_size[MAX_SPRITES];
+
+	// Atlas offset and the size of the sprite to draw
+	//   atlasOffset_spriteSize.xy = atlas offset, atlasOffset_spriteSize.zw = sprite size
+	glm::vec4 atlasOffset_spriteSize [MAX_SPRITES];
+
+	// zBuffer
+	float zBuffer[MAX_SPRITES];							
 
 	int numSprites;
-	Texture sprite_sheet;
+
+	// Currently we only have one sprite_sheet but this could become an array
+	SpriteSheet sprite_sheet;
 
 };
 
