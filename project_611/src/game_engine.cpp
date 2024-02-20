@@ -23,7 +23,6 @@ int GameEngine::Init() {
     window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "game pre-alpha v0.01", NULL, NULL);
     glfwMakeContextCurrent(window);
 
-    scene = Scene::getInstance();
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize OpenGL context" << std::endl;
@@ -31,9 +30,13 @@ int GameEngine::Init() {
         return EXIT_FAILURE;
     }
 
+    scene = Scene::getInstance();
     scene->LoadScene();
 
     Sprite::getInstance()->Init();
+
+    // TODO : THIS IS A TEST PLEASE REMOVE ME
+    glfwSwapInterval(0);
 
     return EXIT_SUCCESS;
 }

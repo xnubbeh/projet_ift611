@@ -1,4 +1,4 @@
-#include "../header/game.h"
+//#include "../header/game.h"
 //
 //
 //Sprite *Renderer;
