@@ -2,12 +2,12 @@
 #ifndef GAME_ENGINE_H
 #define GAME_ENGINE_H
 
-//#include <glad/glad.h>
-//#include <glfw3.h>
+#include <glad/glad.h>
+#include <glfw3.h>
 #include <iostream>
 
 #include "game.h"
-#include "resource_manager.h"
+//#include "resource_manager.h"
 #include "scene.h"
 
 // The Width of the screen

@@ -2,10 +2,10 @@
 	Ce fichier est base sur l'engin du TP2 d'IMN401 par Guillaume Gilet. Plusieurs modifications ont été apportées
 */
 
+#define STB_IMAGE_IMPLEMENTATION
 #include <../third_party/stb_image.h>
 
 #include "../header/sprite_sheet.h"
-
 
 SpriteSheet::SpriteSheet(const std::string& filename) :
 	name(filename), id(0), handle(0), format(GL_RGBA8), image(NULL)
@@ -13,12 +13,13 @@ SpriteSheet::SpriteSheet(const std::string& filename) :
 	int channels;
 
 	image = stbi_load(filename.c_str(), &sprite_sheet_width, &sprite_sheet_height, &channels, 4);
-
+	
 	if (image == nullptr) {
 		// TODO
 		// LOG INSTEAD
 		// DO SOME ERROR HANDLING
 	}
+
 	loadToGPU();
 	pixel_height = 1 / sprite_sheet_height;
 	pixel_width = 1 / sprite_sheet_width;

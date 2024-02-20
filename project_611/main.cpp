@@ -2,7 +2,6 @@
 //
 
 
-#define STB_IMAGE_IMPLEMENTATION
 #include "header/game_engine.h"
 
 int main()
