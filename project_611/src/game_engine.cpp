@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <chrono>
+#include <thread>
 
 #include "../header/game_engine.h"
 
@@ -46,24 +47,22 @@ void GameEngine::MainLoop()
     std::chrono::time_point<std::chrono::high_resolution_clock> previous_time, current_time;
     current_time = std::chrono::high_resolution_clock::now();
 
-    while (!glfwWindowShouldClose(window)) {
-        // Calculate time
-        previous_time = current_time;
-        current_time = std::chrono::high_resolution_clock::now();
-        auto elapsed_Time = current_time - previous_time;
-        float elapsed_milli = std::chrono::duration_cast<std::chrono::duration<float, std::milli>>(elapsed_Time).count();
+    // just to initialize the previousTimestamp
 
-        ProcessInput(window);
-        // Un thread pour lire les inputs pi updater l'etat du modele
-        glfwPollEvents();
-        
-        
+    while (!glfwWindowShouldClose(window)) {
+
+        auto currentTime = std::chrono::system_clock::now();
+
         Render();
 
-        Animate (elapsed_milli); //NOT SURE THIS BELONGS HERE
-        // Un thread pour display le modele aka render
+        Animate();
 
-        // une place ou on met toute les objets de la scenes
+        long int timeDifference = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - std::chrono::system_clock::now()).count();
+
+        if (timeDifference < 16) { // this is so that the game polls inputs at approx 60fps
+            std::this_thread::sleep_for(std::chrono::milliseconds(16 - timeDifference));
+        }
+
 
         glfwSwapBuffers(window);
         // Un thread pour la journalisation aka logging
@@ -76,22 +75,19 @@ void GameEngine::Render()
 {
     glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-    // SI JAMAIS ON UTILISE UN DRAW CALL POUR TOUS LES OBJETS C CA QUI FAUT FAIRE
 
     Sprite::getInstance()->RenderAll();
-
-    // SI JAMAIS ON UTILISE UN DRAW CALL PAR OBJET, C CA QUI FAUT FAIRE
-    //std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [](const std::pair<std::string, GameObject*>& pair) {
-    //    pair.second->Render();
-    //});
 }
 
-void GameEngine::Animate(const float elapsedTime)
+void GameEngine::Animate()
 {
-    std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
-        pair.second->Animate(elapsedTime);
-    });
+    ProcessInput(window);
+    glfwPollEvents();
+
+    // THE CODE BELOW MIGHT BE DEADCODE TODO
+    //std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
+    //    pair.second->Animate(elapsedTime);
+    //    });
 }
 
 void GameEngine::ProcessInput(GLFWwindow *window) {
@@ -138,3 +134,6 @@ void GameEngine::ProcessInput(GLFWwindow *window) {
         }
     }
 }
+
+
+

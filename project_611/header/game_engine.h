@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 #include <glfw3.h>
 #include <iostream>
+#include <chrono>
 
 #include "game.h"
 //#include "resource_manager.h"
@@ -38,7 +39,7 @@ public:
 	void ProcessInput(GLFWwindow* window);
 	void Update(float);
 	void Render();
-	void Animate(const float elapsedTime);
+	void Animate();
 
 
 	void MainLoop();
