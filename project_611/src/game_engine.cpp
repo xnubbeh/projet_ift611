@@ -57,6 +57,7 @@ void GameEngine::MainLoop()
         // Un thread pour lire les inputs pi updater l'etat du modele
         glfwPollEvents();
         
+        
         Render();
 
         Animate (elapsed_milli); //NOT SURE THIS BELONGS HERE
@@ -98,22 +99,42 @@ void GameEngine::ProcessInput(GLFWwindow *window) {
     glm::vec2 playerPos = scene->getPlayerPos();
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         //get sprite position and move it +y
-        scene->movePlayerPos(glm::vec2(0,1));
-        std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
+        if (playerPos.y < SCREEN_HEIGHT && playerPos.y > 0){
+            scene->movePlayerPos(glm::vec2(0, 1));
+            std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
+        }
+        else {
+            std::cout << "bravo champion t'es sortie de l'ecran" << std::endl;
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         //get sprite position and move it -y
-        scene->movePlayerPos(glm::vec2(0,-1));
-        std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
+        if (playerPos.y < SCREEN_HEIGHT && playerPos.y > 0) {
+            scene->movePlayerPos(glm::vec2(0, -1));
+            std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
+        }
+        else {
+            std::cout << "bravo champion t'es sortie de l'ecran" << std::endl;
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
         //get sprite position and move it -x
-        scene->movePlayerPos(glm::vec2(-1,0));
-        std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
+        if (playerPos.x < SCREEN_WIDTH && playerPos.x > 0) {
+            scene->movePlayerPos(glm::vec2(-1, 0));
+            std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
+        }
+        else {
+            std::cout << "bravo champion t'es sortie de l'ecran" << std::endl;
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
         //get sprite position and move it +x
-        scene->movePlayerPos(glm::vec2(1,0));
-        std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
+        if (playerPos.x < SCREEN_WIDTH && playerPos.x > 0) {
+            scene->movePlayerPos(glm::vec2(1, 0));
+            std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
+        }
+        else {
+            std::cout << "bravo champion t'es sortie de l'ecran" << std::endl;
+        }
     }
 }

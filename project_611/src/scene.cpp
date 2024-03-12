@@ -3,11 +3,11 @@
 
 void Scene::LoadScene() {
 
-	GameObject* cloppeux = createPlayerGameObject("player");
-	RenderData cloppeuxSprite = { glm::vec2(400,350), glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(16, 16), 0.0 };
-	cloppeux->CreateRenderData(cloppeuxSprite);
-	Sprite::getInstance()->AddSprite(cloppeuxSprite);
-	Scene::setPlayerPos(glm::vec2(400, 350));
+	createPlayerGameObject("player",glm::vec2(300,300));
+	//RenderData playerSprite = { glm::vec2(400,350), glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(16, 16), 0.0 };
+	playerObject->CreateRenderData(playerSprite);
+	//Sprite::getInstance()->AddSprite(playerSprite);
+	//Scene::setPlayerPos(glm::vec2(400, 350));
 
 	GameObject* cloppeux2 = createGameObject("cloppeux2");
 	RenderData cloppeuxSprite2 = { glm::vec2(10,0), glm::vec2(50, 50), glm::vec2(16, 0), glm::vec2(16, 16), 0.25 };
@@ -50,7 +50,7 @@ GameObject* Scene::createGameObject(const std::string& name)
 	return gameObject;
 }
 
-GameObject* Scene::createPlayerGameObject(const std::string& name)
+void Scene::createPlayerGameObject(const std::string& name, glm::vec2 playerPos)
 {
 	GameObject* createPlayerGameObject = getGameObject(name);
 
@@ -60,7 +60,10 @@ GameObject* Scene::createPlayerGameObject(const std::string& name)
 		gameObjects.insert(std::pair<std::string, GameObject*>(name, createPlayerGameObject));
 	}
 
-	return createPlayerGameObject;
+	playerObject = createPlayerGameObject;
+	RenderData playerSprite = { playerPos, glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(16, 16), 0.0 };
+	Sprite::getInstance()->AddSprite(playerSprite);
+	Scene::setPlayerPos(playerPos);
 }
 
 glm::vec2 Scene::getPlayerPos() {
@@ -70,9 +73,8 @@ glm::vec2 Scene::getPlayerPos() {
 void Scene::movePlayerPos(glm::vec2 direction) {
 	playerPos += direction;
 	GameObject* player = getGameObject("player");
-	RenderData playerSprite = { playerPos, glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(16, 16), 0.0 };
-	player->CreateRenderData(playerSprite);
-	Sprite::getInstance()->AddSprite(playerSprite);
+	//player->CreateRenderData(playerSprite);
+	//Sprite::getInstance()->RenderAll();
 	Scene::setPlayerPos(playerPos);
 }
 

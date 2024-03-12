@@ -21,7 +21,10 @@ public:
 	std::map<std::string, GameObject*>& getAllGameObjects();
 	void LoadScene();
 
-	GameObject* createPlayerGameObject(const std::string& name);
+	void createPlayerGameObject(const std::string& name, glm::vec2 pos);
+	GameObject* playerObject;
+	RenderData playerSprite;
+
 	glm::vec2 getPlayerPos(); //ishh
 	void setPlayerPos(glm::vec2);
 	void movePlayerPos(glm::vec2); 
