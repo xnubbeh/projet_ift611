@@ -21,11 +21,19 @@ public:
 	std::map<std::string, GameObject*>& getAllGameObjects();
 	void LoadScene();
 
+	GameObject* createPlayerGameObject(const std::string& name);
+	glm::vec2 getPlayerPos(); //ishh
+	void setPlayerPos(glm::vec2); 
 
+	
 
 private:
 	// la racine de la scene
 	GameObject* root;
+
+	// le playerGameObject
+	glm::vec2 playerPos;
+
 	// tous les autres gameObjects
 	std::map<std::string, GameObject*> gameObjects;
 

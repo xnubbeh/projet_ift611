@@ -53,6 +53,7 @@ void GameEngine::MainLoop()
         auto elapsed_Time = current_time - previous_time;
         float elapsed_milli = std::chrono::duration_cast<std::chrono::duration<float, std::milli>>(elapsed_Time).count();
 
+        ProcessInput(window);
         // Un thread pour lire les inputs pi updater l'etat du modele
         glfwPollEvents();
         
@@ -90,4 +91,26 @@ void GameEngine::Animate(const float elapsedTime)
     std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
         pair.second->Animate(elapsedTime);
     });
+}
+
+void GameEngine::ProcessInput(GLFWwindow *window) {
+    glm::vec2 playerPos = scene->getPlayerPos();
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        //get sprite position and move it +y
+        scene->setPlayerPos(glm::vec2(0,10));
+
+        std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
+    }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        //get sprite position and move it -y
+        std::cout << "S" << std::endl;
+    }
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        //get sprite position and move it -x
+        std::cout << "A" << std::endl;
+    }
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        //get sprite position and move it +x
+        std::cout << "D" << std::endl;
+    }
 }
