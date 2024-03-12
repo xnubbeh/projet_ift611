@@ -38,6 +38,7 @@ void SpriteSheet::loadToGPU()
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB8_ALPHA8, sprite_sheet_width, sprite_sheet_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glActiveTexture(GL_TEXTURE0);
+	glEnable(GL_FRAMEBUFFER_SRGB);
 }
 
 void SpriteSheet::Bind() {
