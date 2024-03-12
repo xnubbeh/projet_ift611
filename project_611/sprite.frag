@@ -13,5 +13,9 @@ void main()
 	int texCoordY = int (textureCoordsOut.y);
 
 	vec4 textureColor = texelFetch(textureAtlas, ivec2(texCoordX, texCoordY), 0);
+	if(textureColor.a == 0.0)
+	{
+		discard;
+	}
 	fragColor = textureColor;
 }

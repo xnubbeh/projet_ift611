@@ -28,3 +28,9 @@ void GameObject::translate(const glm::vec2& translation)
 		Sprite::getInstance()->translateSpriteAt(spriteIndex, translation);
 	}
 }
+
+void GameObject::changeSpriteFrame(const glm::vec2& newSpriteAtlasPosition) {
+	if (spriteIndex != NO_SPRITE) {
+		Sprite::getInstance()->changeSpriteModelAt(spriteIndex, newSpriteAtlasPosition);
+	}
+}
