@@ -4,10 +4,6 @@
 void Scene::LoadScene() {
 
 	createPlayerGameObject("player",glm::vec2(300,300));
-	//RenderData playerSprite = { glm::vec2(400,350), glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(16, 16), 0.0 };
-	playerObject->CreateRenderData(playerSprite);
-	//Sprite::getInstance()->AddSprite(playerSprite);
-	//Scene::setPlayerPos(glm::vec2(400, 350));
 
 	GameObject* cloppeux2 = createGameObject("cloppeux2");
 	RenderData cloppeuxSprite2 = { glm::vec2(10,0), glm::vec2(50, 50), glm::vec2(16, 0), glm::vec2(16, 16), 0.25 };
@@ -62,7 +58,8 @@ void Scene::createPlayerGameObject(const std::string& name, glm::vec2 playerPos)
 
 	playerObject = createPlayerGameObject;
 	RenderData playerSprite = { playerPos, glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(16, 16), 0.0 };
-	Sprite::getInstance()->AddSprite(playerSprite);
+	playerObject->CreateRenderData(playerSprite);
+	//Sprite::getInstance()->AddSprite(playerSprite);
 	Scene::setPlayerPos(playerPos);
 }
 
@@ -75,6 +72,7 @@ void Scene::movePlayerPos(glm::vec2 direction) {
 	GameObject* player = getGameObject("player");
 	//player->CreateRenderData(playerSprite);
 	//Sprite::getInstance()->RenderAll();
+	player->translate(direction);
 	Scene::setPlayerPos(playerPos);
 }
 
