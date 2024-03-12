@@ -20,6 +20,7 @@ public:
 	void CreateRenderData(const RenderData&);
 	RenderData& GetRenderData();
 	void translate(const glm::vec2& translation);
+	void changeSpriteFrame(const glm::vec2& newSpriteAtlasPosition);
 
 private:
 	// private car les objets DOIVENT avoir un nom
