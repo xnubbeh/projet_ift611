@@ -101,6 +101,7 @@ void GameEngine::ProcessInput(GLFWwindow *window) {
         //get sprite position and move it +y
         if (playerPos.y < SCREEN_HEIGHT && playerPos.y > 0){
             scene->movePlayerPos(glm::vec2(0, 1));
+            scene->playerObject->changeSpriteFrame(glm::vec2(16, 0));
             std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
         }
         else {
@@ -111,6 +112,7 @@ void GameEngine::ProcessInput(GLFWwindow *window) {
         //get sprite position and move it -y
         if (playerPos.y < SCREEN_HEIGHT && playerPos.y > 0) {
             scene->movePlayerPos(glm::vec2(0, -1));
+            scene->playerObject->changeSpriteFrame(glm::vec2(32, 0));
             std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
         }
         else {
