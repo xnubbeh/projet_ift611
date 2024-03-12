@@ -39,6 +39,7 @@ int Sprite::AddSprite(const RenderData& data) {
     return numSprites - 1;
 }
 
+
 void Sprite::Init() {
 
     InitBuffers();

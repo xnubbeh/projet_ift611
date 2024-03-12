@@ -3,7 +3,7 @@
 
 void Scene::LoadScene() {
 
-	GameObject* cloppeux = createPlayerGameObject("cloppeux");
+	GameObject* cloppeux = createPlayerGameObject("player");
 	RenderData cloppeuxSprite = { glm::vec2(400,350), glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(16, 16), 0.0 };
 	cloppeux->CreateRenderData(cloppeuxSprite);
 	Sprite::getInstance()->AddSprite(cloppeuxSprite);
@@ -18,8 +18,6 @@ void Scene::LoadScene() {
 	RenderData cloppeuxSprite3 = { glm::vec2(50,150), glm::vec2(50, 50), glm::vec2(32, 0), glm::vec2(16, 16), 0.75 };
 	cloppeux3->CreateRenderData(cloppeuxSprite3);
 	Sprite::getInstance()->AddSprite(cloppeuxSprite3);
-
-
 
 }
 
@@ -69,8 +67,17 @@ glm::vec2 Scene::getPlayerPos() {
 	return playerPos;
 }
 
-void Scene::setPlayerPos(glm::vec2 direction) {
+void Scene::movePlayerPos(glm::vec2 direction) {
 	playerPos += direction;
+	GameObject* player = getGameObject("player");
+	RenderData playerSprite = { playerPos, glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(16, 16), 0.0 };
+	player->CreateRenderData(playerSprite);
+	Sprite::getInstance()->AddSprite(playerSprite);
+	Scene::setPlayerPos(playerPos);
+}
+
+void Scene::setPlayerPos(glm::vec2 pos) {
+	playerPos = pos;
 }
 
 std::map<std::string, GameObject*>& Scene::getAllGameObjects()

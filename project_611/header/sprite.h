@@ -29,6 +29,7 @@ public:
 	void RenderAll();
 	int AddSprite(const RenderData& data); // retourne l'indice de ce sprite dans renderData[]
 	void Init();
+
 	
 private:
 	void InitBuffers();

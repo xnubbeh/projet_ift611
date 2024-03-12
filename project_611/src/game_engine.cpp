@@ -94,23 +94,26 @@ void GameEngine::Animate(const float elapsedTime)
 }
 
 void GameEngine::ProcessInput(GLFWwindow *window) {
+    //maybe add a delay since this updates REALLY fast
     glm::vec2 playerPos = scene->getPlayerPos();
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         //get sprite position and move it +y
-        scene->setPlayerPos(glm::vec2(0,10));
-
+        scene->movePlayerPos(glm::vec2(0,1));
         std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         //get sprite position and move it -y
-        std::cout << "S" << std::endl;
+        scene->movePlayerPos(glm::vec2(0,-1));
+        std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
         //get sprite position and move it -x
-        std::cout << "A" << std::endl;
+        scene->movePlayerPos(glm::vec2(-1,0));
+        std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
         //get sprite position and move it +x
-        std::cout << "D" << std::endl;
+        scene->movePlayerPos(glm::vec2(1,0));
+        std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
     }
 }

@@ -23,7 +23,8 @@ public:
 
 	GameObject* createPlayerGameObject(const std::string& name);
 	glm::vec2 getPlayerPos(); //ishh
-	void setPlayerPos(glm::vec2); 
+	void setPlayerPos(glm::vec2);
+	void movePlayerPos(glm::vec2); 
 
 	
 
