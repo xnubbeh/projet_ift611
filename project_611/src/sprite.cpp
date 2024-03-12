@@ -39,6 +39,15 @@ int Sprite::AddSprite(const RenderData& data) {
     return numSprites - 1;
 }
 
+
+void Sprite::translateSpriteAt(int index, const glm::vec2& translation) {
+    positionOffset_size[index] += glm::vec4(translation, 0.0, 0.0);
+}
+
+void Sprite::changeSpriteModelAt(int index, const glm::vec2& newSpriteAtlasPosition) {
+    atlasOffset_spriteSize[index] = glm::vec4(newSpriteAtlasPosition, atlasOffset_spriteSize[index].z, atlasOffset_spriteSize[index].w);
+}
+
 void Sprite::Init() {
 
     InitBuffers();
