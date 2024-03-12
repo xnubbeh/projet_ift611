@@ -39,6 +39,7 @@ int Sprite::AddSprite(const RenderData& data) {
     return numSprites - 1;
 }
 
+
 void Sprite::translateSpriteAt(int index, const glm::vec2& translation) {
     positionOffset_size[index] += glm::vec4(translation, 0.0, 0.0);
 }

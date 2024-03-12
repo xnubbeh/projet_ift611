@@ -34,7 +34,8 @@ public:
 
 	int Init();
 
-	void ProcessInput(float);
+	//void ProcessInput(float); GLFW3 a des methodes pour handle les inputs
+	void ProcessInput(GLFWwindow* window);
 	void Update(float);
 	void Render();
 	void Animate(const float elapsedTime);
