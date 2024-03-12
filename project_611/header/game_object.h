@@ -5,6 +5,8 @@
 #include "frame.h"
 #include "sprite.h"
 
+#define NO_SPRITE -1
+
 class GameObject
 {
 
@@ -17,6 +19,7 @@ public:
 
 	void CreateRenderData(const RenderData&);
 	RenderData& GetRenderData();
+	void translate(const glm::vec2& translation);
 
 private:
 	// private car les objets DOIVENT avoir un nom
@@ -25,6 +28,7 @@ private:
 
 	Frame* p_frame;
 	RenderData sprite;
+	int spriteIndex;
 
 
 
