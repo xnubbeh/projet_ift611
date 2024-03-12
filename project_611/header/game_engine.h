@@ -29,18 +29,15 @@ public:
 	GameState State;
 	bool Keys[1024];
 	unsigned int Width, Height;
-	GameEngine();
+	GameEngine() = default;
 	GameEngine(unsigned int, unsigned int);
-	~GameEngine();
+	~GameEngine() = default;
 
 	int Init();
 
-	//void ProcessInput(float); GLFW3 a des methodes pour handle les inputs
-	void ProcessInput(GLFWwindow* window);
 	void Update(float);
 	void Render();
-	void Animate();
-
+	void Animate(const float elapsedTime);
 
 	void MainLoop();
 

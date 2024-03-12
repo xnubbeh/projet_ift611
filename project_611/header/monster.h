@@ -3,7 +3,7 @@
 
 #include "game_object.h"
 
-class Monster : GameObject
+class Monster : public GameObject
 {
 
 public:

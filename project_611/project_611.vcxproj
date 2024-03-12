@@ -137,11 +137,15 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\environment_object.cpp" />
     <ClCompile Include="src\frame.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\game_engine.cpp" />
     <ClCompile Include="src\game_object.cpp" />
+    <ClCompile Include="src\input_manager.cpp" />
     <ClCompile Include="src\material.cpp" />
+    <ClCompile Include="src\monster.cpp" />
+    <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\shader_pipeline.cpp" />
     <ClCompile Include="src\sprite.cpp" />
@@ -152,15 +156,20 @@
   <ItemGroup>
     <ClInclude Include="header\camera.h" />
     <ClInclude Include="header\color.h" />
+    <ClInclude Include="header\environment_object.h" />
     <ClInclude Include="header\frame.h" />
     <ClInclude Include="header\game.h" />
     <ClInclude Include="header\game_engine.h" />
     <ClInclude Include="header\game_object.h" />
+    <ClInclude Include="header\input_manager.h" />
     <ClInclude Include="header\material.h" />
+    <ClInclude Include="header\monster.h" />
+    <ClInclude Include="header\player.h" />
     <ClInclude Include="header\scene.h" />
     <ClInclude Include="header\shader_pipeline.h" />
     <ClInclude Include="header\singleton.h" />
     <ClInclude Include="header\sprite.h" />
+    <ClInclude Include="header\sprite_index.h" />
     <ClInclude Include="header\sprite_render.h" />
     <ClInclude Include="header\sprite_sheet.h" />
     <ClInclude Include="header\utils.h" />

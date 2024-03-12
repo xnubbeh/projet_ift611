@@ -3,7 +3,7 @@
 
 #include "game_object.h"
 
-class EnvironmentObject : GameObject
+class EnvironmentObject : public GameObject
 {
 
 public:

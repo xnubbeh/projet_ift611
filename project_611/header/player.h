@@ -3,16 +3,25 @@
 
 #include "game_object.h"
 
-class Player : GameObject
+class Player : public GameObject
 {
 
 public:
-	Player(const std::string& name) : GameObject{ name } {};
+	Player(const std::string& name, float speed) : GameObject{ name }, speed {speed} {};
 	~Player() = default;
+	void Animate(const float elapsedTime) override;
+
 
 private:
-	// private car les objets DOIVENT avoir un nom
+	// private cstor car les objets DOIVENT avoir un nom
 	Player() = default;
+	
+	// private methods
+	void Move();
+	void AnimateSprite(const float elapsedTime);
+
+	// private attributes
+	float speed;
 
 };
 
