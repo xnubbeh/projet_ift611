@@ -12,7 +12,7 @@ enum class Direction {
 class Player : public GameObject
 {
 public:
-	Player(const std::string& name, float speed) : GameObject{ name }, velocity{ speed }, status {Status::Idle} {};
+	Player(const std::string& name, float speed) : GameObject{ name }, velocity{ speed }, status{ Direction::Idle }, jumping{false} {};
 	~Player() = default;
 	void Animate(const float elapsedTime) override;
 
