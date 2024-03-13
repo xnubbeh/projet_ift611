@@ -3,6 +3,14 @@
 
 void Scene::LoadScene() {
 	Player* player = createPlayerGameObject(glm::vec2(300,300));
+	GameObject* map[64];
+	
+	// TODO : either do maps programatically like we see below, or load a prebuilt map from some file
+	//for (int i = 0; i < 64; ++i) {
+	//	map[i] = createGameObject(std::to_string(i));
+	//	RenderData tileSprite{ glm::vec2{50 * i, 50}, glm::vec2{50, 50}, glm::vec2{0, 0}, glm::vec2{32, 32}, 0.5};
+	//	map[i]->CreateRenderData(std::move(tileSprite));
+	//}
 }
 
 GameObject* Scene::GetRoot()

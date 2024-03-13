@@ -4,6 +4,7 @@
 
 #include "../header/game_engine.h"
 #include "../header/input_manager.h"
+#include "../header/utils.h"
 
 
 int GameEngine::Init() {
@@ -46,10 +47,23 @@ void GameEngine::MainLoop()
 
         auto currentTime = std::chrono::system_clock::now();
 
-        Render();
+        int renderTime = [&]() {
+            auto before = std::chrono::high_resolution_clock::now();
+            Render();
+            auto after = std::chrono::high_resolution_clock::now();
+            return std::chrono::duration_cast<std::chrono::microseconds>(after - before).count();
+        }();
 
-        // TODO : do not call this with PI
-        Animate(3.14159);
+        int animateTime = [&]() {
+            auto before = std::chrono::high_resolution_clock::now();
+            // TODO : do not call this with PI
+            Animate(3.14159f);
+            auto after = std::chrono::high_resolution_clock::now();
+            return std::chrono::duration_cast<std::chrono::microseconds>(after - before).count();
+        }();
+
+        std::cout << "AnimateTime " << animateTime << "us" << std::endl;
+        std::cout << "RenderTime " << renderTime << "us" << std::endl;
 
         long int timeDifference = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - std::chrono::system_clock::now()).count();
 
@@ -57,10 +71,7 @@ void GameEngine::MainLoop()
             std::this_thread::sleep_for(std::chrono::milliseconds(16 - timeDifference));
         }
 
-
         glfwSwapBuffers(window);
-        // Un thread pour la journalisation aka logging
-            // whatever
     }
 }
 

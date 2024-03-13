@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UTIL_H
+#define UTIL_H
 
 #include <string>
 #include <fstream>
@@ -15,3 +16,7 @@ static inline std::string readFile(const std::string& filePath)
 	ifs.close();
 	return s.str();
 }
+
+
+
+#endif // UTIL_H
