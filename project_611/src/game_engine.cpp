@@ -47,30 +47,31 @@ void GameEngine::MainLoop()
 
         auto currentTime = std::chrono::system_clock::now();
 
-        int renderTime = measureTimeMicroSec(&GameEngine::Render, *this);
-        std::cout << "RenderTime " << renderTime << "ms" << std::endl;
-     //   Render();
+        int renderTime = [&]() {
+            auto before = std::chrono::high_resolution_clock::now();
+            Render();
+            auto after = std::chrono::high_resolution_clock::now();
+            return std::chrono::duration_cast<std::chrono::microseconds>(after - before).count();
+        }();
 
-        // TODO : do not call this with PI
-        int animateTime = measureTimeMicroSec(&GameEngine::Animate, *this, 3.14159f);
-        std::cout << "AnimateTime " << animateTime << "ms" << std::endl;
+        int animateTime = [&]() {
+            auto before = std::chrono::high_resolution_clock::now();
+            // TODO : do not call this with PI
+            Animate(3.14159f);
+            auto after = std::chrono::high_resolution_clock::now();
+            return std::chrono::duration_cast<std::chrono::microseconds>(after - before).count();
+        }();
 
-
-        //  Animate(3.14159);
+        std::cout << "AnimateTime " << animateTime << "us" << std::endl;
+        std::cout << "RenderTime " << renderTime << "us" << std::endl;
 
         long int timeDifference = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - std::chrono::system_clock::now()).count();
 
         if (timeDifference < 16) { // this is so that the game polls inputs at approx 60fps
             std::this_thread::sleep_for(std::chrono::milliseconds(16 - timeDifference));
         }
-        else {
-            std::cout << "PROBLEME\n\n\n\n\n\n\n\n\n\n\n " << std::endl;
-        }
-
 
         glfwSwapBuffers(window);
-        // Un thread pour la journalisation aka logging
-            // whatever
     }
 }
 
