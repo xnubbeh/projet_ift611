@@ -10,7 +10,7 @@ enum Key {
 	A,
 	S,
 	D,
-	NUM_KEYS
+	NUM_KEYS // this must always be the last thing
 };
 
 class InputManager : public Singleton<InputManager> {
