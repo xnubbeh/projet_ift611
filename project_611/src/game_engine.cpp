@@ -4,6 +4,7 @@
 
 #include "../header/game_engine.h"
 #include "../header/input_manager.h"
+#include "../header/utils.h"
 
 
 int GameEngine::Init() {
@@ -46,15 +47,24 @@ void GameEngine::MainLoop()
 
         auto currentTime = std::chrono::system_clock::now();
 
-        Render();
+        int renderTime = measureTimeMicroSec(&GameEngine::Render, *this);
+        std::cout << "RenderTime " << renderTime << "ms" << std::endl;
+     //   Render();
 
         // TODO : do not call this with PI
-        Animate(3.14159);
+        int animateTime = measureTimeMicroSec(&GameEngine::Animate, *this, 3.14159f);
+        std::cout << "AnimateTime " << animateTime << "ms" << std::endl;
+
+
+        //  Animate(3.14159);
 
         long int timeDifference = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - std::chrono::system_clock::now()).count();
 
         if (timeDifference < 16) { // this is so that the game polls inputs at approx 60fps
             std::this_thread::sleep_for(std::chrono::milliseconds(16 - timeDifference));
+        }
+        else {
+            std::cout << "PROBLEME\n\n\n\n\n\n\n\n\n\n\n " << std::endl;
         }
 
 
