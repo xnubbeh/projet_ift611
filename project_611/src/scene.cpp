@@ -2,19 +2,7 @@
 #include "../header/sprite.h"
 
 void Scene::LoadScene() {
-
-	createPlayerGameObject("player",glm::vec2(300,300));
-
-	/*GameObject* cloppeux2 = createGameObject("cloppeux2");
-	RenderData cloppeuxSprite2 = { glm::vec2(10,0), glm::vec2(50, 50), glm::vec2(, 0), glm::vec2(16, 16), 0.0 };
-	cloppeux2->CreateRenderData(cloppeuxSprite2);
-	Sprite::getInstance()->AddSprite(cloppeuxSprite2);
-
-	GameObject* cloppeux3 = createGameObject("cloppeux3");
-	RenderData cloppeuxSprite3 = { glm::vec2(50,150), glm::vec2(50, 50), glm::vec2(32, 0), glm::vec2(16, 16), 0.0 };
-	cloppeux3->CreateRenderData(cloppeuxSprite3);
-	Sprite::getInstance()->AddSprite(cloppeuxSprite3);*/
-
+	Player* player = createPlayerGameObject(glm::vec2(300,300));
 }
 
 GameObject* Scene::GetRoot()
@@ -45,38 +33,21 @@ GameObject* Scene::createGameObject(const std::string& name)
 	return gameObject;
 }
 
-void Scene::createPlayerGameObject(const std::string& name, glm::vec2 playerPos)
+Player* Scene::createPlayerGameObject(glm::vec2 playerPos)
 {
-	GameObject* createPlayerGameObject = getGameObject(name);
+	GameObject* playerObject = getGameObject("player");
 
-	if (createPlayerGameObject == nullptr)
-	{
-		createPlayerGameObject = new GameObject(name);
-		gameObjects.insert(std::pair<std::string, GameObject*>(name, createPlayerGameObject));
+	if (playerObject != nullptr) {
+		return static_cast<Player*>(playerObject);
 	}
 
-	playerObject = createPlayerGameObject;
+	Player* player = new Player("player", 4.0f);
+	gameObjects.insert(std::pair<std::string, GameObject*>("player", static_cast<GameObject*>(player)));
+
 	RenderData playerSprite = { playerPos, glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(32, 32), 1.0 };
-	playerObject->CreateRenderData(playerSprite);
-	//Sprite::getInstance()->AddSprite(playerSprite);
-	Scene::setPlayerPos(playerPos);
-}
+	player->CreateRenderData(std::move(playerSprite));
 
-glm::vec2 Scene::getPlayerPos() {
-	return playerPos;
-}
-
-void Scene::movePlayerPos(glm::vec2 direction) {
-	playerPos += direction;
-	GameObject* player = getGameObject("player");
-	//player->CreateRenderData(playerSprite);
-	//Sprite::getInstance()->RenderAll();
-	player->translate(direction);
-	Scene::setPlayerPos(playerPos);
-}
-
-void Scene::setPlayerPos(glm::vec2 pos) {
-	playerPos = pos;
+	return player;
 }
 
 std::map<std::string, GameObject*>& Scene::getAllGameObjects()

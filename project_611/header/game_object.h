@@ -12,15 +12,15 @@ class GameObject
 
 public:
 	GameObject(const std::string& name);
-	~GameObject() = default;
+	virtual ~GameObject() = default;
 	
-	void Render();
-	void Animate(const float elapsedTime);
+	virtual void Animate(const float elapsedTime);
 
 	void CreateRenderData(const RenderData&);
 	RenderData& GetRenderData();
 	void translate(const glm::vec2& translation);
 	void changeSpriteFrame(const glm::vec2& newSpriteAtlasPosition);
+	glm::vec2 getPosition();
 
 private:
 	// private car les objets DOIVENT avoir un nom
@@ -28,7 +28,7 @@ private:
 	std::string name;
 
 	Frame* p_frame;
-	RenderData sprite;
+	RenderData renderData;
 	int spriteIndex;
 
 

@@ -3,15 +3,8 @@
 #include <thread>
 
 #include "../header/game_engine.h"
+#include "../header/input_manager.h"
 
-
-GameEngine::GameEngine() {
-   
-}
-
-GameEngine::~GameEngine() {
-    
-}
 
 int GameEngine::Init() {
 
@@ -55,7 +48,8 @@ void GameEngine::MainLoop()
 
         Render();
 
-        Animate();
+        // TODO : do not call this with PI
+        Animate(3.14159);
 
         long int timeDifference = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - std::chrono::system_clock::now()).count();
 
@@ -79,62 +73,14 @@ void GameEngine::Render()
     Sprite::getInstance()->RenderAll();
 }
 
-void GameEngine::Animate()
+void GameEngine::Animate(const float elapsedTime)
 {
-    ProcessInput(window);
+    InputManager::getInstance()->ProcessInput(window);
     glfwPollEvents();
 
-    // THE CODE BELOW MIGHT BE DEADCODE TODO
-    //std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
-    //    pair.second->Animate(elapsedTime);
-    //    });
-}
-
-void GameEngine::ProcessInput(GLFWwindow *window) {
-    //maybe add a delay since this updates REALLY fast
-    glm::vec2 playerPos = scene->getPlayerPos();
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        //get sprite position and move it +y
-        if (playerPos.y < SCREEN_HEIGHT && playerPos.y > 0){
-            scene->movePlayerPos(glm::vec2(0, 1));
-            scene->playerObject->changeSpriteFrame(glm::vec2(16, 0));
-            std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
-        }
-        else {
-            std::cout << "bravo champion t'es sortie de l'ecran" << std::endl;
-        }
-    }
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        //get sprite position and move it -y
-        if (playerPos.y < SCREEN_HEIGHT && playerPos.y > 0) {
-            scene->movePlayerPos(glm::vec2(0, -1));
-            scene->playerObject->changeSpriteFrame(glm::vec2(32, 0));
-            std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
-        }
-        else {
-            std::cout << "bravo champion t'es sortie de l'ecran" << std::endl;
-        }
-    }
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        //get sprite position and move it -x
-        if (playerPos.x < SCREEN_WIDTH && playerPos.x > 0) {
-            scene->movePlayerPos(glm::vec2(-1, 0));
-            std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
-        }
-        else {
-            std::cout << "bravo champion t'es sortie de l'ecran" << std::endl;
-        }
-    }
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        //get sprite position and move it +x
-        if (playerPos.x < SCREEN_WIDTH && playerPos.x > 0) {
-            scene->movePlayerPos(glm::vec2(1, 0));
-            std::cout << scene->getPlayerPos().x << "    " << scene->getPlayerPos().y << std::endl;
-        }
-        else {
-            std::cout << "bravo champion t'es sortie de l'ecran" << std::endl;
-        }
-    }
+    std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
+        pair.second->Animate(elapsedTime);
+        });
 }
 
 

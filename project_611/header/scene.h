@@ -7,6 +7,7 @@
 #include "singleton.h"
 #include "game_object.h"
 #include "camera.h"
+#include "player.h"
 
 class Scene : public Singleton<Scene> {
 	friend class Singleton<Scene>;
@@ -21,12 +22,10 @@ public:
 	std::map<std::string, GameObject*>& getAllGameObjects();
 	void LoadScene();
 
-	void createPlayerGameObject(const std::string& name, glm::vec2 pos);
+	Player* createPlayerGameObject(glm::vec2 pos);
 	GameObject* playerObject;
 	RenderData playerSprite;
 
-	glm::vec2 getPlayerPos(); //ishh
-	void setPlayerPos(glm::vec2);
 	void movePlayerPos(glm::vec2); 
 
 	
@@ -34,9 +33,6 @@ public:
 private:
 	// la racine de la scene
 	GameObject* root;
-
-	// le playerGameObject
-	glm::vec2 playerPos;
 
 	// tous les autres gameObjects
 	std::map<std::string, GameObject*> gameObjects;
