@@ -3,13 +3,10 @@
 
 #include "game_object.h"
 
-enum class Status {
+enum class Direction {
 	Idle,
 	WalkingLeft,
-	WalkingRight,
-	JumpingStraighUp,
-	JumpingRight,
-	JumpingLeft
+	WalkingRight
 };
 
 class Player : public GameObject
@@ -29,8 +26,8 @@ private:
 
 	// private attributes
 	float velocity;
-	Status status;
-
+	Direction status;
+	bool jumping;
 };
 
 #endif
