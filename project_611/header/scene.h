@@ -47,7 +47,7 @@ private:
 	std::map<std::string, GameObject*> gameObjects;
 	std::map<std::string, EnvironmentObject*> environmentObjects;
 
-	Collider* collider;
+	Collider collider;
 	Camera* camera;
 
 	int width, height;

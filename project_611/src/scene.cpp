@@ -7,7 +7,7 @@ void Scene::LoadScene() {
 	
 	 //TODO : either do maps programatically like we see below, or load a prebuilt map from some file
 	for (int i = 0; i < 64; ++i) {
-		map[i] = createGameObject(std::to_string(i));
+		map[i] = createEnvironmentObject(std::to_string(i));
 		RenderData tileSprite{ glm::vec2{50 * i, 50}, glm::vec2{50, 50},FLOOR , glm::vec2{32, 32}, 0.5 };
 		map[i]->CreateRenderData(std::move(tileSprite));
 	}
@@ -84,7 +84,7 @@ void Scene::Animate(const float elapsedTime) {
 	std::for_each(this->getAllGameObjects().begin(), this->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
 		pair.second->Animate(elapsedTime);
 		});
-	collider->checkCollision(gameObjects, environmentObjects);
+	collider.checkCollision(gameObjects, environmentObjects);
 }
 
 

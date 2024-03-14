@@ -3,6 +3,8 @@
 
 #include <map>
 #include <string>
+#include <algorithm>
+#include <iostream>
 
 #include "glm.hpp"
 #include "game_object.h"
@@ -10,7 +12,7 @@
 
 class Collider {
 public:
-	Collider();
+	Collider() { std::cout << "COLLIDER CREATED" << std::endl; }
 	~Collider();
 
 	void checkCollision(const std::map<std::string, GameObject*>& gameMap, const std::map<std::string, EnvironmentObject*>& environmentMap);

@@ -62,8 +62,8 @@ void GameEngine::MainLoop()
             return std::chrono::duration_cast<std::chrono::microseconds>(after - before).count();
         }();
 
-        std::cout << "AnimateTime " << animateTime << "us" << std::endl;
-        std::cout << "RenderTime " << renderTime << "us" << std::endl;
+        //std::cout << "AnimateTime " << animateTime << "us" << std::endl;
+        //std::cout << "RenderTime " << renderTime << "us" << std::endl;
 
         long int timeDifference = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - std::chrono::system_clock::now()).count();
 
