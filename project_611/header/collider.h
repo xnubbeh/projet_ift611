@@ -19,6 +19,8 @@ public:
 
 private:
 	bool detectCollision(glm::vec2 pos1, glm::vec2 pos2);
+	bool detectCollisionX(glm::vec2 pos1, glm::vec2 pos2);
+	bool detectCollisionY(glm::vec2 pos1, glm::vec2 pos2);
 };
 
 #endif

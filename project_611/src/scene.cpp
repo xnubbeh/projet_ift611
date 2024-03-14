@@ -11,6 +11,13 @@ void Scene::LoadScene() {
 		RenderData tileSprite{ glm::vec2{50 * i, 50}, glm::vec2{50, 50},FLOOR , glm::vec2{32, 32}, 0.5 };
 		map[i]->CreateRenderData(std::move(tileSprite));
 	}
+
+	for (int i = 0; i < 64; ++i) {
+		map[i] = createEnvironmentObject(std::to_string(i));
+		RenderData tileSprite{ glm::vec2{50 , 50 * i}, glm::vec2{50, 50},FLOOR , glm::vec2{32, 32}, 0.5 };
+		map[i]->CreateRenderData(std::move(tileSprite));
+	}
+	
 }
 
 GameObject* Scene::GetRoot()
