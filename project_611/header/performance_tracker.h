@@ -12,14 +12,11 @@
 
 #define LOG_FILE_PATH "log"
 
-enum class TimeMessageType {
-	RenderTime,
-	AnimateTime
-};
-
 struct TimeMessage {
-	int time;
-	TimeMessageType type;
+	int animateTime;
+	int renderTime;
+
+	TimeMessage(int animateTime, int renderTime) : animateTime{ animateTime }, renderTime{ renderTime }{}
 };
 
 class PerformanceTracker : public Singleton<PerformanceTracker> {
@@ -28,18 +25,21 @@ class PerformanceTracker : public Singleton<PerformanceTracker> {
 public:
 	void AddTimeMessage(const TimeMessage& message);
 	void Start();
+	void Stop();
 
 private:
 	PerformanceTracker();
-	~PerformanceTracker();
+	~PerformanceTracker() = default;
+	// called by start
 	void Process();
-	int CalculateMean(int whichQueue);
+	// returns <meanRenderTime, meanAnimateTime> for the previous period
+	std::pair<int, int> CalculateMeans(int whichQueue);
+	// returns <meanRenderTime, meanAnimateTime> for the previous period for the given queue
+	std::pair<int, int> ProcessMeans(std::queue<TimeMessage>& queue);
 
 	std::atomic<int> whichQueue;
 	std::queue<TimeMessage> messageQueue_0;
 	std::queue<TimeMessage> messageQueue_1;
-	int meanRenderTime{0};
-	int meanAnimateTime{0};
 	std::thread performanceTrackerThread;
 	std::ofstream logFileStream;
 	bool isRunning {false};

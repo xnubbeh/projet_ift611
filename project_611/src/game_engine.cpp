@@ -5,6 +5,7 @@
 #include "../header/game_engine.h"
 #include "../header/input_manager.h"
 #include "../header/utils.h"
+#include "../header/performance_tracker.h"
 
 
 int GameEngine::Init() {
@@ -29,6 +30,7 @@ int GameEngine::Init() {
     scene->LoadScene();
 
     Sprite::getInstance()->Init();
+    PerformanceTracker::getInstance()->Start();
 
     // TODO : THIS IS A TEST PLEASE REMOVE ME
     glfwSwapInterval(0);
@@ -62,8 +64,7 @@ void GameEngine::MainLoop()
             return std::chrono::duration_cast<std::chrono::microseconds>(after - before).count();
         }();
 
-        std::cout << "AnimateTime " << animateTime << "us" << std::endl;
-        std::cout << "RenderTime " << renderTime << "us" << std::endl;
+        PerformanceTracker::getInstance()->AddTimeMessage(TimeMessage{ animateTime, renderTime });
 
         long int timeDifference = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - std::chrono::system_clock::now()).count();
 
@@ -73,6 +74,8 @@ void GameEngine::MainLoop()
 
         glfwSwapBuffers(window);
     }
+
+    PerformanceTracker::getInstance()->Stop();
 }
 
 
