@@ -89,9 +89,7 @@ void GameEngine::Animate(const float elapsedTime)
     InputManager::getInstance()->ProcessInput(window);
     glfwPollEvents();
 
-    std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
-        pair.second->Animate(elapsedTime);
-        });
+    scene->Animate(elapsedTime);
 }
 
 

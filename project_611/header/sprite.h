@@ -8,6 +8,7 @@
 #include "sprite_sheet.h"
 #include "shader_pipeline.h"
 #include "singleton.h"
+#include "sprite_index.h"
 
 #define MAX_SPRITES 1000
 

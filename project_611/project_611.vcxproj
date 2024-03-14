@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\collider.cpp" />
     <ClCompile Include="src\environment_object.cpp" />
     <ClCompile Include="src\frame.cpp" />
     <ClCompile Include="src\game.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\camera.h" />
+    <ClInclude Include="header\collider.h" />
     <ClInclude Include="header\color.h" />
     <ClInclude Include="header\environment_object.h" />
     <ClInclude Include="header\frame.h" />
