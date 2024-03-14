@@ -11,9 +11,14 @@ void Player::Move() {
 	//sideways
 	if (InputManager::getInstance()->pressedKey[Key::A] && !InputManager::getInstance()->pressedKey[Key::D]) {
 		translate(glm::vec2(-1, 0) * velocity);
+		status = Direction::WalkingLeft;
 	}
 	else if (InputManager::getInstance()->pressedKey[Key::D] && !InputManager::getInstance()->pressedKey[Key::A]) {
 		translate(glm::vec2(1, 0) * velocity);
+		status = Direction::WalkingRight;
+	}
+	else {
+		status = Direction::Idle;
 	}
 
 	//up and down
