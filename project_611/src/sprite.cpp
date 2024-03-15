@@ -98,7 +98,7 @@ void Sprite::InitBuffers() {
     glVertexArrayAttribBinding(VAO, 3, 3);
     glVertexAttribDivisor(3, 1);
 
-    // Flipped channel 4 (pass one int)
+    // Flipped channel 4 (pass one float)
     glCreateBuffers(1, &VBO_DIRECTION);
     glNamedBufferData(VBO_DIRECTION, sizeof(int) * MAX_SPRITES, directionBuffer, GL_DYNAMIC_DRAW);
     glEnableVertexArrayAttrib(VAO, 4);
