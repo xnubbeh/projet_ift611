@@ -3,6 +3,7 @@
 
 // TODO
 // define sprites with significant ID's with their offset in the sprite sheet
+#include "glm.hpp"
 
 #define PLAYER_WALKING_NUM_SPRITES 7
 #define PLAYER_JUMPING_NUM_SPRITES 4

@@ -62,7 +62,7 @@ void GameEngine::MainLoop()
             auto after = std::chrono::high_resolution_clock::now();
             return std::chrono::duration_cast<std::chrono::microseconds>(after - before).count();
         }();
-        
+       
         previous_time = currentTime;
         PerformanceTracker::getInstance()->AddTimeMessage(TimeMessage{ animateTime, renderTime });
         long int timeDifference = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - std::chrono::high_resolution_clock::now()).count();
@@ -91,9 +91,7 @@ void GameEngine::Animate(const float elapsedTime)
     InputManager::getInstance()->ProcessInput(window);
     glfwPollEvents();
 
-    std::for_each(scene->getAllGameObjects().begin(), scene->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
-        pair.second->Animate(elapsedTime);
-        });
+    scene->Animate(elapsedTime);
 }
 
 

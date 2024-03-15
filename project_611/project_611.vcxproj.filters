@@ -66,6 +66,9 @@
     <ClCompile Include="src\input_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\collider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\performance_tracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -972,6 +975,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header\input_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header\performance_tracker.h">
