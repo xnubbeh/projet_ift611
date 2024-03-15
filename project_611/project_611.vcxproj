@@ -146,6 +146,7 @@
     <ClCompile Include="src\input_manager.cpp" />
     <ClCompile Include="src\material.cpp" />
     <ClCompile Include="src\monster.cpp" />
+    <ClCompile Include="src\performance_tracker.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\shader_pipeline.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="header\input_manager.h" />
     <ClInclude Include="header\material.h" />
     <ClInclude Include="header\monster.h" />
+    <ClInclude Include="header\performance_tracker.h" />
     <ClInclude Include="header\player.h" />
     <ClInclude Include="header\scene.h" />
     <ClInclude Include="header\shader_pipeline.h" />

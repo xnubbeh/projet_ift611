@@ -9,6 +9,7 @@ uniform mat4 orthoProjection;
 layout (location = 1) in vec4 positionOffset_size;
 layout (location = 2) in vec4 atlasOffset_spriteSize;
 layout (location = 3) in float zBuffer;
+layout (location = 4) in float flipped;
 
 // Out
 out vec2 textureCoordsOut;
@@ -44,16 +45,28 @@ void main()
     gl_Position = orthoProjection * vec4(vertexPos, zBuffer, 1.0);
 
     // TEXCOORD CALCULATION
-    vec2 textureCoords[6] = 
+    vec2 textureCoords[12] = 
     {
+    // # # # USE THESE TO FACE RIGHT
+    //1er triangle
         vec2(left, top),
         vec2(left, bottom),
         vec2(right, top),
+    //2e triangle
         vec2(right, top),
         vec2(left, bottom),
         vec2(right, bottom),
+
+    // # # # USE THESE TO FACE LEFT
+    //1er triangle
+        vec2(right, top),
+        vec2(right, bottom),
+        vec2(left, top),
+    //2e triangle
+        vec2(left, top),
+        vec2(right, bottom),
+        vec2(left, bottom),
     };
 
-   textureCoordsOut = textureCoords[gl_VertexID];
-
+    textureCoordsOut = textureCoords[gl_VertexID + int(flipped)];
 }

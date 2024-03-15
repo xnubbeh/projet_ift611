@@ -69,6 +69,9 @@
     <ClCompile Include="src\collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\performance_tracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="third_party\glm\detail\_features.hpp">
@@ -975,6 +978,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header\collider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\performance_tracker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
