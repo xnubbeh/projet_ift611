@@ -43,13 +43,14 @@ void Player::Move() {
 		MakeFaceDirection(direction);
 	}
 
-	translate(velocity * speed);
+	velocity = glm::vec2(velocity.x * horizontalSpeed, velocity.y * verticalSpeed);
+
+	translate(velocity);
 	statusHasChanged = previousStatus != status;
 }
 
 void Player::MakeFaceDirection(Direction direction) {
 	int directionValue = direction == Direction::Left ? LEFT : RIGHT;
-	std::cout << directionValue<<"\n";
 	if (spriteIndex != NO_SPRITE) {
 		Sprite::getInstance()->setSpriteDirectionAt(spriteIndex, directionValue);
 		renderData.direction = directionValue;

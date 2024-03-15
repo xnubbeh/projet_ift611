@@ -21,7 +21,8 @@ class Player : public GameObject
 public:
 	Player(const std::string& name, float speed) :
 		GameObject{ name },
-		speed{ speed },
+		horizontalSpeed{ speed },
+		verticalSpeed{0},
 		direction{ Direction::Right },
 		status{ Status::Idle },
 		statusHasChanged{ false },
@@ -41,7 +42,8 @@ private:
 	void MakeFaceDirection(Direction direction);
 
 	// private attributes
-	float speed;
+	float horizontalSpeed;
+	float verticalSpeed;
 	glm::vec2 velocity{};
 	Direction direction;
 	Status status;
