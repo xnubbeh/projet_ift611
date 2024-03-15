@@ -57,7 +57,7 @@ void Player::MakeFaceDirection(Direction direction) {
 }
 
 void Player::AnimateSprite(const float elapsedTime) {
-	static float elapsedTimeSinceLastSpriteSwitch{0};
+	static float elapsedTimeSinceLastSpriteSwitch{ 0 };
 	// reset the animation if the status has changed
 	if (statusHasChanged) {
 		indexInFlipBook = 0;
@@ -67,20 +67,26 @@ void Player::AnimateSprite(const float elapsedTime) {
 		elapsedTimeSinceLastSpriteSwitch += elapsedTime;
 	}
 	if (elapsedTimeSinceLastSpriteSwitch == 0 || elapsedTimeSinceLastSpriteSwitch > MAXIMUM_FRAME_DISPLAY_DURATION) {
-		// select the right flipbook
-		/*
-			switch (status) {
+		glm::vec2 spriteOffset;
 
-			}
-		*/
-
-		// commencer juste par marcher a droite pour l'instant
-		// walking right
-		if (status == Status::Walking) {
+		switch (status) {
+		case Status::Walking: {
 			indexInFlipBook = (indexInFlipBook + 1) % PLAYER_WALKING_NUM_SPRITES;
-			glm::vec2 spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::PlayerWalking, indexInFlipBook);
-			
-			changeSpriteFrame(std::move(spriteOffset));
+			spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::PlayerWalking, indexInFlipBook);
+			break;
 		}
+		case Status::Jumping: {
+			indexInFlipBook = (indexInFlipBook + 1) % PLAYER_JUMPING_NUM_SPRITES;
+			spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::PlayerJumping, indexInFlipBook);
+			break;
+		}
+		case Status::Idle: {
+			indexInFlipBook = (indexInFlipBook + 1) % PLAYER_IDLE_NUM_SPRITES;
+			spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::PlayerJumping, indexInFlipBook);
+			break;
+		}
+		}
+
+		changeSpriteFrame(std::move(spriteOffset));
 	}
 }
