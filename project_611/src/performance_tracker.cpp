@@ -28,7 +28,6 @@ void PerformanceTracker::AddTimeMessage (const TimeMessage& message) {
 void PerformanceTracker::Start() {
 	isRunning = true;
 	performanceTrackerThread = std::thread{ &PerformanceTracker::Process, this };
-	std::cout << "started\n";
 }
 
 void PerformanceTracker::Process() {
@@ -69,7 +68,6 @@ std::pair<int, int> PerformanceTracker::ProcessMeans(std::queue<TimeMessage>& qu
 }
 
 void PerformanceTracker::Stop() {
-	std::cout << "ended";
 	isRunning = false;
 	performanceTrackerThread.join();
 	logFileStream.close();

@@ -47,6 +47,7 @@ void main()
     // TEXCOORD CALCULATION
     vec2 textureCoords[12] = 
     {
+    // # # # USE THESE TO FACE RIGHT
     //1er triangle
         vec2(left, top),
         vec2(left, bottom),
@@ -55,7 +56,8 @@ void main()
         vec2(right, top),
         vec2(left, bottom),
         vec2(right, bottom),
-    // # # # SWAPPERONI
+
+    // # # # USE THESE TO FACE LEFT
     //1er triangle
         vec2(right, top),
         vec2(right, bottom),
@@ -66,18 +68,5 @@ void main()
         vec2(left, bottom),
     };
 
-    int lol = gl_VertexID;
-    int actualIndexBro = lol + int(flipped);
-
-   // if (flipped == 6 ) {
-   // textureCoordsOut = textureCoords[gl_VertexID + 6];
-   // 
-   // } else {
-   // textureCoordsOut = textureCoords[gl_VertexID + 0];
-   // 
-   // }
-   //
-    textureCoordsOut = textureCoords[actualIndexBro];
-
-
+    textureCoordsOut = textureCoords[gl_VertexID + int(flipped)];
 }
