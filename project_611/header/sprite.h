@@ -10,13 +10,16 @@
 #include "singleton.h"
 
 #define MAX_SPRITES 1000
+#define LEFT 6.0
+#define RIGHT 0.0
 
 struct RenderData {
-	glm::vec2 pos;  // bottom left position of the sprite
-	glm::vec2 size; // (width, height)
-	glm::vec2 atlasOffset; // top left position of the sprite in the atlas, expressed in texels
-	glm::vec2 spriteSize; // (spriteWidth, spriteHeight), expressed in texels
-	float z;
+	glm::vec2 pos;			// bottom left position of the sprite
+	glm::vec2 size;			// (width, height)
+	glm::vec2 atlasOffset;	// top left position of the sprite in the atlas, expressed in texels
+	glm::vec2 spriteSize;	// (spriteWidth, spriteHeight), expressed in texels
+	float z;				// zbuffer
+	float direction;		// 0 means faces right, 6 faces left
 };
 
 class Sprite : public Singleton<Sprite> {
@@ -31,15 +34,17 @@ public:
 	void Init();
 	void translateSpriteAt(int index, const glm::vec2& translation);
 	void changeSpriteModelAt(int index, const glm::vec2& newSpriteAtlasPosition);
+	void setSpriteDirectionAt(int index, int direction);
 	
 private:
 	void InitBuffers();
 
 	// Buffers
-	GLuint VAO /*VertexArray*/,
-		   VBO_POSITION /*Vertex position and size*/,
-		   VBO_SPRITE /*Atlas offset and sprite size*/,
-		   VBO_DEPTH /*z-buffer*/;
+	GLuint VAO				/*VertexArray*/,
+		   VBO_POSITION		/*Vertex position and size*/,
+		   VBO_SPRITE		/*Atlas offset and sprite size*/,
+		   VBO_DEPTH		/*z-buffer*/,
+		   VBO_DIRECTION	/*sprite faces left or right*/;
 
 	ShaderPipeline main_shader;
 
@@ -53,7 +58,10 @@ private:
 	glm::vec4 atlasOffset_spriteSize [MAX_SPRITES];
 
 	// zBuffer
-	float zBuffer[MAX_SPRITES];							
+	float zBuffer[MAX_SPRITES];				
+
+	// faces left or right ?
+	float directionBuffer[MAX_SPRITES];
 
 	int numSprites;
 
