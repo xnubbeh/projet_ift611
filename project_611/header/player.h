@@ -3,16 +3,31 @@
 
 #include "game_object.h"
 
-enum class Direction {
-	Idle,
-	WalkingLeft,
-	WalkingRight
-};
+
 
 class Player : public GameObject
 {
+	enum class Direction {
+		Left,
+		Right
+	};
+
+	enum class Status {
+		Idle,
+		Walking,
+		Jumping
+	};
+
 public:
-	Player(const std::string& name, float speed) : GameObject{ name }, velocity{ speed }, status{ Direction::Idle }, jumping{false} {};
+	Player(const std::string& name, float speed) :
+		GameObject{ name },
+		speed{ speed },
+		direction{ Direction::Right },
+		status{ Status::Idle },
+		statusHasChanged{ false },
+		indexInFlipBook{ 0 }
+		{};
+
 	~Player() = default;
 	void Animate(const float elapsedTime) override;
 
@@ -23,11 +38,15 @@ private:
 	// private methods
 	void Move();
 	void AnimateSprite(const float elapsedTime);
+	void MakeFaceDirection(Direction direction);
 
 	// private attributes
-	float velocity;
-	Direction status;
-	bool jumping;
+	float speed;
+	glm::vec2 velocity{};
+	Direction direction;
+	Status status;
+	bool statusHasChanged;
+	int indexInFlipBook;
 };
 
 #endif

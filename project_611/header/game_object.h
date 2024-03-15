@@ -16,7 +16,7 @@ public:
 	
 	virtual void Animate(const float elapsedTime);
 
-	void CreateRenderData(const RenderData&);
+	void CreateRenderData(const RenderData& data);
 	RenderData& GetRenderData();
 	void translate(const glm::vec2& translation);
 	void changeSpriteFrame(const glm::vec2& newSpriteAtlasPosition);
@@ -25,6 +25,8 @@ public:
 private:
 	// private car les objets DOIVENT avoir un nom
 	GameObject() = default;
+
+protected:
 	std::string name;
 
 	Frame* p_frame;

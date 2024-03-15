@@ -23,6 +23,7 @@ void Sprite::RenderAll()
     glNamedBufferSubData(VBO_POSITION, 0, sizeof(glm::vec4) * numSprites, positionOffset_size);
     glNamedBufferSubData(VBO_SPRITE, 0, sizeof(glm::ivec4) * numSprites, atlasOffset_spriteSize);
     glNamedBufferSubData(VBO_DEPTH, 0, sizeof(float) * numSprites, zBuffer);
+    glNamedBufferSubData(VBO_DIRECTION, 0, sizeof(float) * numSprites, directionBuffer);
 
     // one draw call to rule them all
     glDrawArraysInstanced(GL_TRIANGLES, 0, 6, numSprites);
@@ -31,14 +32,14 @@ void Sprite::RenderAll()
 
 int Sprite::AddSprite(const RenderData& data) {
 
-    positionOffset_size [numSprites] = glm::vec4{ data.pos, data.size };
-    atlasOffset_spriteSize [numSprites] = glm::vec4{data.atlasOffset, data.spriteSize};
-    zBuffer [numSprites] = data.z;
+    positionOffset_size[numSprites] = glm::vec4{ data.pos, data.size };
+    atlasOffset_spriteSize[numSprites] = glm::vec4{ data.atlasOffset, data.spriteSize };
+    zBuffer[numSprites] = data.z;
+    directionBuffer[numSprites] = data.direction;
 
     ++numSprites;
     return numSprites - 1;
 }
-
 
 void Sprite::translateSpriteAt(int index, const glm::vec2& translation) {
     positionOffset_size[index] += glm::vec4(translation, 0.0, 0.0);
@@ -46,6 +47,10 @@ void Sprite::translateSpriteAt(int index, const glm::vec2& translation) {
 
 void Sprite::changeSpriteModelAt(int index, const glm::vec2& newSpriteAtlasPosition) {
     atlasOffset_spriteSize[index] = glm::vec4(newSpriteAtlasPosition, atlasOffset_spriteSize[index].z, atlasOffset_spriteSize[index].w);
+}
+
+void Sprite::setSpriteDirectionAt(int index, int direction) {
+    directionBuffer[index] = direction;
 }
 
 void Sprite::Init() {
@@ -92,6 +97,15 @@ void Sprite::InitBuffers() {
     glVertexArrayVertexBuffer(VAO, 3, VBO_DEPTH, 0, sizeof(float));
     glVertexArrayAttribBinding(VAO, 3, 3);
     glVertexAttribDivisor(3, 1);
+
+    // Flipped channel 4 (pass one int)
+    glCreateBuffers(1, &VBO_DIRECTION);
+    glNamedBufferData(VBO_DIRECTION, sizeof(int) * MAX_SPRITES, directionBuffer, GL_DYNAMIC_DRAW);
+    glEnableVertexArrayAttrib(VAO, 4);
+    glVertexArrayAttribFormat(VAO, 4, 1, GL_FLOAT, GL_FALSE, 0);
+    glVertexArrayVertexBuffer(VAO, 4, VBO_DIRECTION, 0, sizeof(float));
+    glVertexArrayAttribBinding(VAO, 4, 4);
+    glVertexAttribDivisor(4, 1);
 }
 
 
