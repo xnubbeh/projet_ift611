@@ -1,5 +1,6 @@
 #include "../header/scene.h"
 #include "../header/sprite.h"
+#include "../header/sprite_index.h"
 
 void Scene::LoadScene() {
 	Player* player = createPlayerGameObject(glm::vec2(300,300));
@@ -9,25 +10,25 @@ void Scene::LoadScene() {
 	
 	for (int i = 0; i < 4; ++i) {
 		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{20 * i, 50}, glm::vec2{50, 50},FLOOR , glm::vec2{32, 32}, 0.5 };
+		RenderData tileSprite{ glm::vec2{20 * i, 50}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5};
 		map[i]->CreateRenderData(std::move(tileSprite));
 	}
 
 	for (int i = 4; i < 8; ++i) {
 		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{150 * i, 30}, glm::vec2{50, 50},FLOOR , glm::vec2{32, 32}, 0.5 };
+		RenderData tileSprite{ glm::vec2{150 * i, 30}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 };
 		map[i]->CreateRenderData(std::move(tileSprite));
 	}
 
 	for (int i = 8; i < 12; ++i) {
 		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{350 , 10 * i}, glm::vec2{50, 50},FLOOR , glm::vec2{32, 32}, 0.5 };
+		RenderData tileSprite{ glm::vec2{350 , 10 * i}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 };
 		map[i]->CreateRenderData(std::move(tileSprite));
 	}
 
 	for (int i = 12; i < 16; ++i) {
 		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{450 , 5 * i}, glm::vec2{50, 50},FLOOR , glm::vec2{32, 32}, 0.5 };
+		RenderData tileSprite{ glm::vec2{450 , 5 * i}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 };
 		map[i]->CreateRenderData(std::move(tileSprite));
 	}
 
