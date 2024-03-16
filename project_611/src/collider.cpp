@@ -8,15 +8,17 @@ void Collider::checkCollision(const std::map<std::string, GameObject*>& animated
 		// iterate through the scene's static objects for collisions
 		// this could be refined if performances are affected
 		
-		// Il est nécessaire de répéter cette boucle deux fois p
-		for (std::pair<std::string, EnvironmentObject*> environmentObject : staticObjects) {
-			if(detectCollision(animatedObject.second->getPosition(), environmentObject.second->getPosition())) {
-				bumpBack(animatedObject.second, environmentObject.second);
-			}
-		}
+
 		for (std::pair<std::string, EnvironmentObject*> environmentObject : staticObjects) {
 			if (detectCollision(animatedObject.second->getPosition(), environmentObject.second->getPosition())) {
-				bumpBack(animatedObject.second, environmentObject.second);
+				bumpBackVertical(animatedObject.second, environmentObject.second);
+			}
+		}
+
+		// Il est nécessaire de répéter cette boucle deux fois p
+		for (std::pair<std::string, EnvironmentObject*> environmentObject : staticObjects) {
+			if (detectCollision(animatedObject.second->getPosition(), environmentObject.second->getPosition())) {
+				bumpBackHorizontal(animatedObject.second, environmentObject.second);
 			}
 		}
 
@@ -38,7 +40,7 @@ bool Collider::detectCollisionY(const glm::vec2& pos1, const glm::vec2& pos2) {
 		   pos1.y < pos2.y + TEST;
 }
 
-void Collider::bumpBack(GameObject* smallObject, EnvironmentObject* largeObject) {
+void Collider::bumpBackHorizontal(GameObject* smallObject, EnvironmentObject* largeObject) {
 	
 	// Minimum translation vector resolution of the collision
 	glm::vec2 smallObjectPos = smallObject->getPosition();
@@ -51,13 +53,30 @@ void Collider::bumpBack(GameObject* smallObject, EnvironmentObject* largeObject)
 		(smallObjectPos.y + TEST) - (largeObjectPos.y) :
 		(largeObjectPos.y + TEST) - (smallObjectPos.y);
 
-
 	float bumpBackX = dX < dY ? dX : 0;
-	float bumpBackY = dX < dY ? 0 : dY;
-	std::cout << "bumpback x : " << bumpBackX << " y :" << bumpBackY << std::endl;
 
 	float xDirection = smallObjectPos.x < largeObjectPos.x ? -1.0 : 1.0;
+
+	smallObject->translate(glm::vec2{ bumpBackX * xDirection, 0 });
+}
+
+void Collider::bumpBackVertical(GameObject* smallObject, EnvironmentObject* largeObject) {
+
+	// Minimum translation vector resolution of the collision
+	glm::vec2 smallObjectPos = smallObject->getPosition();
+	glm::vec2 largeObjectPos = largeObject->getPosition();
+
+	float dX = (smallObjectPos.x < largeObjectPos.x) ?
+		(smallObjectPos.x + TEST) - (largeObjectPos.x) :
+		(largeObjectPos.x + TEST) - (smallObjectPos.x);
+	float dY = (smallObjectPos.y < largeObjectPos.y) ?
+		(smallObjectPos.y + TEST) - (largeObjectPos.y) :
+		(largeObjectPos.y + TEST) - (smallObjectPos.y);
+
+
+	float bumpBackY = dX < dY ? 0 : dY;
+
 	float yDirection = smallObjectPos.y < largeObjectPos.y ? -1.0 : 1.0;
 
-	smallObject->translate(glm::vec2{ bumpBackX * xDirection, bumpBackY * yDirection });
+	smallObject->translate(glm::vec2{ 0, bumpBackY * yDirection });
 }

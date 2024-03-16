@@ -15,7 +15,7 @@ void Scene::LoadScene() {
 	}
 	for (; i < 54; ++i) {
 		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{200, 45 * (i-49) }, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
+		RenderData tileSprite{ glm::vec2{200, 50 * (i-49) }, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
 		map[i]->CreateRenderData(std::move(tileSprite));
 	}
 	for (; i < 60; ++i) {

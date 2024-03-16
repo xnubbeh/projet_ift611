@@ -22,10 +22,10 @@ private:
 	bool detectCollisionX(const glm::vec2& pos1, const glm::vec2& pos2);
 	bool detectCollisionY(const glm::vec2& pos1, const glm::vec2& pos2);
 
-	// this is the result of a collision where a smaller mass collides with an infinite mass (immovable object)
-	// the return value is the displacement to give the smaller object so that it does not collide with the first object
-	void bumpBack(GameObject* smallObject, EnvironmentObject* largeObject);
-
+	// collision between an actor and a solid object
+	void bumpBackHorizontal(GameObject* smallObject, EnvironmentObject* largeObject);
+	// collision between an actor and a solid object
+	void bumpBackVertical(GameObject* smallObject, EnvironmentObject* largeObject);
 };
 
 #endif
