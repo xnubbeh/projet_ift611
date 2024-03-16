@@ -4,36 +4,26 @@
 
 void Scene::LoadScene() {
 	Player* player = createPlayerGameObject(glm::vec2(300,300));
-	GameObject* map[64];
+	GameObject* map[200];
 	
 	 //TODO : either do maps programatically like we see below, or load a prebuilt map from some file
-	
-	for (int i = 0; i < 4; ++i) {
+	int i = 0;
+	for (; i < 50; ++i) {
 		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{20 * i, 50}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5};
+		RenderData tileSprite{ glm::vec2{50 * i, 0}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5, 0.0};
+		map[i]->CreateRenderData(std::move(tileSprite));
+	}
+	for (; i < 54; ++i) {
+		map[i] = createEnvironmentObject(std::to_string(i));
+		RenderData tileSprite{ glm::vec2{200, 45 * (i-49) }, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
+		map[i]->CreateRenderData(std::move(tileSprite));
+	}
+	for (; i < 60; ++i) {
+		map[i] = createEnvironmentObject(std::to_string(i));
+		RenderData tileSprite{ glm::vec2{50 * (i-54), 400}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
 		map[i]->CreateRenderData(std::move(tileSprite));
 	}
 
-	for (int i = 4; i < 8; ++i) {
-		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{150 * i, 30}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 };
-		map[i]->CreateRenderData(std::move(tileSprite));
-	}
-
-	for (int i = 8; i < 12; ++i) {
-		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{350 , 10 * i}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 };
-		map[i]->CreateRenderData(std::move(tileSprite));
-	}
-
-	for (int i = 12; i < 16; ++i) {
-		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{450 , 5 * i}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 };
-		map[i]->CreateRenderData(std::move(tileSprite));
-	}
-
-	
-	
 }
 
 GameObject* Scene::GetRoot()

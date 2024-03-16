@@ -22,7 +22,7 @@ public:
 	Player(const std::string& name, float speed) :
 		GameObject{ name },
 		horizontalSpeed{ speed },
-		verticalSpeed{0},
+		verticalSpeed{ speed+1.0f }, // TODO this should be handled by gravity I guess
 		direction{ Direction::Right },
 		status{ Status::Idle },
 		statusHasChanged{ false },
