@@ -83,7 +83,7 @@ void Player::AnimateSprite(const float elapsedTime) {
 		}
 		case Status::Idle: {
 			indexInFlipBook = (indexInFlipBook + 1) % PLAYER_IDLE_NUM_SPRITES;
-			spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::PlayerJumping, indexInFlipBook);
+			spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::PlayerIdle, indexInFlipBook);
 			break;
 		}
 		}
