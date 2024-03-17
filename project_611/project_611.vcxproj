@@ -139,7 +139,6 @@
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\collider.cpp" />
     <ClCompile Include="src\environment_object.cpp" />
-    <ClCompile Include="src\frame.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\game_engine.cpp" />
     <ClCompile Include="src\game_object.cpp" />
@@ -160,7 +159,6 @@
     <ClInclude Include="header\collider.h" />
     <ClInclude Include="header\color.h" />
     <ClInclude Include="header\environment_object.h" />
-    <ClInclude Include="header\frame.h" />
     <ClInclude Include="header\game.h" />
     <ClInclude Include="header\game_engine.h" />
     <ClInclude Include="header\game_object.h" />

@@ -27,9 +27,6 @@
     <ClCompile Include="src\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\frame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -921,9 +918,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header\camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="header\frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header\game.h">
