@@ -10,6 +10,7 @@ enum Key {
 	A,
 	S,
 	D,
+	SPACE,
 	NUM_KEYS // this must always be the last thing
 };
 

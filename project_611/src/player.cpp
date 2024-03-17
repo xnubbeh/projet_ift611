@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#define MAXIMUM_FRAME_DISPLAY_DURATION 32.0f
+#define MAXIMUM_FRAME_DISPLAY_DURATION 32.0f // about 2 frames
 
 void Player::Animate(const float elapsedTime) {
 	Move();
@@ -14,36 +14,41 @@ void Player::Animate(const float elapsedTime) {
 void Player::Move() {
 	Status previousStatus = status;
 	Direction previousDirection = direction;
-	velocity = glm::vec2{};
-	
-	//sideways
-	if (InputManager::getInstance()->pressedKey[Key::A] && !InputManager::getInstance()->pressedKey[Key::D]) {
-		velocity += glm::vec2(-1, 0);
-		direction = Direction::Left;
-		status = Status::Walking;
-	}
-	else if (InputManager::getInstance()->pressedKey[Key::D] && !InputManager::getInstance()->pressedKey[Key::A]) {
-		velocity += glm::vec2(1, 0);
-		direction = Direction::Right;
-		status = Status::Walking;
-	}
-	else {
-		status = Status::Idle;
-	}
 
-	//up and down
-	if (InputManager::getInstance()->pressedKey[Key::W] && !InputManager::getInstance()->pressedKey[Key::S]) {
-		velocity += glm::vec2(0, 1);
+	velocity = glm::vec2{};
+
+	if (grounded) {
+		//sideways
+		if (InputManager::getInstance()->pressedKey[Key::A] && !InputManager::getInstance()->pressedKey[Key::D]) {
+			horizontalVelocity = -1.0f;
+			direction = Direction::Left;
+			status = Status::Walking;
+		}
+		else if (InputManager::getInstance()->pressedKey[Key::D] && !InputManager::getInstance()->pressedKey[Key::A]) {
+			horizontalVelocity = 1.0f;
+			direction = Direction::Right;
+			status = Status::Walking;
+		}
+		else {
+			status = Status::Idle;
+		}
+
+		//up and down
+		if (InputManager::getInstance()->pressedKey[Key::SPACE]) {
+			Jump();
+		}
+		//else if (InputManager::getInstance()->pressedKey[Key::S] && !InputManager::getInstance()->pressedKey[Key::W]) {
+		//	velocity += glm::vec2(0, -1);
+		//}
 	}
-	else if (InputManager::getInstance()->pressedKey[Key::S] && !InputManager::getInstance()->pressedKey[Key::W]) {
-		velocity += glm::vec2(0, -1);
-	}
+	
 
 	if (direction != previousDirection) {
 		MakeFaceDirection(direction);
 	}
 
-	velocity = glm::vec2(velocity.x * horizontalSpeed, velocity.y * verticalSpeed);
+	Gravity();
+	velocity = glm::vec2(horizontalVelocity * horizontalSpeed, verticalVelocity);
 
 	translate(velocity);
 	statusHasChanged = previousStatus != status;
@@ -91,3 +96,20 @@ void Player::AnimateSprite(const float elapsedTime) {
 		changeSpriteFrame(std::move(spriteOffset));
 	}
 }
+
+void Player::Gravity() {
+	verticalVelocity -= GRAVITATIONAL_ACCELERATION;
+	if (verticalVelocity < TERMINAL_VELOCITY) {
+		verticalVelocity = TERMINAL_VELOCITY;
+	}
+
+	velocity.y = verticalVelocity;
+}
+
+void Player::Jump() {
+	if (grounded) {
+		grounded = false;
+		verticalVelocity = 16.0f;
+	}
+}
+

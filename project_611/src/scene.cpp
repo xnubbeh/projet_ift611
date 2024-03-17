@@ -7,21 +7,21 @@ void Scene::LoadScene() {
 	GameObject* map[200];
 	
 	 //TODO : either do maps programatically like we see below, or load a prebuilt map from some file
-	int i = 0;
-	for (; i < 50; ++i) {
+
+	for (int i=0; i < 50; ++i) {
 		map[i] = createEnvironmentObject(std::to_string(i));
 		RenderData tileSprite{ glm::vec2{50 * i, 0}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5, 0.0};
 		map[i]->CreateRenderData(std::move(tileSprite));
 	}
-	for (; i < 54; ++i) {
-		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{200, 50 * (i-49) }, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
-		map[i]->CreateRenderData(std::move(tileSprite));
+	for (int j = 4; j > 0; --j) {
+		map[j] = createEnvironmentObject(std::to_string(j+1*100));
+		RenderData tileSprite{ glm::vec2{200, 50 * j }, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
+		map[j]->CreateRenderData(std::move(tileSprite));
 	}
-	for (; i < 60; ++i) {
-		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{50 * (i-54), 400}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
-		map[i]->CreateRenderData(std::move(tileSprite));
+	for (int k = 0; k < 60; ++k) {
+		map[k] = createEnvironmentObject(std::to_string(k+1*1000));
+		RenderData tileSprite{ glm::vec2{50 * k, 400}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
+		map[k]->CreateRenderData(std::move(tileSprite));
 	}
 
 }
@@ -65,7 +65,7 @@ Player* Scene::createPlayerGameObject(glm::vec2 playerPos)
 	Player* player = new Player("player", 4.0f);
 	gameObjects.insert(std::pair<std::string, GameObject*>("player", static_cast<GameObject*>(player)));
 
-	RenderData playerSprite = { playerPos, glm::vec2(50, 50), glm::vec2(0, 0), glm::vec2(32, 32), 1.0 , 0.0};
+	RenderData playerSprite = { playerPos, glm::vec2(64, 64), glm::vec2(0, 0), glm::vec2(32, 32), 1.0 , 0.0};
 	player->CreateRenderData(std::move(playerSprite));
 
 	return player;
