@@ -143,7 +143,6 @@
     <ClCompile Include="src\game_engine.cpp" />
     <ClCompile Include="src\game_object.cpp" />
     <ClCompile Include="src\input_manager.cpp" />
-    <ClCompile Include="src\material.cpp" />
     <ClCompile Include="src\monster.cpp" />
     <ClCompile Include="src\performance_tracker.cpp" />
     <ClCompile Include="src\player.cpp" />
@@ -163,7 +162,6 @@
     <ClInclude Include="header\game_engine.h" />
     <ClInclude Include="header\game_object.h" />
     <ClInclude Include="header\input_manager.h" />
-    <ClInclude Include="header\material.h" />
     <ClInclude Include="header\monster.h" />
     <ClInclude Include="header\performance_tracker.h" />
     <ClInclude Include="header\player.h" />
