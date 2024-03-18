@@ -12,7 +12,7 @@
 
 class Collider {
 public:
-	Collider() { std::cout << "COLLIDER CREATED" << std::endl; }
+	Collider() = default;
 	~Collider() = default;
 
 	void checkCollision(const std::map<std::string, GameObject*>& animatedObjects, const std::map<std::string, EnvironmentObject*>& staticObjects);

@@ -2,7 +2,6 @@
 #define GAME_OBJECT_H
 
 #include <string>
-#include "frame.h"
 #include "sprite.h"
 
 #define NO_SPRITE -1
@@ -29,7 +28,6 @@ private:
 protected:
 	std::string name;
 
-	Frame* p_frame;
 	RenderData renderData;
 	int spriteIndex;
 

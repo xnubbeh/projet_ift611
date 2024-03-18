@@ -7,7 +7,7 @@ void Collider::checkCollision(const std::map<std::string, GameObject*>& animated
 	for (std::pair<std::string, GameObject*> animatedObject : animatedObjects) {
 		// iterate through the scene's static objects for collisions
 		// this could be refined if performances are affected
-		
+
 
 		for (std::pair<std::string, EnvironmentObject*> environmentObject : staticObjects) {
 			if (detectCollision(animatedObject.second->getPosition(), environmentObject.second->getPosition())) {
