@@ -22,9 +22,8 @@ class Player : public GameObject
 public:
 	Player(const std::string& name, float speed) :
 		GameObject{ name },
-		horizontalSpeed{ speed+6.0f },
-		verticalSpeed{ speed+7.0f }, // TODO this should be handled by gravity I guess
-		horizontalVelocity{0},
+		horizontalVelocity{ speed+6.0f },
+		horizontalDirection{0},
 		verticalVelocity{0},
 		direction{ Direction::Right },
 		status{ Status::Idle },
@@ -50,9 +49,8 @@ private:
 	void Jump();
 
 	// private attributes
-	float horizontalSpeed;
-	float verticalSpeed;
 	float horizontalVelocity;
+	float horizontalDirection;
 	float verticalVelocity;
 	glm::vec2 velocity{};
 	Direction direction;
