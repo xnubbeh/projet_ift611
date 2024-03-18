@@ -30,6 +30,7 @@ void Player::Move() {
 			status = Status::Walking;
 		}
 		else {
+			horizontalVelocity = 0.0f;
 			status = Status::Idle;
 		}
 
