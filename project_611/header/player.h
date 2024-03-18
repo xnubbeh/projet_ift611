@@ -25,11 +25,13 @@ public:
 		horizontalVelocity{ speed+6.0f },
 		horizontalDirection{0},
 		verticalVelocity{0},
+		elapsedTimeSinceLastJump{ 2000.0f },
 		direction{ Direction::Right },
 		status{ Status::Idle },
 		statusHasChanged{ false },
 		grounded{false},
-		indexInFlipBook{ 0 }
+		indexInFlipBook{ 0 },
+		jumpButtonReleasedSinceLastJump{true}
 		{};
 
 	~Player() = default;
@@ -52,12 +54,14 @@ private:
 	float horizontalVelocity;
 	float horizontalDirection;
 	float verticalVelocity;
+	float elapsedTimeSinceLastJump;
 	glm::vec2 velocity{};
 	Direction direction;
 	Status status;
 	bool statusHasChanged;
 	bool grounded;
 	int indexInFlipBook;
+	bool jumpButtonReleasedSinceLastJump;
 };
 
 #endif
