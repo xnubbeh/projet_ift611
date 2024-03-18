@@ -32,6 +32,24 @@ void GameObject::changeSpriteFrame(const glm::vec2& newSpriteAtlasPosition) {
 	}
 }
 
-glm::vec2 GameObject::getPosition() {
+glm::vec2 GameObject::getPosition() const {
 	return renderData.pos;
+}
+
+void GameObject::setHitboxDim(const glm::vec2& dim)
+{
+	hitboxDim = dim;
+}
+
+void GameObject::setHitboxOffset(const glm::vec2& offset)
+{
+	hitboxOffset = offset;
+}
+
+glm::vec2 GameObject::getHitboxDim() const{
+	return hitboxDim;
+}
+
+glm::vec2 GameObject::getHitboxOffset() const{
+	return hitboxOffset;
 }

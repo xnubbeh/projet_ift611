@@ -3,6 +3,8 @@
 #include "../header/player.h"
 
 #define TEST 50 // TODO : figure a better way to do get the collision boxes of objects
+#define TEST_X 45
+#define TEST_Y 50
 
 void Collider::checkCollision(const std::map<std::string, GameObject*>& animatedObjects, const std::map<std::string, EnvironmentObject*>& staticObjects) {
 	for (std::pair<std::string, GameObject*> animatedObject : animatedObjects) {
@@ -11,14 +13,15 @@ void Collider::checkCollision(const std::map<std::string, GameObject*>& animated
 
 
 		for (std::pair<std::string, EnvironmentObject*> environmentObject : staticObjects) {
-			if (detectCollision(animatedObject.second->getPosition(), environmentObject.second->getPosition())) {
+			if (detectCollision(animatedObject.second,environmentObject.second)) {
 				bumpBackVertical(animatedObject.second, environmentObject.second);
+				//bumpBackHorizontal(animatedObject.second, environmentObject.second);
 			}
 		}
 
 		// Il est nécessaire de répéter cette boucle deux fois p
 		for (std::pair<std::string, EnvironmentObject*> environmentObject : staticObjects) {
-			if (detectCollision(animatedObject.second->getPosition(), environmentObject.second->getPosition())) {
+			if (detectCollision(animatedObject.second, environmentObject.second)) {
 				bumpBackHorizontal(animatedObject.second, environmentObject.second);
 			}
 		}
@@ -27,63 +30,88 @@ void Collider::checkCollision(const std::map<std::string, GameObject*>& animated
 	}
 }
 
-bool Collider::detectCollision(const glm::vec2& pos1, const glm::vec2& pos2) {
-	return detectCollisionY(pos1, pos2) && (detectCollisionX(pos1, pos2));
-}
+bool Collider::detectCollision(const GameObject* obj1, const GameObject* obj2)
+{
+	glm::vec2 Pos1 = obj1->getHitboxOffset() + obj1->getPosition();
+	glm::vec2 Pos2 = obj2->getHitboxOffset() + obj2->getPosition();
 
-bool Collider::detectCollisionX(const glm::vec2& pos1, const glm::vec2& pos2) {
-	return pos1.x < pos2.x + TEST && // Collision on Left of pos1 and right of pos2
-		   pos1.x + TEST > pos2.x;   // Collision on Right of pos1 and left of pos2
-}
 
-bool Collider::detectCollisionY(const glm::vec2& pos1, const glm::vec2& pos2) {
-	return pos1.y + TEST > pos2.y &&      // Collision on Top of pos1 and Bottom of pos2
-		   pos1.y < pos2.y + TEST;
+	bool collisionX = Pos1.x < Pos2.x + obj2->getHitboxDim().x && // Left side of obj1 with right side of obj2
+					  Pos1.x + obj1->getHitboxDim().x > Pos2.x;   // Right side of obj1 with left side of obj2
+
+	bool collisionY = Pos1.y + obj1->getHitboxDim().y > Pos2.y && // Top of obj1 with bottom of obj2
+					  Pos1.y < Pos2.y + obj2->getHitboxDim().y;   // Bottom of obj1 with top of obj2
+	
+	
+
+	return collisionX && collisionY;
 }
 
 void Collider::bumpBackHorizontal(GameObject* smallObject, EnvironmentObject* largeObject) {
 	
 	// Minimum translation vector resolution of the collision
-	glm::vec2 smallObjectPos = smallObject->getPosition();
-	glm::vec2 largeObjectPos = largeObject->getPosition();
+	glm::vec2 smallObjectPos = smallObject->getPosition() + smallObject->getHitboxOffset();
+	glm::vec2 largeObjectPos = largeObject->getPosition() + largeObject->getHitboxOffset();
 
-	float dX = (smallObjectPos.x < largeObjectPos.x) ?
-		(smallObjectPos.x + TEST) - (largeObjectPos.x) :
-		(largeObjectPos.x + TEST) - (smallObjectPos.x);
-	float dY = (smallObjectPos.y < largeObjectPos.y) ?
-		(smallObjectPos.y + TEST) - (largeObjectPos.y) :
-		(largeObjectPos.y + TEST) - (smallObjectPos.y);
+	float overlapX;
+	if (smallObjectPos.x < largeObjectPos.x) {
+		overlapX = (smallObjectPos.x + smallObject->getHitboxDim().x) - largeObjectPos.x;
+	}
+	else {
+		overlapX = (largeObjectPos.x + largeObject->getHitboxDim().x) - smallObjectPos.x;
+	}
 
-	float bumpBackX = dX < dY ? dX : 0;
+	float overlapY;
+	if (smallObjectPos.y < largeObjectPos.y) {
+		overlapY = (smallObjectPos.y + smallObject->getHitboxDim().y) - largeObjectPos.y;
+	}
+	else {
+		overlapY = (largeObjectPos.y + largeObject->getHitboxDim().y) - smallObjectPos.y;
+	}
+
+	overlapX = overlapX < overlapY ? overlapX : 0;
 
 	float xDirection = smallObjectPos.x < largeObjectPos.x ? -1.0 : 1.0;
 
-	smallObject->translate(glm::vec2{ bumpBackX * xDirection, 0 });
+	// Only apply bump back if there's a significant overlap to prevent phasing through objects
+	if (std::abs(overlapX) > 0) {
+		smallObject->translate(glm::vec2{ overlapX * xDirection, 0 });
+	}
 }
 
 void Collider::bumpBackVertical(GameObject* smallObject, EnvironmentObject* largeObject) {
 
 	// Minimum translation vector resolution of the collision
-	glm::vec2 smallObjectPos = smallObject->getPosition();
-	glm::vec2 largeObjectPos = largeObject->getPosition();
+	glm::vec2 smallObjectPos = smallObject->getPosition() + smallObject->getHitboxOffset();
+	glm::vec2 largeObjectPos = largeObject->getPosition() + largeObject->getHitboxOffset();
 
-	float dX = (smallObjectPos.x < largeObjectPos.x) ?
-		(smallObjectPos.x + TEST) - (largeObjectPos.x) :
-		(largeObjectPos.x + TEST) - (smallObjectPos.x);
-	float dY = (smallObjectPos.y < largeObjectPos.y) ?
-		(smallObjectPos.y + TEST) - (largeObjectPos.y) :
-		(largeObjectPos.y + TEST) - (smallObjectPos.y);
-
-
-	float bumpBackY = dX < dY ? 0 : dY;
-
-	float yDirection = smallObjectPos.y < largeObjectPos.y ? -1.0 : 1.0;
-	
-	// TODO : MAKE GAME OBJECT A SUBCLASS OF ANIMATED OBJECT
-	if (!static_cast<Player*>(smallObject)->isGrounded() && yDirection > 0) {
-		static_cast<Player*>(smallObject)->Ground();
-		std::cout << "PLAYED GROUNDED\n";
+	// Calculate vertical overlap
+	float overlapX;
+	if (smallObjectPos.x < largeObjectPos.x) {
+		overlapX = (smallObjectPos.x + smallObject->getHitboxDim().x) - largeObjectPos.x;
+	}
+	else {
+		overlapX = (largeObjectPos.x + largeObject->getHitboxDim().x) - smallObjectPos.x;
 	}
 
-	smallObject->translate(glm::vec2{ 0, bumpBackY * yDirection });
+	float overlapY;
+	if (smallObjectPos.y < largeObjectPos.y) {
+		overlapY = (smallObjectPos.y + smallObject->getHitboxDim().y) - largeObjectPos.y;
+	}
+	else {
+		overlapY = (largeObjectPos.y + largeObject->getHitboxDim().y) - smallObjectPos.y;
+	}
+
+	overlapY = overlapX < overlapY ? 0 : overlapY;
+
+	// Determine direction of bump back
+	float yDirection = smallObjectPos.y < largeObjectPos.y ? -1.0 : 1.0;
+
+	// Apply vertical bump back based on overlap
+	smallObject->translate(glm::vec2{ 0, overlapY * yDirection });
+
+	// Adjust grounded state as necessary
+	if (yDirection > 0) { // Only ground if the player is above the object (floor)
+		static_cast<Player*>(smallObject)->Ground();
+	}
 }
