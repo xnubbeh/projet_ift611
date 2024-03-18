@@ -4,13 +4,13 @@
 
 #include <iostream>
 
-#define MAXIMUM_FRAME_DISPLAY_DURATION 100.0f
 #define MINIMUM_TIME_BEFORE_NEXT_JUMP 512.0f
 
 void Player::Animate(const float elapsedTime) {
 	Move();
 	AnimateSprite(elapsedTime);
 	elapsedTimeSinceLastJump += elapsedTime;
+	++elapsedFrames;
 }
 
 void Player::Move() {
@@ -69,16 +69,11 @@ void Player::MakeFaceDirection(Direction direction) {
 }
 
 void Player::AnimateSprite(const float elapsedTime) {
-	static float elapsedTimeSinceLastSpriteSwitch{ 0 };
 	// reset the animation if the status has changed
 	if (statusHasChanged) {
 		indexInFlipBook = 0;
-		elapsedTimeSinceLastSpriteSwitch = 0;
 	}
-	else {
-		elapsedTimeSinceLastSpriteSwitch += elapsedTime;
-	}
-	if (elapsedTimeSinceLastSpriteSwitch == 0 || elapsedTimeSinceLastSpriteSwitch > MAXIMUM_FRAME_DISPLAY_DURATION) {
+	if (elapsedFrames%3 == 0) {
 		glm::vec2 spriteOffset;
 
 		switch (status) {

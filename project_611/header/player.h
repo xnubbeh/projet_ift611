@@ -31,7 +31,8 @@ public:
 		statusHasChanged{ false },
 		grounded{false},
 		indexInFlipBook{ 0 },
-		jumpButtonReleasedSinceLastJump{true}
+		jumpButtonReleasedSinceLastJump{true},
+		elapsedFrames{0}
 		{};
 
 	~Player() = default;
@@ -62,6 +63,7 @@ private:
 	bool grounded;
 	int indexInFlipBook;
 	bool jumpButtonReleasedSinceLastJump;
+	unsigned long int elapsedFrames;
 };
 
 #endif

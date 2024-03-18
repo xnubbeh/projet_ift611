@@ -68,7 +68,7 @@ Player* Scene::createPlayerGameObject(glm::vec2 playerPos)
 	Player* player = new Player("player", 4.0f);
 	gameObjects.insert(std::pair<std::string, GameObject*>("player", static_cast<GameObject*>(player)));
 
-	RenderData playerSprite = { playerPos, glm::vec2(64, 64), glm::vec2(0, 0), glm::vec2(32, 32), 1.0 , 0.0};
+	RenderData playerSprite { playerPos, glm::vec2(64, 64), glm::vec2(0, 0), glm::vec2(32, 32), 1.0 , 0.0};
 	player->CreateRenderData(std::move(playerSprite));
 
 	return player;

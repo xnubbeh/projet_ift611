@@ -34,7 +34,7 @@ int GameEngine::Init() {
     PerformanceTracker::getInstance()->Start();
 
     // TODO : THIS IS A TEST PLEASE REMOVE ME
-    glfwSwapInterval(0);
+    glfwSwapInterval(1);
 
     return EXIT_SUCCESS;
 }
@@ -69,7 +69,7 @@ void GameEngine::MainLoop()
         long int timeDifference = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - std::chrono::high_resolution_clock::now()).count();
 
         if (timeDifference < 16) { // this is so that the game polls inputs at approx 60fps
-            std::this_thread::sleep_for(std::chrono::milliseconds(16 - timeDifference));
+            std::this_thread::sleep_for(std::chrono::milliseconds(15 - timeDifference));
         }
 
         glfwSwapBuffers(window);
