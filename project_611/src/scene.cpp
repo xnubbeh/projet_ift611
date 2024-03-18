@@ -8,16 +8,19 @@ void Scene::LoadScene() {
 	
 	 //TODO : either do maps programatically like we see below, or load a prebuilt map from some file
 
+	//this makes the floor
 	for (int i=0; i < 50; ++i) {
 		map[i] = createEnvironmentObject(std::to_string(i));
 		RenderData tileSprite{ glm::vec2{50 * i, 0}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5, 0.0};
 		map[i]->CreateRenderData(std::move(tileSprite));
 	}
+	//this makes the wall
 	for (int j = 4; j > 0; --j) {
 		map[j] = createEnvironmentObject(std::to_string(j+1*100));
-		RenderData tileSprite{ glm::vec2{200, 50 * j }, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
+		RenderData tileSprite{ glm::vec2{250, 50 * j }, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
 		map[j]->CreateRenderData(std::move(tileSprite));
 	}
+	//this makes the roof
 	for (int k = 0; k < 60; ++k) {
 		map[k] = createEnvironmentObject(std::to_string(k+1*1000));
 		RenderData tileSprite{ glm::vec2{50 * k, 400}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};

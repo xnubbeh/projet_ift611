@@ -46,7 +46,7 @@ private:
 	glm::vec2 playerWalking[PLAYER_WALKING_NUM_SPRITES] { glm::vec2{32,0},  glm::vec2{64,0}, glm::vec2{96, 0}, glm::vec2{128, 0}, glm::vec2{160, 0}, glm::vec2{192, 0}, glm::vec2{224,0}};
 	glm::vec2 playerIdle[PLAYER_IDLE_NUM_SPRITES]{ glm::vec2{0,0}};
 	glm::vec2 playerJumping[PLAYER_JUMPING_NUM_SPRITES]{ glm::vec2{256,0}, glm::vec2{288, 0}, glm::vec2{320, 0}, glm::vec2{352, 0} };
-	glm::vec2 tiles[TILE_NUM_SPRITES]{ glm::vec2{0, 45} };
+	glm::vec2 tiles[TILE_NUM_SPRITES]{ glm::vec2{0, 48} };
 	glm::vec2 monsterWalking[MONSTER_WALKING_NUM_SPRITES]{ glm::vec2{0,96} };
 
 };
