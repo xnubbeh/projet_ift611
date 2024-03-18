@@ -11,11 +11,6 @@
 //#include "resource_manager.h"
 #include "scene.h"
 
-// The Width of the screen
-const unsigned int SCREEN_WIDTH = 800;
-// The height of the screen
-const unsigned int SCREEN_HEIGHT = 600;
-
 class GameEngine
 {
 	enum GameState {
@@ -28,7 +23,8 @@ class GameEngine
 public:
 	GameState State;
 	bool Keys[1024];
-	unsigned int Width, Height;
+	const unsigned int screenWidth = 1920;
+	const unsigned int screenHeight = 1080;
 	GameEngine() = default;
 	GameEngine(unsigned int, unsigned int);
 	~GameEngine() = default;

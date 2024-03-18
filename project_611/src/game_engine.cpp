@@ -13,10 +13,11 @@ int GameEngine::Init() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-
     glfwWindowHint(GLFW_RESIZABLE, false); //save the trouble of resizing for now
+    
+    Camera::getInstance()->setDimensions(screenWidth, screenHeight);
 
-    window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "game pre-alpha v0.01", NULL, NULL);
+    window = glfwCreateWindow(screenWidth, screenHeight, "game pre-alpha v0.01", glfwGetPrimaryMonitor(), NULL);
     glfwMakeContextCurrent(window);
 
 

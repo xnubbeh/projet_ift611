@@ -7,9 +7,10 @@
 class Camera : public Singleton<Camera> {
 	friend class Singleton<Camera>;
 public:
-	Camera();
+	Camera() = default;
 	~Camera() = default;
 	glm::mat4& Projection();
+	void setDimensions(const unsigned int width, const unsigned int height);
 private:
 	glm::mat4 projection;
 };
