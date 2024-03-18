@@ -18,9 +18,11 @@ public:
 	void checkCollision(const std::map<std::string, GameObject*>& animatedObjects, const std::map<std::string, EnvironmentObject*>& staticObjects);
 
 private:
-	bool detectCollision(const glm::vec2& pos1, const glm::vec2& pos2);
+	/*bool detectCollision(const glm::vec2& pos1, const glm::vec2& pos2);
 	bool detectCollisionX(const glm::vec2& pos1, const glm::vec2& pos2);
-	bool detectCollisionY(const glm::vec2& pos1, const glm::vec2& pos2);
+	bool detectCollisionY(const glm::vec2& pos1, const glm::vec2& pos2);*/
+
+	bool detectCollision(const GameObject* obj1, const GameObject* obj2);
 
 	// collision between an actor and a solid object
 	void bumpBackHorizontal(GameObject* smallObject, EnvironmentObject* largeObject);

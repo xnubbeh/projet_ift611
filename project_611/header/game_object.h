@@ -4,6 +4,8 @@
 #include <string>
 #include "sprite.h"
 
+#include "glm.hpp"
+
 #define NO_SPRITE -1
 
 class GameObject
@@ -19,7 +21,13 @@ public:
 	RenderData& GetRenderData();
 	void translate(const glm::vec2& translation);
 	void changeSpriteFrame(const glm::vec2& newSpriteAtlasPosition);
-	glm::vec2 getPosition();
+	glm::vec2 getPosition() const;
+
+	void setHitboxDim(const glm::vec2& dim);
+	void setHitboxOffset(const glm::vec2& offset);
+
+	glm::vec2 getHitboxDim() const;
+	glm::vec2 getHitboxOffset() const;
 
 private:
 	// private car les objets DOIVENT avoir un nom
@@ -30,6 +38,10 @@ protected:
 
 	RenderData renderData;
 	int spriteIndex;
+
+	glm::vec2 hitboxDim{};
+	glm::vec2 hitboxOffset{};
+	
 
 
 
