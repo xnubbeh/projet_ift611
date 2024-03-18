@@ -33,7 +33,6 @@ int GameEngine::Init() {
     Sprite::getInstance()->Init();
     PerformanceTracker::getInstance()->Start();
 
-    // TODO : THIS IS A TEST PLEASE REMOVE ME
     glfwSwapInterval(1);
 
     return EXIT_SUCCESS;
