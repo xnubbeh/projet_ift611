@@ -4,11 +4,13 @@
 
 #include <iostream>
 
-#define MAXIMUM_FRAME_DISPLAY_DURATION 32.0f // about 2 frames
+#define MAXIMUM_FRAME_DISPLAY_DURATION 100.0f
+#define MINIMUM_TIME_BEFORE_NEXT_JUMP 512.0f
 
 void Player::Animate(const float elapsedTime) {
 	Move();
 	AnimateSprite(elapsedTime);
+	elapsedTimeSinceLastJump += elapsedTime;
 }
 
 void Player::Move() {
@@ -37,6 +39,9 @@ void Player::Move() {
 	//up and down
 	if (InputManager::getInstance()->pressedKey[Key::SPACE]) {
 		Jump();
+	}
+	else {
+		jumpButtonReleasedSinceLastJump = true;
 	}
 	//else if (InputManager::getInstance()->pressedKey[Key::S] && !InputManager::getInstance()->pressedKey[Key::W]) {
 	//	velocity += glm::vec2(0, -1);
@@ -108,7 +113,9 @@ void Player::Gravity() {
 }
 
 void Player::Jump() {
-	if (grounded) {
+	if (grounded && elapsedTimeSinceLastJump > MINIMUM_TIME_BEFORE_NEXT_JUMP && jumpButtonReleasedSinceLastJump) {
+		jumpButtonReleasedSinceLastJump = false;
+		elapsedTimeSinceLastJump = 0.0f;
 		grounded = false;
 		verticalVelocity = 16.0f;
 	}
