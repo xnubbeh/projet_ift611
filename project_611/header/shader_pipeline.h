@@ -16,8 +16,6 @@ public:
     void Bind();
     void Release();
 
-
-
     // constructor
     ShaderPipeline(std::string name);
     ShaderPipeline() { ShaderPipeline{ "" }; }
@@ -37,7 +35,6 @@ public:
 
     GLuint VertexShader() { return vertexShaderProgram; }
     GLuint FragmentShader() { return fragmentShaderProgram; }
-
 
 private:
 

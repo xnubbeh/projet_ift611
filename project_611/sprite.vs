@@ -25,10 +25,10 @@ void main()
     vec2 atlasOffset = atlasOffset_spriteSize.xy;
     vec2 spriteSize = atlasOffset_spriteSize.zw;
 
-    float left = atlasOffset.x;
-    float bottom = atlasOffset.y;
-    float right = atlasOffset.x + spriteSize.x;
-    float top = atlasOffset.y + spriteSize.y;
+    float left = atlasOffset.x+0.5;
+    float bottom = atlasOffset.y+0.5;
+    float right = atlasOffset.x + spriteSize.x-0.5;
+    float top = atlasOffset.y + spriteSize.y-0.5;
 
     // POSITION CALCULATION
     vec2 vertices[6] =

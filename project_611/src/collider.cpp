@@ -1,5 +1,6 @@
 #include <cmath>
 #include "../header/collider.h"
+#include "../header/player.h"
 
 #define TEST 50 // TODO : figure a better way to do get the collision boxes of objects
 
@@ -77,6 +78,12 @@ void Collider::bumpBackVertical(GameObject* smallObject, EnvironmentObject* larg
 	float bumpBackY = dX < dY ? 0 : dY;
 
 	float yDirection = smallObjectPos.y < largeObjectPos.y ? -1.0 : 1.0;
+	
+	// TODO : MAKE GAME OBJECT A SUBCLASS OF ANIMATED OBJECT
+	if (!static_cast<Player*>(smallObject)->isGrounded() && yDirection > 0) {
+		static_cast<Player*>(smallObject)->Ground();
+		std::cout << "PLAYED GROUNDED\n";
+	}
 
 	smallObject->translate(glm::vec2{ 0, bumpBackY * yDirection });
 }

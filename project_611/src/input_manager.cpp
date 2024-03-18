@@ -14,6 +14,9 @@ void InputManager::ProcessInput(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
         InputManager::getInstance()->pressedKey[Key::D] = true;
     }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        InputManager::getInstance()->pressedKey[Key::SPACE] = true;
+    }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_RELEASE) {
         InputManager::getInstance()->pressedKey[Key::W] = false;
     }
@@ -25,5 +28,8 @@ void InputManager::ProcessInput(GLFWwindow* window) {
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_RELEASE) {
         InputManager::getInstance()->pressedKey[Key::D] = false;
+    }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) {
+        InputManager::getInstance()->pressedKey[Key::SPACE] = false;
     }
 }
