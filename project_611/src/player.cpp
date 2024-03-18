@@ -17,31 +17,31 @@ void Player::Move() {
 
 	velocity = glm::vec2{};
 
-	if (grounded) {
-		//sideways
-		if (InputManager::getInstance()->pressedKey[Key::A] && !InputManager::getInstance()->pressedKey[Key::D]) {
-			horizontalVelocity = -1.0f;
-			direction = Direction::Left;
-			status = Status::Walking;
-		}
-		else if (InputManager::getInstance()->pressedKey[Key::D] && !InputManager::getInstance()->pressedKey[Key::A]) {
-			horizontalVelocity = 1.0f;
-			direction = Direction::Right;
-			status = Status::Walking;
-		}
-		else {
-			horizontalVelocity = 0.0f;
-			status = Status::Idle;
-		}
 
-		//up and down
-		if (InputManager::getInstance()->pressedKey[Key::SPACE]) {
-			Jump();
-		}
-		//else if (InputManager::getInstance()->pressedKey[Key::S] && !InputManager::getInstance()->pressedKey[Key::W]) {
-		//	velocity += glm::vec2(0, -1);
-		//}
+	//sideways
+	if (InputManager::getInstance()->pressedKey[Key::A] && !InputManager::getInstance()->pressedKey[Key::D]) {
+		horizontalDirection = -1.0f;
+		direction = Direction::Left;
+		status = Status::Walking;
 	}
+	else if (InputManager::getInstance()->pressedKey[Key::D] && !InputManager::getInstance()->pressedKey[Key::A]) {
+		horizontalDirection = 1.0f;
+		direction = Direction::Right;
+		status = Status::Walking;
+	}
+	else {
+		horizontalDirection = 0.0f;
+		status = Status::Idle;
+	}
+
+	//up and down
+	if (InputManager::getInstance()->pressedKey[Key::SPACE]) {
+		Jump();
+	}
+	//else if (InputManager::getInstance()->pressedKey[Key::S] && !InputManager::getInstance()->pressedKey[Key::W]) {
+	//	velocity += glm::vec2(0, -1);
+	//}
+
 	
 
 	if (direction != previousDirection) {
@@ -49,7 +49,7 @@ void Player::Move() {
 	}
 
 	Gravity();
-	velocity = glm::vec2(horizontalVelocity * horizontalSpeed, verticalVelocity);
+	velocity = glm::vec2(horizontalDirection * horizontalVelocity, verticalVelocity);
 
 	translate(velocity);
 	statusHasChanged = previousStatus != status;
