@@ -9,11 +9,13 @@ class EnvironmentObject : public GameObject
 public:
 	EnvironmentObject(const std::string& name) : GameObject{ name } {};
 	~EnvironmentObject() = default;
-
+	
+	void SetIsGround();
+	bool IsGround();
 private:
 	// private car les objets DOIVENT avoir un nom
 	EnvironmentObject() = default;
-
+	bool isActualGround {false};
 
 
 };

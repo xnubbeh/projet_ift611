@@ -40,6 +40,9 @@ public:
 	
 
 private:
+	void OuterScreenBoundingBoxes();
+	void LoadPlatforms();
+
 	// la racine de la scene
 	GameObject* root;
 
@@ -51,7 +54,6 @@ private:
 	Camera* camera;
 
 	int width, height;
-
 };
 
 #endif // SCENE_H
