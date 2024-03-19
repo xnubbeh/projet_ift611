@@ -38,7 +38,7 @@ public:
 	~Player() = default;
 	void Animate(const float elapsedTime) override;
 	bool isGrounded() { return grounded; }
-	void Ground() { grounded = true;}
+	void Ground(bool resetVerticalVelocity);
 
 private:
 	// private cstor car les objets DOIVENT avoir un nom

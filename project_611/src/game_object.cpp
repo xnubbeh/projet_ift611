@@ -2,7 +2,8 @@
 
 GameObject::GameObject(const std::string& name) :
 	name { name },
-	spriteIndex { NO_SPRITE }
+	spriteIndex { NO_SPRITE },
+	collidable { false }
 {}
 
 void GameObject::Animate(const float elapsedTime) {}
@@ -38,6 +39,7 @@ glm::vec2 GameObject::getPosition() const {
 
 void GameObject::setHitboxDim(const glm::vec2& dim)
 {
+	collidable = true;
 	hitboxDim = dim;
 }
 
@@ -52,4 +54,8 @@ glm::vec2 GameObject::getHitboxDim() const{
 
 glm::vec2 GameObject::getHitboxOffset() const{
 	return hitboxOffset;
+}
+
+bool GameObject::isCollidable() const {
+	return collidable;
 }

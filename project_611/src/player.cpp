@@ -116,3 +116,10 @@ void Player::Jump() {
 	}
 }
 
+void Player::Ground(bool resetVerticalVelocity) {
+	if (resetVerticalVelocity) {
+		verticalVelocity = 0.0f;
+	}
+
+	grounded = true;
+}

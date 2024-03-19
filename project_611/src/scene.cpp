@@ -4,40 +4,12 @@
 
 void Scene::LoadScene() {
 	Player* player = createPlayerGameObject(glm::vec2(500, 150));
-	//std::cout << "PLAYER POS: " << player->getPosition().x << " " << player->getPosition().y << std::endl;
-	//std::cout << "PLAYER POS: " << player->getPosition().x + player->getHitboxOffset().x << " " << player->getPosition().y + player->getHitboxOffset().y << std::endl;
-	GameObject* map[200];
+
+	// create the bounding box of the screen so the player cant fall out of the map
+	OuterScreenBoundingBoxes();
 	
-	 //TODO : either do maps programatically like we see below, or load a prebuilt map from some file
-
-	//this makes the floor
-	for (int i=0; i < 50; ++i) {
-		map[i] = createEnvironmentObject(std::to_string(i));
-		RenderData tileSprite{ glm::vec2{50 * i, 0}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5, 0.0};
-		map[i]->CreateRenderData(std::move(tileSprite));
-		map[i]->setHitboxDim(glm::vec2(50, 50));
-	}
-	//this makes the wall
-	for (int j = 4; j > 0; --j) {
-		map[j] = createEnvironmentObject(std::to_string(j+1*100));
-		RenderData tileSprite{ glm::vec2{250, 50 * j }, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
-		map[j]->CreateRenderData(std::move(tileSprite));
-		map[j]->setHitboxDim(glm::vec2(50, 50));
-	}
-	//this makes the roof
-	for (int k = 0; k < 60; ++k) {
-		map[k] = createEnvironmentObject(std::to_string(k+1*1000));
-		RenderData tileSprite{ glm::vec2{50 * k, 400}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0};
-		map[k]->CreateRenderData(std::move(tileSprite));
-		map[k]->setHitboxDim(glm::vec2(50, 50));
-	}
-
-	//this is a random block
-	map[2] = createEnvironmentObject("3000");
-	RenderData tileSprite{ glm::vec2{600,150}, glm::vec2{50, 50},SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0) , glm::vec2{32, 32}, 0.5 , 0.0 };
-	map[2]->CreateRenderData(std::move(tileSprite));
-	map[2]->setHitboxDim(glm::vec2(50, 50));
-
+	LoadPlatforms();
+	
 }
 
 GameObject* Scene::GetRoot()
@@ -80,12 +52,13 @@ Player* Scene::createPlayerGameObject(glm::vec2 playerPos)
 	}
 
 	Player* player = new Player("player", 4.0f);
-	gameObjects.insert(std::pair<std::string, GameObject*>("player", static_cast<GameObject*>(player)));
-
 	RenderData playerSprite { playerPos, glm::vec2(64, 64), glm::vec2(0, 0), glm::vec2(32, 32), 1.0 , 0.0};
 	player->CreateRenderData(std::move(playerSprite));
 	player->setHitboxDim(std::move(hitboxDim));
 	player->setHitboxOffset(std::move(hitboxOffset));
+
+	gameObjects.insert(std::pair<std::string, GameObject*>("player", static_cast<GameObject*>(player)));
+	addMovableObject(player);
 
 	return player;
 }
@@ -116,5 +89,101 @@ void Scene::Animate(const float elapsedTime) {
 	std::for_each(this->getAllGameObjects().begin(), this->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
 		pair.second->Animate(elapsedTime);
 		});
-	collider.checkCollision(gameObjects, environmentObjects);
+	collider.checkCollision(collidableMovableObjects, collidableImmovableObjects);
+}
+
+// screen width/height 1920 : 1080
+void Scene::OuterScreenBoundingBoxes() {
+	// Create GameObjects
+	EnvironmentObject* bottom, * top, * left, * right;
+	bottom = createEnvironmentObject("bottomOuterPlatform");
+	top = createEnvironmentObject("topOuterPlatform");
+	left = createEnvironmentObject("leftOuterPlatform");
+	right = createEnvironmentObject("rightOuterPlatform");
+
+	// Assign them some render data, mostly for position and dimensions. Other fields are not required
+	RenderData bottomRD{ glm::vec2{-10,-50}, {1940, 50}, SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0),  glm::vec2{32, 32}, 0.5, 0.0 };
+	RenderData topRD{ glm::vec2{-10,1080}, {1940, 50}, SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0),  glm::vec2{32, 32}, 0.5, 0.0 };
+	RenderData leftRD{ glm::vec2{-50,0}, {50, 1080}, SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0),  glm::vec2{32, 32}, 0.5, 0.0 };
+	RenderData rightRD{ glm::vec2{1920,0}, {50, 1080}, SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0),  glm::vec2{32, 32}, 0.5, 0.0 };
+	bottom->CreateRenderData(bottomRD);
+	top->CreateRenderData(topRD);
+	left->CreateRenderData(leftRD);
+	right->CreateRenderData(rightRD);
+
+	// Assign them a bounding box
+	glm::vec2 horizontalBoundingBoxDimensions{1940, 50};
+	glm::vec2 verticalBoundingBoxDimensions{50, 1080};
+	bottom->setHitboxDim(horizontalBoundingBoxDimensions);
+	top->setHitboxDim(horizontalBoundingBoxDimensions);
+	left->setHitboxDim(verticalBoundingBoxDimensions);
+	right->setHitboxDim(verticalBoundingBoxDimensions);
+
+	addImmovableObject(bottom);
+	addImmovableObject(top);
+	addImmovableObject(left);
+	addImmovableObject(right);
+}
+
+void Scene::LoadPlatforms() {
+	std::string platform{ "platform" };
+
+	for (int i{ 0 }; i < 4; ++i) {
+		std::string level{ std::to_string(i*100) };
+		CreatePlatform(platform + level, 30, glm::vec2{ 200, i * 250 + 150 });
+	}
+}
+
+void Scene::CreatePlatform(std::string uniqueName, int length, glm::vec2 position) {
+	std::string platform{ "platform" };
+	glm::vec2 platformDimensions{ 50,50 };
+	glm::vec2 platformBoundingBoxDimensions{ length*50, 50 };
+	glm::vec2 spriteSize{ 32,32 };
+	glm::vec2 spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0);
+	RenderData renderData{ glm::vec2{}, platformDimensions, spriteOffset, spriteSize, 0.5, 0.0 };
+
+	for (int i{ 0 }; i < length; ++i) {
+		EnvironmentObject* currentPlatform = createEnvironmentObject(platform + uniqueName + std::to_string(i));
+		glm::vec2 platformPosition{ (i * 50) + position.x, position.y };
+		renderData.pos = platformPosition;
+		currentPlatform->CreateRenderData(renderData);
+		if (i == 0) {
+			currentPlatform->setHitboxDim(platformBoundingBoxDimensions);
+			currentPlatform->SetIsGround();
+			addImmovableObject(currentPlatform);
+		}
+	}
+}
+
+void Scene::CreateWall(std::string uniqueName, int height, glm::vec2 position) {
+	std::string wall{ "wall" };
+	glm::vec2 spriteScreenDimensions{ 50,50 };
+	glm::vec2 wallBoundingBoxDimensions{ 50, height * 50 };
+	glm::vec2 spriteSize{ 32,32 };
+	glm::vec2 spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0);
+	RenderData renderData{ glm::vec2{}, spriteScreenDimensions, spriteOffset, spriteSize, 0.5, 0.0 };
+
+	for (int i{ 0 }; i < height; ++i) {
+		EnvironmentObject* currentPlatform = createEnvironmentObject(wall + uniqueName + std::to_string(i));
+		glm::vec2 platformPosition{ position.x, position.y + (i * 50)};
+		renderData.pos = platformPosition;
+		currentPlatform->CreateRenderData(renderData);
+		if (i == 0) {
+			currentPlatform->setHitboxDim(wallBoundingBoxDimensions);
+			currentPlatform->SetIsGround();
+			addImmovableObject(currentPlatform);
+		}
+	}
+}
+
+void Scene::addMovableObject(GameObject* obj) {
+	if (obj->isCollidable()) {
+		collidableMovableObjects.push_back(obj);
+	}
+}
+
+void Scene::addImmovableObject(EnvironmentObject* obj) {
+	if (obj->isCollidable()) {
+		collidableImmovableObjects.push_back(obj);
+	}
 }

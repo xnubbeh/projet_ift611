@@ -1,33 +1,19 @@
+#include <algorithm>
 #include <cmath>
 #include "../header/collider.h"
 #include "../header/player.h"
 
-#define TEST 50 // TODO : figure a better way to do get the collision boxes of objects
-#define TEST_X 45
-#define TEST_Y 50
-
-void Collider::checkCollision(const std::map<std::string, GameObject*>& animatedObjects, const std::map<std::string, EnvironmentObject*>& staticObjects) {
-	for (std::pair<std::string, GameObject*> animatedObject : animatedObjects) {
-		// iterate through the scene's static objects for collisions
-		// this could be refined if performances are affected
 
 
-		for (std::pair<std::string, EnvironmentObject*> environmentObject : staticObjects) {
-			if (detectCollision(animatedObject.second,environmentObject.second)) {
-				bumpBackVertical(animatedObject.second, environmentObject.second);
-				//bumpBackHorizontal(animatedObject.second, environmentObject.second);
+void Collider::checkCollision(const std::vector<GameObject*>& animatedObjects, const std::vector<EnvironmentObject*>& staticObjects) {
+	std::for_each(begin(animatedObjects), end(animatedObjects), [&](GameObject* animatedObject) {
+		std::for_each(begin(staticObjects), end(staticObjects), [&](EnvironmentObject* staticObject) {
+			if (detectCollision(animatedObject, staticObject)) {
+				bumpBackHorizontal(animatedObject, staticObject);
+				bumpBackVertical(animatedObject, staticObject);
 			}
-		}
-
-		// Il est nécessaire de répéter cette boucle deux fois p
-		for (std::pair<std::string, EnvironmentObject*> environmentObject : staticObjects) {
-			if (detectCollision(animatedObject.second, environmentObject.second)) {
-				bumpBackHorizontal(animatedObject.second, environmentObject.second);
-			}
-		}
-
-		// TODO : we should probably iterate through other animated objects as well 
-	}
+			});
+		});
 }
 
 bool Collider::detectCollision(const GameObject* obj1, const GameObject* obj2)
@@ -70,13 +56,8 @@ void Collider::bumpBackHorizontal(GameObject* smallObject, EnvironmentObject* la
 	}
 
 	overlapX = overlapX < overlapY ? overlapX : 0;
-
 	float xDirection = smallObjectPos.x < largeObjectPos.x ? -1.0 : 1.0;
-
-	// Only apply bump back if there's a significant overlap to prevent phasing through objects
-	if (std::abs(overlapX) > 0) {
-		smallObject->translate(glm::vec2{ overlapX * xDirection, 0 });
-	}
+	smallObject->translate(glm::vec2{ overlapX * xDirection, 0 });
 }
 
 void Collider::bumpBackVertical(GameObject* smallObject, EnvironmentObject* largeObject) {
@@ -112,6 +93,6 @@ void Collider::bumpBackVertical(GameObject* smallObject, EnvironmentObject* larg
 
 	// Adjust grounded state as necessary
 	if (yDirection > 0) { // Only ground if the player is above the object (floor)
-		static_cast<Player*>(smallObject)->Ground();
+		static_cast<Player*>(smallObject)->Ground(largeObject->IsGround() && overlapY > 0);
 	}
 }
