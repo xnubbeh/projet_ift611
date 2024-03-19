@@ -1,23 +1,19 @@
+#include <algorithm>
 #include <cmath>
 #include "../header/collider.h"
 #include "../header/player.h"
 
 
-void Collider::checkCollision(const std::map<std::string, GameObject*>& animatedObjects, const std::map<std::string, EnvironmentObject*>& staticObjects) {
-	for (std::pair<std::string, GameObject*> animatedObject : animatedObjects) {
-		// iterate through the scene's static objects for collisions
-		// this could be refined if performances are affected
 
-		for (std::pair<std::string, EnvironmentObject*> environmentObject : staticObjects) {
-			if (detectCollision(animatedObject.second,environmentObject.second)) {
-				bumpBackHorizontal(animatedObject.second, environmentObject.second);
-				bumpBackVertical(animatedObject.second, environmentObject.second);
-
+void Collider::checkCollision(const std::vector<GameObject*>& animatedObjects, const std::vector<EnvironmentObject*>& staticObjects) {
+	std::for_each(begin(animatedObjects), end(animatedObjects), [&](GameObject* animatedObject) {
+		std::for_each(begin(staticObjects), end(staticObjects), [&](EnvironmentObject* staticObject) {
+			if (detectCollision(animatedObject, staticObject)) {
+				bumpBackHorizontal(animatedObject, staticObject);
+				bumpBackVertical(animatedObject, staticObject);
 			}
-		}
-
-		// TODO : we should probably iterate through other animated objects as well 
-	}
+			});
+		});
 }
 
 bool Collider::detectCollision(const GameObject* obj1, const GameObject* obj2)

@@ -53,6 +53,7 @@ Player* Scene::createPlayerGameObject(glm::vec2 playerPos)
 
 	Player* player = new Player("player", 4.0f);
 	gameObjects.insert(std::pair<std::string, GameObject*>("player", static_cast<GameObject*>(player)));
+	collidableMovableObjects.push_back(player);
 
 	RenderData playerSprite { playerPos, glm::vec2(64, 64), glm::vec2(0, 0), glm::vec2(32, 32), 1.0 , 0.0};
 	player->CreateRenderData(std::move(playerSprite));
@@ -88,7 +89,7 @@ void Scene::Animate(const float elapsedTime) {
 	std::for_each(this->getAllGameObjects().begin(), this->getAllGameObjects().end(), [elapsedTime](const std::pair<std::string, GameObject*>& pair) {
 		pair.second->Animate(elapsedTime);
 		});
-	collider.checkCollision(gameObjects, environmentObjects);
+	collider.checkCollision(collidableMovableObjects, collidableImmovableObjects);
 }
 
 // screen width/height 1920 : 1080
@@ -117,31 +118,59 @@ void Scene::OuterScreenBoundingBoxes() {
 	top->setHitboxDim(horizontalBoundingBoxDimensions);
 	left->setHitboxDim(verticalBoundingBoxDimensions);
 	right->setHitboxDim(verticalBoundingBoxDimensions);
-}
 
+	collidableImmovableObjects.push_back(bottom);
+	collidableImmovableObjects.push_back(top);
+	collidableImmovableObjects.push_back(left);
+	collidableImmovableObjects.push_back(right);
+}
 
 void Scene::LoadPlatforms() {
 	std::string platform{ "platform" };
-	glm::vec2 platformDimensions{ 50,50 };
-	glm::vec2 platformBoundingBoxDimensions{1500, 50};
-	glm::vec2 spriteSize { 32,32 };
-	glm::vec2 spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0);
-	RenderData renderData{ glm::vec2{}, platformDimensions, spriteOffset, spriteSize, 0.5, 0.0 };
-
 
 	for (int i{ 0 }; i < 4; ++i) {
 		std::string level{ std::to_string(i*100) };
-		for (int j{ 0 }; j < 30; ++j) {
-			EnvironmentObject* currentPlatform = createEnvironmentObject(platform + level + std::to_string(j));
-			glm::vec2 platformPosition{ (j * 50) + 200, i * 250 + 150 };
-			renderData.pos = platformPosition;
-			currentPlatform->CreateRenderData(renderData);
-			if (j == 0) {
-				currentPlatform->setHitboxDim(platformBoundingBoxDimensions);
-				currentPlatform->SetIsGround();
-			}
+		CreatePlatform(platform + level, 30, glm::vec2{ 200, i * 250 + 150 });
+	}
+}
+
+void Scene::CreatePlatform(std::string uniqueName, int length, glm::vec2 position) {
+	std::string platform{ "platform" };
+	glm::vec2 platformDimensions{ 50,50 };
+	glm::vec2 platformBoundingBoxDimensions{ length*50, 50 };
+	glm::vec2 spriteSize{ 32,32 };
+	glm::vec2 spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0);
+	RenderData renderData{ glm::vec2{}, platformDimensions, spriteOffset, spriteSize, 0.5, 0.0 };
+
+	for (int i{ 0 }; i < length; ++i) {
+		EnvironmentObject* currentPlatform = createEnvironmentObject(platform + uniqueName + std::to_string(i));
+		glm::vec2 platformPosition{ (i * 50) + position.x, position.y };
+		renderData.pos = platformPosition;
+		currentPlatform->CreateRenderData(renderData);
+		if (i == 0) {
+			currentPlatform->setHitboxDim(platformBoundingBoxDimensions);
+			currentPlatform->SetIsGround();
+			collidableImmovableObjects.push_back(currentPlatform);
 		}
 	}
+}
 
-	
+void Scene::CreateWall(std::string uniqueName, int height, glm::vec2 position) {
+	std::string wall{ "wall" };
+	glm::vec2 spriteScreenDimensions{ 50,50 };
+	glm::vec2 wallBoundingBoxDimensions{ 50, height * 50 };
+	glm::vec2 spriteSize{ 32,32 };
+	glm::vec2 spriteOffset = SpriteIndex::getInstance()->getSpriteOffset(SpriteType::FloorTiles, 0);
+	RenderData renderData{ glm::vec2{}, spriteScreenDimensions, spriteOffset, spriteSize, 0.5, 0.0 };
+
+	for (int i{ 0 }; i < height; ++i) {
+		EnvironmentObject* currentPlatform = createEnvironmentObject(wall + uniqueName + std::to_string(i));
+		glm::vec2 platformPosition{ position.x, position.y + (i * 50)};
+		renderData.pos = platformPosition;
+		currentPlatform->CreateRenderData(renderData);
+		if (i == 0) {
+			currentPlatform->setHitboxDim(wallBoundingBoxDimensions);
+			currentPlatform->SetIsGround();
+		}
+	}
 }

@@ -17,7 +17,9 @@ int GameEngine::Init() {
     
     Camera::getInstance()->setDimensions(screenWidth, screenHeight);
 
-    window = glfwCreateWindow(screenWidth, screenHeight, "game pre-alpha v0.01", glfwGetPrimaryMonitor(), NULL);
+  //  window = glfwCreateWindow(screenWidth, screenHeight, "game pre-alpha v0.01", glfwGetPrimaryMonitor(), NULL);
+    window = glfwCreateWindow(screenWidth, screenHeight, "game pre-alpha v0.01", NULL, NULL);
+
     glfwMakeContextCurrent(window);
 
 

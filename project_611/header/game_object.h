@@ -29,6 +29,8 @@ public:
 	glm::vec2 getHitboxDim() const;
 	glm::vec2 getHitboxOffset() const;
 
+	bool isCollidable() const;
+
 private:
 	// private car les objets DOIVENT avoir un nom
 	GameObject() = default;
@@ -41,10 +43,8 @@ protected:
 
 	glm::vec2 hitboxDim{};
 	glm::vec2 hitboxOffset{};
-	
 
-
-
+	bool collidable;
 };
 
 #endif

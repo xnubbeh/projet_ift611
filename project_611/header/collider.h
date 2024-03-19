@@ -1,7 +1,7 @@
 #ifndef COLLIDER_H
 #define COLLIDER_H
 
-#include <map>
+#include <vector>
 #include <string>
 #include <algorithm>
 #include <iostream>
@@ -15,7 +15,7 @@ public:
 	Collider() = default;
 	~Collider() = default;
 
-	void checkCollision(const std::map<std::string, GameObject*>& animatedObjects, const std::map<std::string, EnvironmentObject*>& staticObjects);
+	void checkCollision(const std::vector<GameObject*>& animatedObjects, const std::vector<EnvironmentObject*>& staticObjects);
 
 private:
 	/*bool detectCollision(const glm::vec2& pos1, const glm::vec2& pos2);
