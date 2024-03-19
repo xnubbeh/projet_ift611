@@ -39,6 +39,7 @@ glm::vec2 GameObject::getPosition() const {
 
 void GameObject::setHitboxDim(const glm::vec2& dim)
 {
+	collidable = true;
 	hitboxDim = dim;
 }
 

@@ -60,6 +60,10 @@ private:
 	/// <param name="position">The position of the bottom left of this wall</param>
 	void CreateWall(std::string uniqueName, int height, glm::vec2 position);
 
+	void addMovableObject(GameObject* obj);
+	void addImmovableObject(EnvironmentObject* obj);
+
+
 	// la racine de la scene
 	GameObject* root;
 

@@ -52,13 +52,13 @@ Player* Scene::createPlayerGameObject(glm::vec2 playerPos)
 	}
 
 	Player* player = new Player("player", 4.0f);
-	gameObjects.insert(std::pair<std::string, GameObject*>("player", static_cast<GameObject*>(player)));
-	collidableMovableObjects.push_back(player);
-
 	RenderData playerSprite { playerPos, glm::vec2(64, 64), glm::vec2(0, 0), glm::vec2(32, 32), 1.0 , 0.0};
 	player->CreateRenderData(std::move(playerSprite));
 	player->setHitboxDim(std::move(hitboxDim));
 	player->setHitboxOffset(std::move(hitboxOffset));
+
+	gameObjects.insert(std::pair<std::string, GameObject*>("player", static_cast<GameObject*>(player)));
+	addMovableObject(player);
 
 	return player;
 }
@@ -119,10 +119,10 @@ void Scene::OuterScreenBoundingBoxes() {
 	left->setHitboxDim(verticalBoundingBoxDimensions);
 	right->setHitboxDim(verticalBoundingBoxDimensions);
 
-	collidableImmovableObjects.push_back(bottom);
-	collidableImmovableObjects.push_back(top);
-	collidableImmovableObjects.push_back(left);
-	collidableImmovableObjects.push_back(right);
+	addImmovableObject(bottom);
+	addImmovableObject(top);
+	addImmovableObject(left);
+	addImmovableObject(right);
 }
 
 void Scene::LoadPlatforms() {
@@ -150,7 +150,7 @@ void Scene::CreatePlatform(std::string uniqueName, int length, glm::vec2 positio
 		if (i == 0) {
 			currentPlatform->setHitboxDim(platformBoundingBoxDimensions);
 			currentPlatform->SetIsGround();
-			collidableImmovableObjects.push_back(currentPlatform);
+			addImmovableObject(currentPlatform);
 		}
 	}
 }
@@ -171,6 +171,19 @@ void Scene::CreateWall(std::string uniqueName, int height, glm::vec2 position) {
 		if (i == 0) {
 			currentPlatform->setHitboxDim(wallBoundingBoxDimensions);
 			currentPlatform->SetIsGround();
+			addImmovableObject(currentPlatform);
 		}
+	}
+}
+
+void Scene::addMovableObject(GameObject* obj) {
+	if (obj->isCollidable()) {
+		collidableMovableObjects.push_back(obj);
+	}
+}
+
+void Scene::addImmovableObject(EnvironmentObject* obj) {
+	if (obj->isCollidable()) {
+		collidableImmovableObjects.push_back(obj);
 	}
 }
