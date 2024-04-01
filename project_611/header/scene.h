@@ -11,6 +11,7 @@
 #include "environment_object.h"
 #include "camera.h"
 #include "player.h"
+#include "monster.h"
 #include "collider.h"
 
 class Scene : public Singleton<Scene> {
@@ -32,6 +33,7 @@ public:
 	void LoadScene();
 
 	Player* createPlayerGameObject(glm::vec2 pos);
+	Monster* createMonsterGameObject(glm::vec2 pos, const std::string& name,float speed, float initialDirection, unsigned int loopLength);
 	GameObject* playerObject;
 	RenderData playerSprite;
 
