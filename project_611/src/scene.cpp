@@ -4,7 +4,9 @@
 
 void Scene::LoadScene() {
 	Player* player = createPlayerGameObject(glm::vec2(300, 300));
-	Monster* monster = createMonsterGameObject(glm::vec2(1200, 300), "goblin1");
+	Monster* monster1 = createMonsterGameObject(glm::vec2(1200, 300), "goblin1",1.0f, -1.0f ,30);
+	Monster* monster2 = createMonsterGameObject(glm::vec2(600, 500), "goblin2", 1.0f, 1.0f, 60);
+	Monster* monster3 = createMonsterGameObject(glm::vec2(800, 700), "goblin3", 0.5f, -1.0f, 40);
 
 	// create the bounding box of the screen so the player cant fall out of the map
 	OuterScreenBoundingBoxes();
@@ -64,7 +66,7 @@ Player* Scene::createPlayerGameObject(glm::vec2 playerPos)
 	return player;
 }
 
-Monster* Scene::createMonsterGameObject(glm::vec2 monsterPos,const std::string& name)
+Monster* Scene::createMonsterGameObject(glm::vec2 monsterPos,const std::string& name,float speed, float initialDirection, unsigned int loopLength)
 {
 	GameObject* monsterObject = getGameObject(name);
 	//hit box all the same for every monster???
@@ -75,7 +77,7 @@ Monster* Scene::createMonsterGameObject(glm::vec2 monsterPos,const std::string& 
 	{
 		return static_cast<Monster*>(monsterObject);
 	}
-	Monster* monster = new Monster(name, 2.0f); //might want to set the speed when you create it 
+	Monster* monster = new Monster(name, speed,initialDirection,loopLength); //might want to set the speed when you create it 
 	RenderData monsterSprite{ monsterPos, glm::vec2(64, 64), glm::vec2(0, 96), glm::vec2(32, 32), 1.0 , 0.0 };
 	monster->CreateRenderData(std::move(monsterSprite));
 	monster->setHitboxDim(std::move(hitboxDim));

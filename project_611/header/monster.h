@@ -20,17 +20,18 @@ class Monster : public GameObject
 	};
 
 public:
-	Monster(const std::string& name, float speed) : 
+	Monster(const std::string& name, float speed, float initialDirection, unsigned int loopLength) : 
 		GameObject{ name },
 		horizontalVelocity{ speed + 6.0f },
-		horizontalDirection{ -1.0f }, //this should be a param
+		horizontalDirection{ initialDirection },
 		verticalVelocity{ 0 }, 
 		direction{ Direction::Right },
 		status{ Status::Idle },
 		statusHasChanged{ false },
 		grounded{ false },
 		indexInFlipBook{ 0 },
-		elapsedFrames{ 0 }
+		elapsedFrames{ 0 },
+		loopLength{ loopLength }
 		{};
 	~Monster() = default;
 	void Animate(const float elapsedTime) override;
@@ -43,7 +44,7 @@ private:
 	Monster() = default;
 
 	// private methods
-	void Move();
+	void Move(unsigned int loopLength);
 	void AnimateSprite(const float elapsedTime);
 	void MakeFaceDirection(Direction direction);
 	void Gravity();
@@ -61,6 +62,7 @@ private:
 	bool grounded;
 	int indexInFlipBook;
 	unsigned long int elapsedFrames;
+	unsigned int loopLength;
 
 
 };

@@ -6,17 +6,17 @@
 #define MINIMUM_TIME_BEFORE_NEXT_JUMP 512.0f
 
 void Monster::Animate(const float elapsedTime) {
-	Move();
+	Move(loopLength);
 	AnimateSprite(elapsedFrames);
 	elapsedTimeSinceLastJump += elapsedTime;
 	++elapsedFrames;
 }
 
-void Monster::Move() {
+void Monster::Move(unsigned int loopLength) {
 	Status previousStatus = status;
 	Direction previousDirection = direction;
 	velocity = glm::vec2{};
-	if (elapsedFrames%30 == 0) {
+	if (elapsedFrames%loopLength == 0) {
 		horizontalDirection *= -1.0f; // Change direction
 
 		//update the direction
@@ -29,10 +29,13 @@ void Monster::Move() {
 
 	}
 
-	velocity = glm::vec2(horizontalDirection * horizontalVelocity, verticalVelocity);
-	translate(velocity);
+	if (direction != previousDirection) {
+		MakeFaceDirection(direction);
+	}
 
 	Gravity();
+	velocity = glm::vec2(horizontalDirection * horizontalVelocity, verticalVelocity);
+	translate(velocity);
 	statusHasChanged = previousStatus != status;
 }
 

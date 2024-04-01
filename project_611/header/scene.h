@@ -33,7 +33,7 @@ public:
 	void LoadScene();
 
 	Player* createPlayerGameObject(glm::vec2 pos);
-	Monster* createMonsterGameObject(glm::vec2 pos, const std::string& name);
+	Monster* createMonsterGameObject(glm::vec2 pos, const std::string& name,float speed, float initialDirection, unsigned int loopLength);
 	GameObject* playerObject;
 	RenderData playerSprite;
 
