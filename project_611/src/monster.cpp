@@ -1,5 +1,6 @@
 #include "../header/monster.h"
 #include "../header/sprite_index.h"
+#include "../header/input_manager.h"
 #include <iostream>
 
 #define MINIMUM_TIME_BEFORE_NEXT_JUMP 512.0f
@@ -14,13 +15,24 @@ void Monster::Animate(const float elapsedTime) {
 void Monster::Move() {
 	Status previousStatus = status;
 	Direction previousDirection = direction;
-
 	velocity = glm::vec2{};
+	if (elapsedFrames%30 == 0) {
+		horizontalDirection *= -1.0f; // Change direction
+
+		//update the direction
+		if (horizontalDirection > 0) {
+			direction = Direction::Right;
+		}
+		else {
+			direction = Direction::Left;
+		}
+
+	}
+
+	velocity = glm::vec2(horizontalDirection * horizontalVelocity, verticalVelocity);
+	translate(velocity);
 
 	Gravity();
-	velocity = glm::vec2(horizontalDirection * horizontalVelocity, verticalVelocity);
-
-	translate(velocity);
 	statusHasChanged = previousStatus != status;
 }
 

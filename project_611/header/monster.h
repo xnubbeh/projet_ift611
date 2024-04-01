@@ -23,7 +23,7 @@ public:
 	Monster(const std::string& name, float speed) : 
 		GameObject{ name },
 		horizontalVelocity{ speed + 6.0f },
-		horizontalDirection{ 0 },
+		horizontalDirection{ -1.0f }, //this should be a param
 		verticalVelocity{ 0 }, 
 		direction{ Direction::Right },
 		status{ Status::Idle },

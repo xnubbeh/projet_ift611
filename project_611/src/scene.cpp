@@ -3,8 +3,8 @@
 #include "../header/sprite_index.h"
 
 void Scene::LoadScene() {
-	Player* player = createPlayerGameObject(glm::vec2(500, 150));
-	Monster* monster = createMonsterGameObject(glm::vec2(500, 300), "goblin1");
+	Player* player = createPlayerGameObject(glm::vec2(300, 300));
+	Monster* monster = createMonsterGameObject(glm::vec2(1200, 300), "goblin1");
 
 	// create the bounding box of the screen so the player cant fall out of the map
 	OuterScreenBoundingBoxes();
