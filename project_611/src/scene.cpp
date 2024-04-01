@@ -4,6 +4,7 @@
 
 void Scene::LoadScene() {
 	Player* player = createPlayerGameObject(glm::vec2(500, 150));
+	Monster* monster = createMonsterGameObject(glm::vec2(500, 300), "goblin1");
 
 	// create the bounding box of the screen so the player cant fall out of the map
 	OuterScreenBoundingBoxes();
@@ -61,6 +62,29 @@ Player* Scene::createPlayerGameObject(glm::vec2 playerPos)
 	addMovableObject(player);
 
 	return player;
+}
+
+Monster* Scene::createMonsterGameObject(glm::vec2 monsterPos,const std::string& name)
+{
+	GameObject* monsterObject = getGameObject(name);
+	//hit box all the same for every monster???
+	glm::vec2 hitboxDim = glm::vec2(33, 44); //too short for now 
+	glm::vec2 hitboxOffset = glm::vec2(14, 2); //drawn a bit high
+
+	if (monsterObject != nullptr)
+	{
+		return static_cast<Monster*>(monsterObject);
+	}
+	Monster* monster = new Monster(name, 2.0f); //might want to set the speed when you create it 
+	RenderData monsterSprite{ monsterPos, glm::vec2(64, 64), glm::vec2(0, 96), glm::vec2(32, 32), 1.0 , 0.0 };
+	monster->CreateRenderData(std::move(monsterSprite));
+	monster->setHitboxDim(std::move(hitboxDim));
+	monster->setHitboxOffset(std::move(hitboxOffset));
+
+	gameObjects.insert(std::pair < std::string, GameObject*>(name, static_cast<GameObject*>(monster)));
+	addMovableObject(monster);
+
+	return monster;
 }
 
 EnvironmentObject* Scene::getEnvironmentObject(const std::string& name) {

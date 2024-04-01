@@ -35,7 +35,7 @@ public:
 			return playerWalking[index];
 			}
 		case SpriteType::MonsterWalking: {
-			return tiles[index];
+			return monsterWalking[index];
 			}
 		case SpriteType::FloorTiles: {
 			return tiles[index];
