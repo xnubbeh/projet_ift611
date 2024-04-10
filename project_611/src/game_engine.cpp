@@ -6,6 +6,7 @@
 #include "../header/input_manager.h"
 #include "../header/utils.h"
 #include "../header/performance_tracker.h"
+#include "../third_party/stb_image.h"
 
 
 int GameEngine::Init() {
@@ -19,9 +20,17 @@ int GameEngine::Init() {
 
   //  window = glfwCreateWindow(screenWidth, screenHeight, "game pre-alpha v0.01", glfwGetPrimaryMonitor(), NULL);
     window = glfwCreateWindow(screenWidth, screenHeight, "game pre-alpha v0.01", NULL, NULL);
-
     glfwMakeContextCurrent(window);
 
+    //load image file
+    int imageW, imageH;
+    int channelsRGB;
+    unsigned char* pixels = stbi_load("icon.png", &imageW,&imageH,&channelsRGB,4);
+    GLFWimage images[1];
+    images[0].width = imageW;
+    images[0].height = imageH;
+    images[0].pixels = pixels;
+    glfwSetWindowIcon(window, 1, images);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize OpenGL context" << std::endl;
